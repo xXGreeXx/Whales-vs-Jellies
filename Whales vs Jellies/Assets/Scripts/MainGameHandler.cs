@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Net;
+using System.Net.Sockets;
 
 public class MainGameHandler : MonoBehaviour {
 
@@ -13,11 +15,16 @@ public class MainGameHandler : MonoBehaviour {
     bool isWhale = false;
 
     //game data
+    TcpClient clientInstance;
 
 	// Use this for initialization
 	void Start () {
         //load sprites
         jellyFishSprite = Resources.Load("jellyfish", typeof(Sprite)) as Sprite;
+
+        //connect to server
+        clientInstance = new TcpClient();
+        clientInstance.Connect("172.30.26.177", 8888);
 
         //create player
         player = new GameObject("Player");
