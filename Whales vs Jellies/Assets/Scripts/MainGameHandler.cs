@@ -14,7 +14,7 @@ public class MainGameHandler : MonoBehaviour {
 
     //player data
     public static GameObject player;
-    public static GameObject player2;
+    public static List<GameObject> otherPlayers = new List<GameObject>();
     bool isWhale = false;
 
     //game data
@@ -68,7 +68,7 @@ public class MainGameHandler : MonoBehaviour {
         if (IsConnected(clientInstance.Client))
         {
             List<String> data = ReadWriteServer();
-            if (data.Count >= 3) ParseData(data);
+            if (data.Count >= 3 ) ParseData(data);
         }
         else
         {
@@ -112,7 +112,10 @@ public class MainGameHandler : MonoBehaviour {
             String line;
             while (!(line = reader.ReadLine()).Equals("END"))
             {
-                data.Add(line);
+                float res;
+                if (float.TryParse(line, out res)) data.Add(line);
+
+                Debug.Log(line);
             }
         }
 
@@ -122,31 +125,63 @@ public class MainGameHandler : MonoBehaviour {
     //parse data from server
     private void ParseData(List<String> data)
     {
-        //create player
-        if (GameObject.Find("Player2") == null)
+        //handle player movement
+        int playerIndex = 0;
+        for (int index = 0; index < data.Count; index += 3)
         {
-            player2 = new GameObject("Player2");
-            player2.AddComponent<BoxCollider2D>();
-            player2.layer = 9;
-            Rigidbody2D bodyBase = player2.AddComponent<Rigidbody2D>();
+            float x = float.Parse(data[index]);
+            float y = float.Parse(data[index + 1]);
+            float rot = float.Parse(data[index + 2]);
 
-            bodyBase.isKinematic = false;
-            bodyBase.gravityScale = 0;
-
-            if (isWhale)
+            if (playerIndex > otherPlayers.Count - 1)
             {
+                otherPlayers.Add(CreatePlayer());
+            }
 
-            }
-            else
-            {
-                SpriteRenderer renderer = player2.AddComponent<SpriteRenderer>();
-                renderer.sprite = jellyFishSprite;
-            }
+            GameObject playerToEdit = otherPlayers[playerIndex];
+            playerToEdit.transform.position = new Vector2(x, y);
+            Rigidbody2D body = playerToEdit.GetComponent<Rigidbody2D>();
+            body.rotation = rot;
+
+            playerIndex++;
         }
 
-        player2.transform.position = new Vector2(float.Parse(data[0]), float.Parse(data[1]));
-        Rigidbody2D body = player2.GetComponent<Rigidbody2D>();
+        //remove extra players
+        for (int tempIndex = playerIndex; tempIndex < otherPlayers.Count - 1; tempIndex++)
+        {
+            RemovePlayer(tempIndex);
+        }
 
-        body.rotation = float.Parse(data[2]);
+    }
+
+    //remove player
+    private void RemovePlayer(int index)
+    {
+        Destroy(otherPlayers[index], 0);
+        otherPlayers.RemoveAt(index);
+    }
+
+    //create player
+    private GameObject CreatePlayer()
+    {
+        GameObject p = new GameObject("Player");
+        p.AddComponent<BoxCollider2D>();
+        p.layer = 9;
+        Rigidbody2D bodyBase = p.AddComponent<Rigidbody2D>();
+
+        bodyBase.isKinematic = false;
+        bodyBase.gravityScale = 0;
+
+        if (isWhale)
+        {
+
+        }
+        else
+        {
+            SpriteRenderer renderer = p.AddComponent<SpriteRenderer>();
+            renderer.sprite = jellyFishSprite;
+        }
+
+        return p;
     }
 }
