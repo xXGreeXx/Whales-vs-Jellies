@@ -38,6 +38,7 @@ public class MainGameHandler : MonoBehaviour {
         player = new GameObject("Player1");
         player.AddComponent<PlayerControlScript>();
         player.AddComponent<BoxCollider2D>();
+        player.layer = 9;
         Rigidbody2D body = player.AddComponent<Rigidbody2D>();
 
         body.isKinematic = false;
@@ -64,81 +65,50 @@ public class MainGameHandler : MonoBehaviour {
     void Update ()
     {
         //interface server
-        String data = WriteThenReadFromServer();
-        if (!data.Equals("")) ParseData(data);
-
-
+        List<String> data = ReadWriteServer();
+        if (data.Count >= 3) ParseData(data);
     }
 
     //send data to server
-    private String WriteThenReadFromServer()
+    private List<String> ReadWriteServer()
     {
-        String data = "";
+        List<String> data = new List<String>();
 
         NetworkStream nwStream = clientInstance.GetStream();
-        byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(player.transform.position.x + ", " + player.transform.position.y + ", " + player.transform.GetComponent<Rigidbody2D>().rotation + ", ");
+        StreamWriter writer = new StreamWriter(nwStream);
+        StreamReader reader = new StreamReader(writer.BaseStream);
 
-        //read
+        writer.Flush();
+        writer.WriteLine(player.transform.position.x);
+        writer.Flush();
+        writer.WriteLine(player.transform.position.y);
+        writer.Flush();
+        writer.WriteLine(player.transform.GetComponent<Rigidbody2D>().rotation);
+        writer.Flush();
+        writer.WriteLine("END");
+        writer.Flush();
+
         if (nwStream.DataAvailable)
         {
-            byte[] bytesToRead = new byte[clientInstance.ReceiveBufferSize];
-            int bytesRead = nwStream.Read(bytesToRead, 0, clientInstance.ReceiveBufferSize);
-            data = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
+            String line;
+            while (!(line = reader.ReadLine()).Equals("END"))
+            {
+                data.Add(line);
+            }
         }
-
-        //send
-        nwStream.Write(bytesToSend, 0, bytesToSend.Length);
 
         return data;
     }
 
     //parse data from server
-    private void ParseData(String data)
+    private void ParseData(List<String> data)
     {
-        //parse data
-        int x = 0;
-        int y = 0;
-        int rot = 0;
-        String curSet = "x";
-        String word = "";
-
-        data = data.Replace(" ", "");
-        for (int index = 0; index < data.Length; index++)
-        {
-            String c = data.Substring(index, 1);
-
-            if (c.Equals(","))
-            {
-                if (curSet.Equals("x"))
-                {
-                    x = int.Parse(word);
-                    curSet = "y";
-                }
-                else if (curSet.Equals("y"))
-                {
-                    y = int.Parse(word);
-                    curSet = "rot";
-                }
-                else
-                {
-                    rot = int.Parse(word);
-                }
-
-
-                word = "";
-            }
-            else
-            {
-                word += c;
-            }
-        }
-
         //create player
-        if (player2.Equals(null))
+        if (GameObject.Find("Player2") == null)
         {
             player2 = new GameObject("Player2");
-            player2.AddComponent<PlayerControlScript>();
             player2.AddComponent<BoxCollider2D>();
+            player2.layer = 9;
             Rigidbody2D bodyBase = player2.AddComponent<Rigidbody2D>();
 
             bodyBase.isKinematic = false;
@@ -155,9 +125,9 @@ public class MainGameHandler : MonoBehaviour {
             }
         }
 
-        player2.transform.position = new Vector2(x, y);
+        player2.transform.position = new Vector2(float.Parse(data[0]), float.Parse(data[1]));
         Rigidbody2D body = player2.GetComponent<Rigidbody2D>();
 
-        body.rotation = rot;
+        body.rotation = float.Parse(data[2]);
     }
 }
