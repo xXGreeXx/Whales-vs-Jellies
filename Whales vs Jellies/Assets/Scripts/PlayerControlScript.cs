@@ -8,13 +8,14 @@ public class PlayerControlScript : MonoBehaviour {
     float moveSpeed = 0.1F;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update ()
+    {
         if (Input.GetKey(KeyCode.W)) yVel = -moveSpeed;
         else yVel = 0;
         if (Input.GetKey(KeyCode.A)) xVel = moveSpeed;
