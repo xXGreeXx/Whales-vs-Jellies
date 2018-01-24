@@ -25,7 +25,8 @@ public class PlayerControlScript : MonoBehaviour {
         Rigidbody2D body = gameObject.GetComponent<Rigidbody2D>();
 
         body.MoveRotation(body.rotation + xVel * 20);
-        body.AddRelativeForce(new Vector2(0, -yVel * 2), ForceMode2D.Force);
+        body.AddRelativeForce(new Vector2(0, -yVel / 3), ForceMode2D.Impulse);
+        body.drag = 1;
         Camera.main.transform.position = new Vector3(MainGameHandler.player.transform.position.x, MainGameHandler.player.transform.position.y, -10);
 
         if (body.position.y > 3.5F)

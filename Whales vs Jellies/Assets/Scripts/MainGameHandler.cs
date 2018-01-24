@@ -65,8 +65,27 @@ public class MainGameHandler : MonoBehaviour {
     void Update ()
     {
         //interface server
-        List<String> data = ReadWriteServer();
-        if (data.Count >= 3) ParseData(data);
+        if (IsConnected(clientInstance.Client))
+        {
+            List<String> data = ReadWriteServer();
+            if (data.Count >= 3) ParseData(data);
+        }
+        else
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+
+    }
+
+    //check if still connected
+    public bool IsConnected(Socket s)
+    {
+        bool part1 = s.Poll(1000, SelectMode.SelectRead);
+        bool part2 = (s.Available == 0);
+        if (part1 && part2)
+            return false;
+        else
+            return true;
     }
 
     //send data to server
