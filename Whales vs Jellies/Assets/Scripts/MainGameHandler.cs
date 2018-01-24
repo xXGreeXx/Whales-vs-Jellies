@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Net;
@@ -24,7 +25,11 @@ public class MainGameHandler : MonoBehaviour {
 
         //connect to server
         clientInstance = new TcpClient();
-        clientInstance.Connect("172.30.26.177", 8888);
+        try
+        {
+            clientInstance.Connect("172.30.26.177", 8888);
+        }
+        catch (Exception) { }
 
         //create player
         player = new GameObject("Player");

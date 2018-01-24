@@ -16,13 +16,20 @@ public class PlayerControlScript : MonoBehaviour {
 	void Update () {
 
         if (Input.GetKey(KeyCode.W)) yVel = -moveSpeed;
-        else if (Input.GetKey(KeyCode.S)) yVel = moveSpeed;
         else yVel = 0;
         if (Input.GetKey(KeyCode.A)) xVel = moveSpeed;
         else if (Input.GetKey(KeyCode.D)) xVel = -moveSpeed;
         else xVel = 0;
 
-        MainGameHandler.player.transform.position -= new Vector3(xVel, yVel, 0);
+        Rigidbody2D body = gameObject.GetComponent<Rigidbody2D>();
+
+        body.MoveRotation(body.rotation + xVel * 20);
+        body.AddRelativeForce(new Vector2(0, -yVel * 2), ForceMode2D.Force);
         Camera.main.transform.position = new Vector3(MainGameHandler.player.transform.position.x, MainGameHandler.player.transform.position.y, -10);
+
+        if (body.position.y > 3.5F)
+        {
+            body.AddForce(new Vector2(0, -10));
+        }
 	}
 }
