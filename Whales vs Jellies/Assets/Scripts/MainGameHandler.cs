@@ -52,7 +52,15 @@ public class MainGameHandler : MonoBehaviour {
         {
             SpriteRenderer renderer = player.AddComponent<SpriteRenderer>();
             renderer.sprite = jellyFishSprite;
+            renderer.sortingOrder = -2;
         }
+
+        //create nametag
+        GameObject nameTag = new GameObject("NameTag");
+        nameTag.transform.SetParent(player.transform);
+        UnityEngine.UI.Text text = nameTag.AddComponent<UnityEngine.UI.Text>();
+
+        text.text = "Player1";
 	}
 
     //close socket with server on exit
@@ -72,6 +80,12 @@ public class MainGameHandler : MonoBehaviour {
         }
         else
         {
+            clientInstance.GetStream().Close();
+            clientInstance.Close();
+            clientInstance = null;
+
+            for (int index = 0; index < otherPlayers.Count; index++) RemovePlayer(index);
+
             SceneManager.LoadScene("MainMenu");
         }
 
@@ -157,7 +171,7 @@ public class MainGameHandler : MonoBehaviour {
     //remove player
     private void RemovePlayer(int index)
     {
-        Destroy(otherPlayers[index], 0);
+        Destroy(otherPlayers[index], 1);
         otherPlayers.RemoveAt(index);
     }
 
@@ -180,6 +194,7 @@ public class MainGameHandler : MonoBehaviour {
         {
             SpriteRenderer renderer = p.AddComponent<SpriteRenderer>();
             renderer.sprite = jellyFishSprite;
+            renderer.sortingOrder = -2;
         }
 
         return p;
