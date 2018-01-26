@@ -15,13 +15,13 @@ public class MainGameHandler : MonoBehaviour {
     //player data
     public static GameObject player;
     public static List<GameObject> otherPlayers = new List<GameObject>();
-    public static bool isWhale = false;
+    public static bool isWhale = true;
 
     //game data
     TcpClient clientInstance;
     public static String IP = "192.168.1.200";
 
-	// Use this for initialization
+	//start
 	void Start ()
     {
         //TODO\\ remove this code it is temp
@@ -77,8 +77,8 @@ public class MainGameHandler : MonoBehaviour {
         clientInstance.Close();
     }
 
-    // Update is called once per frame
-    void Update ()
+    //fixed update
+    void FixedUpdate ()
     {
         //interface server
         if (IsConnected(clientInstance.Client))
@@ -139,8 +139,6 @@ public class MainGameHandler : MonoBehaviour {
                 float res;
                 Boolean res2;
                 if (float.TryParse(line, out res) || Boolean.TryParse(line, out res2)) data.Add(line);
-
-                Debug.Log(line);
             }
         }
 

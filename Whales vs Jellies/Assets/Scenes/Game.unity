@@ -1559,7 +1559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -112.3}
+  m_AnchoredPosition: {x: 0, y: -112.29999}
   m_SizeDelta: {x: 507.7, y: 441.6}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1754148419
@@ -1855,7 +1855,6 @@ GameObject:
   - component: {fileID: 2070252687}
   - component: {fileID: 2070252686}
   - component: {fileID: 2070252685}
-  - component: {fileID: 2070252684}
   m_Layer: 0
   m_Name: Minimap Camera
   m_TagString: Untagged
@@ -1863,13 +1862,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2070252684
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2070252683}
-  m_Enabled: 1
 --- !u!92 &2070252685
 Behaviour:
   m_ObjectHideFlags: 0

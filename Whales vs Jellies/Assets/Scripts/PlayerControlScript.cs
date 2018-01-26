@@ -26,6 +26,8 @@ public class PlayerControlScript : MonoBehaviour {
         Rigidbody2D body = gameObject.GetComponent<Rigidbody2D>();
 
         body.MoveRotation(body.rotation + xVel * 20);
+        if (body.rotation < 0) body.rotation += 360;
+        else if (body.rotation > 360) body.rotation -= 360;
         body.AddRelativeForce(new Vector2(0, -yVel / 3), ForceMode2D.Impulse);
         body.drag = 1;
         Camera.main.transform.position = new Vector3(MainGameHandler.player.transform.position.x, MainGameHandler.player.transform.position.y, -10);
@@ -33,6 +35,20 @@ public class PlayerControlScript : MonoBehaviour {
         if (body.position.y > 3F)
         {
             body.AddForce(new Vector2(0, -20));
+        }
+
+        if (MainGameHandler.isWhale)
+        {
+            SpriteRenderer renderer = body.gameObject.GetComponent<SpriteRenderer>();
+
+            if ((body.rotation > 180 && body.rotation < 360) || (body.rotation < 0 && body.rotation > 180))
+            {
+                renderer.flipX = true;
+            }
+            else
+            {
+                renderer.flipX = false;
+            }
         }
 	}
 }
