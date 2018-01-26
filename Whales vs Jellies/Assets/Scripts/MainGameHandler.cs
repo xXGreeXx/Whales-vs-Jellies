@@ -19,6 +19,7 @@ public class MainGameHandler : MonoBehaviour {
 
     //game data
     TcpClient clientInstance;
+    public static String IP = "";
 
 	// Use this for initialization
 	void Start ()
@@ -30,7 +31,7 @@ public class MainGameHandler : MonoBehaviour {
         clientInstance = new TcpClient();
         try
         {
-            clientInstance.Connect("172.30.26.177", 8888);
+            clientInstance.Connect(IP, 8888);
         }
         catch (Exception) { SceneManager.LoadScene("MainMenu"); }
 

@@ -7,6 +7,7 @@ public class MainMenuButtonScript : MonoBehaviour {
     {
         if (button.Equals("Play"))
         {
+            MainGameHandler.IP = GameObject.Find("IPField").transform.Find("Text").GetComponent<UnityEngine.UI.Text>().text;
             SceneManager.LoadScene("Game");
         }
         else if (button.Equals("Shop"))
