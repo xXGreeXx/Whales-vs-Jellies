@@ -6,6 +6,7 @@ public class PlayerControlScript : MonoBehaviour {
     float yVel = 0;
 
     float moveSpeed = 0.1F;
+    float whaleMoveSpeed = 0.3F;
 
 	// Use this for initialization
 	void Start ()
@@ -16,7 +17,7 @@ public class PlayerControlScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKey(KeyCode.W)) yVel = -moveSpeed;
+        if (Input.GetKey(KeyCode.W)) yVel = MainGameHandler.isWhale ? -whaleMoveSpeed : -moveSpeed;
         else yVel = 0;
         if (Input.GetKey(KeyCode.A)) xVel = moveSpeed;
         else if (Input.GetKey(KeyCode.D)) xVel = -moveSpeed;
@@ -29,9 +30,9 @@ public class PlayerControlScript : MonoBehaviour {
         body.drag = 1;
         Camera.main.transform.position = new Vector3(MainGameHandler.player.transform.position.x, MainGameHandler.player.transform.position.y, -10);
 
-        if (body.position.y > 3.5F)
+        if (body.position.y > 3F)
         {
-            body.AddForce(new Vector2(0, -10));
+            body.AddForce(new Vector2(0, -20));
         }
 	}
 }

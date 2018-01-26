@@ -1832,11 +1832,11 @@ Camera:
     y: 0.01
     width: 0.3
     height: 0.35
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 2.2416465
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 18.585577
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

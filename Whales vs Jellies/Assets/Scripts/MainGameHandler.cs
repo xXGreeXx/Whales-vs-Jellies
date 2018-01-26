@@ -15,7 +15,7 @@ public class MainGameHandler : MonoBehaviour {
     //player data
     public static GameObject player;
     public static List<GameObject> otherPlayers = new List<GameObject>();
-    bool isWhale = false;
+    public static bool isWhale = false;
 
     //game data
     TcpClient clientInstance;
@@ -24,8 +24,12 @@ public class MainGameHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        //TODO\\ remove this code it is temp
+        if (File.Exists("whale.txt")) isWhale = true;
+
         //load sprites
         jellyFishSprite = Resources.Load("jellyfish", typeof(Sprite)) as Sprite;
+        whaleSprite = Resources.Load("whale", typeof(Sprite)) as Sprite;
 
         //connect to server
         clientInstance = new TcpClient();
@@ -45,14 +49,16 @@ public class MainGameHandler : MonoBehaviour {
 
         body.isKinematic = false;
         body.gravityScale = 0;
+        SpriteRenderer renderer = player.AddComponent<SpriteRenderer>();
 
         if (isWhale)
         {
-
+            player.transform.localScale = new Vector3(3, 3, 1);
+            renderer.sprite = whaleSprite;
+            renderer.sortingOrder = -2;
         }
         else
         {
-            SpriteRenderer renderer = player.AddComponent<SpriteRenderer>();
             renderer.sprite = jellyFishSprite;
             renderer.sortingOrder = -2;
         }
@@ -78,7 +84,7 @@ public class MainGameHandler : MonoBehaviour {
         if (IsConnected(clientInstance.Client))
         {
             List<String> data = ReadWriteServer();
-            if (data.Count >= 3 ) ParseData(data);
+            if (data.Count >= 4 ) ParseData(data);
         }
         else
         {
@@ -120,6 +126,8 @@ public class MainGameHandler : MonoBehaviour {
         writer.Flush();
         writer.WriteLine(player.transform.GetComponent<Rigidbody2D>().rotation);
         writer.Flush();
+        writer.WriteLine(isWhale);
+        writer.Flush();
         writer.WriteLine("END");
         writer.Flush();
 
@@ -129,7 +137,8 @@ public class MainGameHandler : MonoBehaviour {
             while (!(line = reader.ReadLine()).Equals("END"))
             {
                 float res;
-                if (float.TryParse(line, out res)) data.Add(line);
+                Boolean res2;
+                if (float.TryParse(line, out res) || Boolean.TryParse(line, out res2)) data.Add(line);
 
                 Debug.Log(line);
             }
@@ -143,15 +152,16 @@ public class MainGameHandler : MonoBehaviour {
     {
         //handle player movement
         int playerIndex = 0;
-        for (int index = 0; index < data.Count; index += 3)
+        for (int index = 0; index < data.Count; index += 4)
         {
             float x = float.Parse(data[index]);
             float y = float.Parse(data[index + 1]);
             float rot = float.Parse(data[index + 2]);
+            Boolean localIsWhale = Boolean.Parse(data[index + 3]);
 
             if (playerIndex > otherPlayers.Count - 1)
             {
-                otherPlayers.Add(CreatePlayer());
+                otherPlayers.Add(CreatePlayer(localIsWhale));
             }
 
             GameObject playerToEdit = otherPlayers[playerIndex];
@@ -178,7 +188,7 @@ public class MainGameHandler : MonoBehaviour {
     }
 
     //create player
-    private GameObject CreatePlayer()
+    private GameObject CreatePlayer(Boolean localIsWhale)
     {
         GameObject p = new GameObject("Player");
         p.AddComponent<BoxCollider2D>();
@@ -187,14 +197,16 @@ public class MainGameHandler : MonoBehaviour {
 
         bodyBase.isKinematic = false;
         bodyBase.gravityScale = 0;
+        SpriteRenderer renderer = p.AddComponent<SpriteRenderer>();
 
-        if (isWhale)
+        if (localIsWhale)
         {
-
+            p.transform.localScale = new Vector3(3, 3, 1);
+            renderer.sprite = whaleSprite;
+            renderer.sortingOrder = -2;
         }
         else
         {
-            SpriteRenderer renderer = p.AddComponent<SpriteRenderer>();
             renderer.sprite = jellyFishSprite;
             renderer.sortingOrder = -2;
         }
