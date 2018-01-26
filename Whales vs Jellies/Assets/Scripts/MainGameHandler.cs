@@ -15,7 +15,7 @@ public class MainGameHandler : MonoBehaviour {
     //player data
     public static GameObject player;
     public static List<GameObject> otherPlayers = new List<GameObject>();
-    public static bool isWhale = true;
+    public static bool isWhale = false;
 
     //game data
     TcpClient clientInstance;
@@ -166,6 +166,20 @@ public class MainGameHandler : MonoBehaviour {
             playerToEdit.transform.position = new Vector2(x, y);
             Rigidbody2D body = playerToEdit.GetComponent<Rigidbody2D>();
             body.rotation = rot;
+
+            if (playerToEdit.GetComponent<SpriteRenderer>().sprite.Equals(whaleSprite))
+            {
+                SpriteRenderer renderer = playerToEdit.gameObject.GetComponent<SpriteRenderer>();
+
+                if ((body.rotation > 180 && body.rotation < 360) || (body.rotation < 0 && body.rotation > 180))
+                {
+                    renderer.flipX = true;
+                }
+                else
+                {
+                    renderer.flipX = false;
+                }
+            }
 
             playerIndex++;
         }
