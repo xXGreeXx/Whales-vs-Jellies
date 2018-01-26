@@ -19,7 +19,7 @@ public class MainGameHandler : MonoBehaviour {
 
     //game data
     TcpClient clientInstance;
-    public static String IP = "";
+    public static String IP = "192.168.1.200";
 
 	// Use this for initialization
 	void Start ()
