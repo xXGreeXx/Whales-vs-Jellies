@@ -32,6 +32,7 @@ public class MainGameHandler : MonoBehaviour {
         try
         {
             clientInstance.Connect(IP, 8888);
+            clientInstance.NoDelay = true;
         }
         catch (Exception) { SceneManager.LoadScene("MainMenu"); }
 
