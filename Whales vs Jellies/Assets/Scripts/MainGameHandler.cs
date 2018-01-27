@@ -11,9 +11,11 @@ public class MainGameHandler : MonoBehaviour {
     //sprites
     Sprite jellyFishSprite;
     Sprite whaleSprite;
+    Sprite jellyfishSpineShooter;
 
     //player data
     public static GameObject player;
+    public static GameObject playerWeapon;
     public static List<GameObject> otherPlayers = new List<GameObject>();
     public static bool isWhale = false;
 
@@ -30,6 +32,7 @@ public class MainGameHandler : MonoBehaviour {
         //load sprites
         jellyFishSprite = Resources.Load("jellyfish", typeof(Sprite)) as Sprite;
         whaleSprite = Resources.Load("whale", typeof(Sprite)) as Sprite;
+        jellyfishSpineShooter = Resources.Load("jellyfishSpineShooter", typeof(Sprite)) as Sprite;
 
         //connect to server
         clientInstance = new TcpClient();
@@ -43,6 +46,17 @@ public class MainGameHandler : MonoBehaviour {
         //create player
         player = CreatePlayer(isWhale);
         player.AddComponent<PlayerControlScript>();
+
+        //create weapon
+        playerWeapon = new GameObject("Weapon");
+        playerWeapon.transform.SetParent(player.transform);
+        playerWeapon.transform.position = new Vector2(player.transform.position.x, player.transform.position.y + 0.2F);
+        playerWeapon.transform.localScale = new Vector2(0.5F, 0.5F);
+        SpriteRenderer weaponRenderer = playerWeapon.AddComponent<SpriteRenderer>();
+        weaponRenderer.sprite = jellyfishSpineShooter;
+        WeaponHandlerScript weaponData = playerWeapon.AddComponent<WeaponHandlerScript>();
+        weaponData.maxAmmo = 10;
+        weaponData.ammo = weaponData.maxAmmo;
 
         //create nametag
         GameObject nameTag = new GameObject("NameTag");
@@ -80,6 +94,13 @@ public class MainGameHandler : MonoBehaviour {
 
         //update HUD labels
         GameObject.Find("healthText").GetComponent<UnityEngine.UI.Text>().text = player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth;
+        GameObject.Find("ammoText").GetComponent<UnityEngine.UI.Text>().text = playerWeapon.GetComponent<WeaponHandlerScript>().ammo + "/" + playerWeapon.GetComponent<WeaponHandlerScript>().maxAmmo;
+
+        //handle weapon fire
+        if (Input.GetMouseButtonDown(0))
+        {
+            playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100);
+        }
     }
 
     //check if still connected

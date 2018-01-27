@@ -8,10 +8,4 @@ public class PlayerData : MonoBehaviour {
     public int ammo;
     public int maxAmmo;
     public float moveSpeed;
-
-    //start
-    void Start()
-    {
-        
-    }
 }
