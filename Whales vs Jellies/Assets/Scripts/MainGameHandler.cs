@@ -15,7 +15,7 @@ public class MainGameHandler : MonoBehaviour {
     //player data
     public static GameObject player;
     public static List<GameObject> otherPlayers = new List<GameObject>();
-    public static bool isWhale = true;
+    public static bool isWhale = false;
 
     //game data
     TcpClient clientInstance;
@@ -184,7 +184,7 @@ public class MainGameHandler : MonoBehaviour {
     private GameObject CreatePlayer(Boolean localIsWhale)
     {
         GameObject p = new GameObject("Player");
-        p.AddComponent<BoxCollider2D>();
+        BoxCollider2D collider = p.AddComponent<BoxCollider2D>();
         p.layer = 9;
         Rigidbody2D bodyBase = p.AddComponent<Rigidbody2D>();
 
@@ -194,14 +194,22 @@ public class MainGameHandler : MonoBehaviour {
 
         if (localIsWhale)
         {
+            collider.size = new Vector2(0.5F, 1F);
+
             p.transform.position = new Vector2(32.8F, -10);
             p.transform.localScale = new Vector3(3, 3, 1);
+            p.layer = 8;
             bodyBase.rotation = 90;
             renderer.sprite = whaleSprite;
             renderer.sortingOrder = -2;
         }
         else
         {
+            collider.size = new Vector2(0.5F, 0.7F);
+
+            PhysicsMaterial2D mat = new PhysicsMaterial2D();
+            mat.bounciness = 1;
+            bodyBase.sharedMaterial = mat;
             p.transform.position = new Vector2(UnityEngine.Random.Range(-39, -10), UnityEngine.Random.Range(2, -18));
             renderer.sprite = jellyFishSprite;
             renderer.sortingOrder = -2;
