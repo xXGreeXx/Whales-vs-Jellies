@@ -78,6 +78,8 @@ public class MainGameHandler : MonoBehaviour {
             SceneManager.LoadScene("MainMenu");
         }
 
+        //update HUD labels
+        GameObject.Find("healthText").GetComponent<UnityEngine.UI.Text>().text = player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth;
     }
 
     //check if still connected
@@ -107,7 +109,7 @@ public class MainGameHandler : MonoBehaviour {
         writer.Flush();
         writer.WriteLine(player.transform.GetComponent<Rigidbody2D>().rotation);
         writer.Flush();
-        writer.WriteLine(isWhale);
+        writer.WriteLine(player.GetComponent<PlayerData>().isWhale);
         writer.Flush();
         writer.WriteLine("END");
         writer.Flush();
@@ -148,7 +150,7 @@ public class MainGameHandler : MonoBehaviour {
             Rigidbody2D body = playerToEdit.GetComponent<Rigidbody2D>();
             body.rotation = rot;
 
-            if (playerToEdit.GetComponent<SpriteRenderer>().sprite.Equals(whaleSprite))
+            if (playerToEdit.GetComponent<PlayerData>().isWhale)
             {
                 SpriteRenderer renderer = playerToEdit.gameObject.GetComponent<SpriteRenderer>();
 
@@ -184,6 +186,8 @@ public class MainGameHandler : MonoBehaviour {
     private GameObject CreatePlayer(Boolean localIsWhale)
     {
         GameObject p = new GameObject("Player");
+        PlayerData data = p.AddComponent<PlayerData>();
+
         BoxCollider2D collider = p.AddComponent<BoxCollider2D>();
         p.layer = 9;
         Rigidbody2D bodyBase = p.AddComponent<Rigidbody2D>();
@@ -192,9 +196,14 @@ public class MainGameHandler : MonoBehaviour {
         bodyBase.gravityScale = 0;
         SpriteRenderer renderer = p.AddComponent<SpriteRenderer>();
 
+        data.isWhale = localIsWhale;
+
         if (localIsWhale)
         {
             collider.size = new Vector2(0.5F, 1F);
+            data.maxHealth = 20000;
+            data.health = data.maxHealth;
+            data.moveSpeed = 0.3F;
 
             p.transform.position = new Vector2(32.8F, -10);
             p.transform.localScale = new Vector3(3, 3, 1);
@@ -206,6 +215,9 @@ public class MainGameHandler : MonoBehaviour {
         else
         {
             collider.size = new Vector2(0.5F, 0.7F);
+            data.maxHealth = 100;
+            data.health = data.maxHealth;
+            data.moveSpeed = 0.15F;
 
             PhysicsMaterial2D mat = new PhysicsMaterial2D();
             mat.bounciness = 1;
