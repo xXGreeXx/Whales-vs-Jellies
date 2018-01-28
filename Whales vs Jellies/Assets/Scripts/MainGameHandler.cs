@@ -96,10 +96,28 @@ public class MainGameHandler : MonoBehaviour {
         GameObject.Find("healthText").GetComponent<UnityEngine.UI.Text>().text = player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth;
         GameObject.Find("ammoText").GetComponent<UnityEngine.UI.Text>().text = playerWeapon.GetComponent<WeaponHandlerScript>().ammo + "/" + playerWeapon.GetComponent<WeaponHandlerScript>().maxAmmo;
 
-        //handle weapon fire
+        //handle weapon fire/rotate
         if (Input.GetMouseButtonDown(0))
         {
             playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100);
+        }
+
+        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
+        Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
+        lookPos = lookPos - transform.position;
+        float angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
+        playerWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        SpriteRenderer renderer = playerWeapon.GetComponent<SpriteRenderer>();
+        if (angle < 0) angle += 360;
+        else if (angle > 360) angle -= 360;
+        if ((angle > 180 && angle < 360) || (angle < 0 && angle > 180))
+        {
+            renderer.flipY = true;
+        }
+        else
+        {
+            renderer.flipY = false;
         }
     }
 
