@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 467
+  controlID: 754
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 468
+  controlID: 755
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 469
+  controlID: 756
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -285,10 +285,10 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 209
-    y: 19
+    y: 92
     width: 1366
     height: 594
-  m_MaximizeOnPlay: 1
+  m_MaximizeOnPlay: 0
   m_Gizmos: 0
   m_Stats: 0
   m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -308,7 +308,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoom: 0
     m_UniformScale: 1
     m_UpDirection: 1
@@ -368,21 +368,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: e2daffff96dbffff98dcffff9cdcffffa8dcffff7ae5ffff2ee6ffff30e7ffff34e7ffff40e7ffff3eeffffff0effffff2f0fffff6f0ffff02f1ffff3ef9ffff1afcffff00000000
+    m_ExpandedIDs: c4effeff88f0feff8af1feff8ef1feff9af1feff4c36fffff836fffffa37fffffe37ffff0a38ffffd44fffff08e6ffffbae6ffffbce7ffffc0e7ffffcce7ffff1afcffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Bullet
+      m_OriginalName: Bullet
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: -55652
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 8}
     m_SearchString: 
@@ -418,14 +418,14 @@ MonoBehaviour:
     width: 1366
     height: 594
   m_SceneLighting: 1
-  lastFramingTime: 1301.6875676050793
+  lastFramingTime: 1335.5818826685093
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 5.043355, y: -8.537943, z: 0}
+    m_Target: {x: -0.19623485, y: 0.15197352, z: 0}
     speed: 2
-    m_Value: {x: 5.043355, y: -8.537943, z: 0}
+    m_Value: {x: -0.19623485, y: 0.15197352, z: 0}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -452,9 +452,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 108.324455
+    m_Target: 109.64381
     speed: 2
-    m_Value: 108.324455
+    m_Value: 109.64381
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -529,18 +529,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts
+    - Assets/Resources
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Resources
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Li\Documents\GitHub\Whales-vs-Jellies\Whales vs Jellies
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 30260000
-    m_LastClickedID: 9776
+    m_SelectedIDs: 3a260000
+    m_LastClickedID: 9786
     m_ExpandedIDs: 000000001a26000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000702e0000fa260000a4270000e82a00005e26000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

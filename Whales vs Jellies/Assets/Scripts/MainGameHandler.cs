@@ -220,7 +220,7 @@ public class MainGameHandler : MonoBehaviour {
             playerToEdit.transform.position = new Vector2(x, y);
             Rigidbody2D body = playerToEdit.GetComponent<Rigidbody2D>();
             body.rotation = rot;
-            playerToEdit.transform.Find("Weapon").transform.rotation = Quaternion.Euler(0, 0, weaponRot);
+            playerToEdit.transform.Find("Weapon").transform.rotation = new Quaternion(0, 0, weaponRot, 1);
 
             if (playerToEdit.GetComponent<PlayerData>().isWhale)
             {
@@ -248,12 +248,12 @@ public class MainGameHandler : MonoBehaviour {
 
                 if (bulletIndex > otherBullets.Count - 1)
                 {
-                    otherBullets.Add(CreateBullet(x, y, Quaternion.Euler(0, 0, rot), damage, speed));
+                    otherBullets.Add(CreateBullet(x, y, new Quaternion(0, 0, bulletRot, 1), damage, speed));
                 }
 
                 GameObject bulletToEdit = otherBullets[bulletIndex];
                 bulletToEdit.transform.position = new Vector2(bulletX, bulletY);
-                bulletToEdit.transform.rotation = Quaternion.Euler(0, 0, bulletRot);
+                bulletToEdit.transform.rotation = new Quaternion(0, 0, bulletRot, 1);
 
                 BulletPhysicsScript physics = bulletToEdit.GetComponent<BulletPhysicsScript>();
                 physics.bulletDamage = damage;
@@ -366,7 +366,7 @@ public class MainGameHandler : MonoBehaviour {
         weapon.transform.localScale = new Vector2(0.5F, 0.5F);
         SpriteRenderer weaponRenderer = weapon.AddComponent<SpriteRenderer>();
         weaponRenderer.sprite = jellyfishSpineShooter;
-        weaponRenderer.sortingOrder = -2;
+        weaponRenderer.sortingOrder = -1;
         WeaponHandlerScript weaponData = weapon.AddComponent<WeaponHandlerScript>();
         weaponData.maxAmmo = 10;
         weaponData.ammo = weaponData.maxAmmo;
