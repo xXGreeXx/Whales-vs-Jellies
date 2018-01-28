@@ -31,9 +31,6 @@ public class MainGameHandler : MonoBehaviour {
 	//start
 	void Start ()
     {
-        //TODO\\ remove this code it is temp
-        if (File.Exists("whale.txt")) isWhale = true;
-
         //load sprites
         jellyFishSprite = Resources.Load("jellyfish", typeof(Sprite)) as Sprite;
         whaleSprite = Resources.Load("whale", typeof(Sprite)) as Sprite;
