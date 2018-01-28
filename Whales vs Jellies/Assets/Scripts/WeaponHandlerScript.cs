@@ -10,6 +10,7 @@ public class WeaponHandlerScript : MonoBehaviour {
     {
         if (ammo > 0)
         {
+            MainGameHandler.bulletsFiredByPlayer.Add(MainGameHandler.CreateBullet(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.rotation, damage, 10));
             ammo--;
         }
     }

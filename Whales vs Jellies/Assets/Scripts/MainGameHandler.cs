@@ -12,12 +12,17 @@ public class MainGameHandler : MonoBehaviour {
     Sprite jellyFishSprite;
     Sprite whaleSprite;
     Sprite jellyfishSpineShooter;
+    public static Sprite bulletSprite;
 
     //player data
     public static GameObject player;
     public static GameObject playerWeapon;
     public static List<GameObject> otherPlayers = new List<GameObject>();
     public static bool isWhale = false;
+
+    //bullet data
+    public static List<GameObject> bulletsFiredByPlayer = new List<GameObject>();
+    public static List<GameObject> otherBullets = new List<GameObject>();
 
     //game data
     TcpClient clientInstance;
@@ -33,6 +38,7 @@ public class MainGameHandler : MonoBehaviour {
         jellyFishSprite = Resources.Load("jellyfish", typeof(Sprite)) as Sprite;
         whaleSprite = Resources.Load("whale", typeof(Sprite)) as Sprite;
         jellyfishSpineShooter = Resources.Load("jellyfishSpineShooter", typeof(Sprite)) as Sprite;
+        bulletSprite = Resources.Load("jellyfishSpine", typeof(Sprite)) as Sprite;
 
         //connect to server
         clientInstance = new TcpClient();
@@ -45,6 +51,7 @@ public class MainGameHandler : MonoBehaviour {
 
         //create player
         player = CreatePlayer(isWhale);
+        player.name = "Player1";
         player.AddComponent<PlayerControlScript>();
 
         //create weapon
@@ -79,7 +86,7 @@ public class MainGameHandler : MonoBehaviour {
         if (IsConnected(clientInstance.Client))
         {
             List<String> data = ReadWriteServer();
-            if (data.Count >= 4 ) ParseData(data);
+            if (data.Count >= 6 ) ParseData(data);
         }
         else
         {
@@ -95,11 +102,19 @@ public class MainGameHandler : MonoBehaviour {
         //update HUD labels
         GameObject.Find("healthText").GetComponent<UnityEngine.UI.Text>().text = player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth;
         GameObject.Find("ammoText").GetComponent<UnityEngine.UI.Text>().text = playerWeapon.GetComponent<WeaponHandlerScript>().ammo + "/" + playerWeapon.GetComponent<WeaponHandlerScript>().maxAmmo;
+    }
 
+    //update
+    void Update()
+    {
         //handle weapon fire/rotate
         if (Input.GetMouseButtonDown(0))
         {
             playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100);
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            playerWeapon.GetComponent<WeaponHandlerScript>().ReloadWeapon();
         }
 
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
@@ -141,6 +156,7 @@ public class MainGameHandler : MonoBehaviour {
         StreamWriter writer = new StreamWriter(nwStream);
         StreamReader reader = new StreamReader(writer.BaseStream);
 
+        //write player data
         writer.Flush();
         writer.WriteLine(player.transform.position.x);
         writer.Flush();
@@ -150,6 +166,29 @@ public class MainGameHandler : MonoBehaviour {
         writer.Flush();
         writer.WriteLine(player.GetComponent<PlayerData>().isWhale);
         writer.Flush();
+        writer.WriteLine(player.GetComponent<PlayerData>().health);
+        writer.Flush();
+        writer.WriteLine("ENDOFPLAYER");
+        writer.Flush();
+
+        //write bullet data
+        foreach (GameObject bullet in bulletsFiredByPlayer)
+        {
+            BulletPhysicsScript physics = bullet.GetComponent<BulletPhysicsScript>();
+
+            writer.WriteLine(bullet.transform.position.x);
+            writer.Flush();
+            writer.WriteLine(bullet.transform.position.y);
+            writer.Flush();
+            writer.WriteLine(bullet.transform.rotation.z);
+            writer.Flush();
+            writer.WriteLine(physics.bulletDamage);
+            writer.Flush();
+            writer.WriteLine(physics.bulletSpeed);
+            writer.Flush();
+        }
+
+        //write end
         writer.WriteLine("END");
         writer.Flush();
 
@@ -158,9 +197,7 @@ public class MainGameHandler : MonoBehaviour {
             String line;
             while (!(line = reader.ReadLine()).Equals("END"))
             {
-                float res;
-                Boolean res2;
-                if (float.TryParse(line, out res) || Boolean.TryParse(line, out res2)) data.Add(line);
+                data.Add(line);
             }
         }
 
@@ -170,14 +207,16 @@ public class MainGameHandler : MonoBehaviour {
     //parse data from server
     private void ParseData(List<String> data)
     {
-        //handle player movement
+        //handle player data
         int playerIndex = 0;
-        for (int index = 0; index < data.Count; index += 4)
+        int lastIndex = 0;
+        for (int index = 0; index < data.Count; index += 5)
         {
             float x = float.Parse(data[index]);
             float y = float.Parse(data[index + 1]);
             float rot = float.Parse(data[index + 2]);
             Boolean localIsWhale = Boolean.Parse(data[index + 3]);
+            float health = float.Parse(data[index + 4]);
 
             if (playerIndex > otherPlayers.Count - 1)
             {
@@ -203,7 +242,9 @@ public class MainGameHandler : MonoBehaviour {
                 }
             }
 
+            if (data[index + 5].Equals("ENDOFPLAYER")) break;
             playerIndex++;
+            lastIndex = index;
         }
 
         //remove extra players
@@ -212,6 +253,52 @@ public class MainGameHandler : MonoBehaviour {
             RemovePlayer(tempIndex);
         }
 
+        //handle bullet data
+        int bulletIndex = 0;
+        for (int index = lastIndex; index < data.Count; index += 5)
+        {
+            float x = float.Parse(data[index]);
+            float y = float.Parse(data[index + 1]);
+            float rot = float.Parse(data[index + 2]);
+            float damage = float.Parse(data[index + 3]);
+            float speed = float.Parse(data[index + 4]);
+
+            if (bulletIndex > otherBullets.Count - 1)
+            {
+                otherBullets.Add(CreateBullet(x, y, Quaternion.Euler(0, 0, rot), damage, speed));
+            }
+
+            GameObject bulletToEdit = otherBullets[bulletIndex];
+            bulletToEdit.transform.position = new Vector2(x, y);
+            bulletToEdit.transform.rotation = Quaternion.Euler(0, 0, rot);
+
+            BulletPhysicsScript physics = bulletToEdit.GetComponent<BulletPhysicsScript>();
+            physics.bulletDamage = damage;
+            physics.bulletSpeed = speed;
+        }
+    }
+
+    //create bullet
+    public static GameObject CreateBullet(float x, float y, Quaternion rot, float damage, float speed)
+    {
+        GameObject bullet = new GameObject("Bullet");
+        bullet.transform.position = new Vector2(x, y);
+
+        if (MainGameHandler.isWhale) bullet.layer = 11;
+        else bullet.layer = 10;
+
+        SpriteRenderer renderer = bullet.AddComponent<SpriteRenderer>();
+        BoxCollider2D collider = bullet.AddComponent<BoxCollider2D>();
+        BulletPhysicsScript physics = bullet.AddComponent<BulletPhysicsScript>();
+        Rigidbody2D body = bullet.AddComponent<Rigidbody2D>();
+
+        body.gravityScale = 0;
+        body.transform.rotation = rot;
+        physics.bulletDamage = damage;
+        physics.bulletSpeed = 10F;
+        renderer.sprite = bulletSprite;
+
+        return bullet;
     }
 
     //remove player
