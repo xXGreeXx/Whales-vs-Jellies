@@ -53,17 +53,7 @@ public class MainGameHandler : MonoBehaviour {
         player = CreatePlayer(isWhale);
         player.name = "Player1";
         player.AddComponent<PlayerControlScript>();
-
-        //create weapon
-        playerWeapon = new GameObject("Weapon");
-        playerWeapon.transform.SetParent(player.transform);
-        playerWeapon.transform.position = new Vector2(player.transform.position.x, player.transform.position.y + 0.2F);
-        playerWeapon.transform.localScale = new Vector2(0.5F, 0.5F);
-        SpriteRenderer weaponRenderer = playerWeapon.AddComponent<SpriteRenderer>();
-        weaponRenderer.sprite = jellyfishSpineShooter;
-        WeaponHandlerScript weaponData = playerWeapon.AddComponent<WeaponHandlerScript>();
-        weaponData.maxAmmo = 10;
-        weaponData.ammo = weaponData.maxAmmo;
+        playerWeapon = CreateWeapon(player);
 
         //create nametag
         GameObject nameTag = new GameObject("NameTag");
@@ -168,7 +158,7 @@ public class MainGameHandler : MonoBehaviour {
         writer.Flush();
         writer.WriteLine(player.GetComponent<PlayerData>().health);
         writer.Flush();
-        writer.WriteLine("ENDOFPLAYER");
+        writer.WriteLine(player.transform.Find("Weapon").transform.rotation.z);
         writer.Flush();
 
         //write bullet data
@@ -207,26 +197,30 @@ public class MainGameHandler : MonoBehaviour {
     //parse data from server
     private void ParseData(List<String> data)
     {
-        //handle player data
+        //handle data
         int playerIndex = 0;
-        int lastIndex = 0;
-        for (int index = 0; index < data.Count; index += 5)
+        for (int index = 0; index < data.Count; index += 6)
         {
+            //player data
             float x = float.Parse(data[index]);
             float y = float.Parse(data[index + 1]);
             float rot = float.Parse(data[index + 2]);
             Boolean localIsWhale = Boolean.Parse(data[index + 3]);
             float health = float.Parse(data[index + 4]);
+            float weaponRot = float.Parse(data[index + 5]);
 
             if (playerIndex > otherPlayers.Count - 1)
             {
-                otherPlayers.Add(CreatePlayer(localIsWhale));
+                GameObject p = CreatePlayer(localIsWhale);
+                CreateWeapon(p);
+                otherPlayers.Add(p);
             }
 
             GameObject playerToEdit = otherPlayers[playerIndex];
             playerToEdit.transform.position = new Vector2(x, y);
             Rigidbody2D body = playerToEdit.GetComponent<Rigidbody2D>();
             body.rotation = rot;
+            playerToEdit.transform.Find("Weapon").transform.rotation = Quaternion.Euler(0, 0, weaponRot);
 
             if (playerToEdit.GetComponent<PlayerData>().isWhale)
             {
@@ -242,39 +236,45 @@ public class MainGameHandler : MonoBehaviour {
                 }
             }
 
-            if (data[index + 5].Equals("ENDOFPLAYER")) break;
+            //handle bullet data
+            int bulletIndex = 0;
+            for (int i = index + 6; index < data.Count; index += 5)
+            {
+                float bulletX = float.Parse(data[i]);
+                float bulletY = float.Parse(data[i + 1]);
+                float bulletRot = float.Parse(data[i + 2]);
+                float damage = float.Parse(data[i + 3]);
+                float speed = float.Parse(data[i + 4]);
+
+                if (bulletIndex > otherBullets.Count - 1)
+                {
+                    otherBullets.Add(CreateBullet(x, y, Quaternion.Euler(0, 0, rot), damage, speed));
+                }
+
+                GameObject bulletToEdit = otherBullets[bulletIndex];
+                bulletToEdit.transform.position = new Vector2(bulletX, bulletY);
+                bulletToEdit.transform.rotation = Quaternion.Euler(0, 0, bulletRot);
+
+                BulletPhysicsScript physics = bulletToEdit.GetComponent<BulletPhysicsScript>();
+                physics.bulletDamage = damage;
+                physics.bulletSpeed = speed;
+
+                if (data[i + 6].Equals("END"))
+                {
+                    index = i + 6;
+                    break;
+                }
+
+                bulletIndex++;
+            }
+
             playerIndex++;
-            lastIndex = index;
         }
 
         //remove extra players
         for (int tempIndex = playerIndex; tempIndex < otherPlayers.Count; tempIndex++)
         {
             RemovePlayer(tempIndex);
-        }
-
-        //handle bullet data
-        int bulletIndex = 0;
-        for (int index = lastIndex; index < data.Count; index += 5)
-        {
-            float x = float.Parse(data[index]);
-            float y = float.Parse(data[index + 1]);
-            float rot = float.Parse(data[index + 2]);
-            float damage = float.Parse(data[index + 3]);
-            float speed = float.Parse(data[index + 4]);
-
-            if (bulletIndex > otherBullets.Count - 1)
-            {
-                otherBullets.Add(CreateBullet(x, y, Quaternion.Euler(0, 0, rot), damage, speed));
-            }
-
-            GameObject bulletToEdit = otherBullets[bulletIndex];
-            bulletToEdit.transform.position = new Vector2(x, y);
-            bulletToEdit.transform.rotation = Quaternion.Euler(0, 0, rot);
-
-            BulletPhysicsScript physics = bulletToEdit.GetComponent<BulletPhysicsScript>();
-            physics.bulletDamage = damage;
-            physics.bulletSpeed = speed;
         }
     }
 
@@ -354,5 +354,23 @@ public class MainGameHandler : MonoBehaviour {
         }
 
         return p;
+    }
+
+    //create bullet
+    private GameObject CreateWeapon(GameObject parent)
+    {
+        //create weapon
+        GameObject weapon = new GameObject("Weapon");
+        weapon.transform.SetParent(parent.transform);
+        weapon.transform.position = new Vector2(parent.transform.position.x, parent.transform.position.y + 0.2F);
+        weapon.transform.localScale = new Vector2(0.5F, 0.5F);
+        SpriteRenderer weaponRenderer = weapon.AddComponent<SpriteRenderer>();
+        weaponRenderer.sprite = jellyfishSpineShooter;
+        weaponRenderer.sortingOrder = -2;
+        WeaponHandlerScript weaponData = weapon.AddComponent<WeaponHandlerScript>();
+        weaponData.maxAmmo = 10;
+        weaponData.ammo = weaponData.maxAmmo;
+
+        return weapon;
     }
 }
