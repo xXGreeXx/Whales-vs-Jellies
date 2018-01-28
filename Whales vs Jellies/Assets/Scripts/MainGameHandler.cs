@@ -7,13 +7,6 @@ using System.IO;
 using System.Text;
 
 public class MainGameHandler : MonoBehaviour {
-
-    //sprites
-    Sprite jellyFishSprite;
-    Sprite whaleSprite;
-    Sprite jellyfishSpineShooter;
-    public static Sprite bulletSprite;
-
     //player data
     public static GameObject player;
     public static GameObject playerWeapon;
@@ -31,12 +24,6 @@ public class MainGameHandler : MonoBehaviour {
 	//start
 	void Start ()
     {
-        //load sprites
-        jellyFishSprite = Resources.Load("jellyfish", typeof(Sprite)) as Sprite;
-        whaleSprite = Resources.Load("whale", typeof(Sprite)) as Sprite;
-        jellyfishSpineShooter = Resources.Load("jellyfishSpineShooter", typeof(Sprite)) as Sprite;
-        bulletSprite = Resources.Load("jellyfishSpine", typeof(Sprite)) as Sprite;
-
         //connect to server
         clientInstance = new TcpClient();
         try
@@ -293,7 +280,7 @@ public class MainGameHandler : MonoBehaviour {
         body.transform.rotation = rot;
         physics.bulletDamage = damage;
         physics.bulletSpeed = 10F;
-        renderer.sprite = bulletSprite;
+        renderer.sprite = SpriteHandler.bulletSprite;
 
         return bullet;
     }
@@ -332,7 +319,7 @@ public class MainGameHandler : MonoBehaviour {
             p.transform.localScale = new Vector3(3, 3, 1);
             p.layer = 8;
             bodyBase.rotation = 90;
-            renderer.sprite = whaleSprite;
+            renderer.sprite = SpriteHandler.whaleSprite;
             renderer.sortingOrder = -2;
         }
         else
@@ -346,7 +333,7 @@ public class MainGameHandler : MonoBehaviour {
             mat.bounciness = 1;
             bodyBase.sharedMaterial = mat;
             p.transform.position = new Vector2(UnityEngine.Random.Range(-39, -10), UnityEngine.Random.Range(2, -18));
-            renderer.sprite = jellyFishSprite;
+            renderer.sprite = SpriteHandler.jellyFishSprite;
             renderer.sortingOrder = -2;
         }
 
@@ -362,7 +349,7 @@ public class MainGameHandler : MonoBehaviour {
         weapon.transform.position = new Vector2(parent.transform.position.x, parent.transform.position.y + 0.2F);
         weapon.transform.localScale = new Vector2(0.5F, 0.5F);
         SpriteRenderer weaponRenderer = weapon.AddComponent<SpriteRenderer>();
-        weaponRenderer.sprite = jellyfishSpineShooter;
+        weaponRenderer.sprite = SpriteHandler.jellyfishSpineShooter;
         weaponRenderer.sortingOrder = -1;
         WeaponHandlerScript weaponData = weapon.AddComponent<WeaponHandlerScript>();
         weaponData.maxAmmo = 10;

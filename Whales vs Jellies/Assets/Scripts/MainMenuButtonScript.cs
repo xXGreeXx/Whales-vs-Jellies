@@ -28,6 +28,7 @@ public class MainMenuButtonScript : MonoBehaviour {
         else if (button.Equals("GoWhale"))
         {
             MainGameHandler.isWhale = true;
+            ShopMenuHandler.ChangeBackground();
         }
     }
 }
