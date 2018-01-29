@@ -20,6 +20,8 @@ public class ShopMenuHandler : MonoBehaviour {
         AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.jellyfishSpineShooter);
         AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.topHatSprite);
         AddItemToInventory(ItemData.ItemTypes.MouthpiecePanel, SpriteHandler.cigarSprite);
+        AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.sunglassesSprite);
+        AddItemToInventory(ItemData.ItemTypes.VestPanel, SpriteHandler.bulletProofVestSprite);
 
         lastPosition = new Vector2(-158, 383);
     }

@@ -18,15 +18,11 @@ public class ItemData : MonoBehaviour {
     //mouse down on item
     void OnMouseDown()
     {
-        if (MainGameHandler.selectedItemInInventory != null && MainGameHandler.selectedItemInInventory.Equals(gameObject))
+        if (MainGameHandler.selectedItemInInventory != null)
         {
-            MainGameHandler.selectedItemInInventory = null;
-            gameObject.transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.white;
+            MainGameHandler.selectedItemInInventory.transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.white;
         }
-        else
-        {
-            MainGameHandler.selectedItemInInventory = gameObject;
-            gameObject.transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.gray;
-        }
+        MainGameHandler.selectedItemInInventory = gameObject;
+        gameObject.transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.gray;
     }
 }
