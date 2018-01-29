@@ -364,7 +364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 183.45, y: -39.50003}
+  m_AnchoredPosition: {x: 183.45001, y: -39.50003}
   m_SizeDelta: {x: 366.98, y: -79.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &365841356
@@ -521,7 +521,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.260025, y: 40.80002}
+  m_AnchoredPosition: {x: -1.2600248, y: 29.197529}
   m_SizeDelta: {x: 24.91, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &516028444
@@ -595,7 +595,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.21982223, y: 42.102524}
+  m_AnchoredPosition: {x: 0.21982223, y: 30.500034}
   m_SizeDelta: {x: 80.43, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &561705276
@@ -669,7 +669,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0599823, y: 41.602493}
+  m_AnchoredPosition: {x: -0.0599823, y: 30}
   m_SizeDelta: {x: 63.3, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &726318871
@@ -957,6 +957,8 @@ GameObject:
   - component: {fileID: 1053509590}
   - component: {fileID: 1053509592}
   - component: {fileID: 1053509591}
+  - component: {fileID: 1053509594}
+  - component: {fileID: 1053509593}
   m_Layer: 0
   m_Name: EyepiecePanel
   m_TagString: Untagged
@@ -980,8 +982,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -175.30002, y: -3.400012}
-  m_SizeDelta: {x: 85.20007, y: 80.100006}
+  m_AnchoredPosition: {x: -173.27002, y: 4.1000004}
+  m_SizeDelta: {x: 65.42, y: 59.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1053509591
 MonoBehaviour:
@@ -1016,6 +1018,42 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1053509589}
+--- !u!114 &1053509593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1053509589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b331731ba0a22439a0ae69e302c113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &1053509594
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1053509589}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 81.85927, y: 77.16239}
+  m_EdgeRadius: 0
 --- !u!1 &1172647662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,6 +1429,8 @@ GameObject:
   - component: {fileID: 1619874058}
   - component: {fileID: 1619874060}
   - component: {fileID: 1619874059}
+  - component: {fileID: 1619874062}
+  - component: {fileID: 1619874061}
   m_Layer: 0
   m_Name: GunPanel
   m_TagString: Untagged
@@ -1414,8 +1454,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -175.30002, y: 92.49994}
-  m_SizeDelta: {x: 85.20007, y: 80.100006}
+  m_AnchoredPosition: {x: -174, y: 87.3}
+  m_SizeDelta: {x: 65.42, y: 59.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1619874059
 MonoBehaviour:
@@ -1450,6 +1490,42 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1619874057}
+--- !u!114 &1619874061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1619874057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b331731ba0a22439a0ae69e302c113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &1619874062
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1619874057}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 81.85927, y: 77.16239}
+  m_EdgeRadius: 0
 --- !u!1 &1647192544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,7 +1558,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.8200836, y: 40.702423}
+  m_AnchoredPosition: {x: -0.8200834, y: 29.099934}
   m_SizeDelta: {x: 28.341, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1647192546
@@ -1556,7 +1632,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.05996704, y: 40.402435}
+  m_AnchoredPosition: {x: -0.05996704, y: 28.799946}
   m_SizeDelta: {x: 29.89, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1789115212
@@ -1682,6 +1758,8 @@ GameObject:
   - component: {fileID: 1951199983}
   - component: {fileID: 1951199985}
   - component: {fileID: 1951199984}
+  - component: {fileID: 1951199987}
+  - component: {fileID: 1951199986}
   m_Layer: 0
   m_Name: VestPanel
   m_TagString: Untagged
@@ -1705,8 +1783,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -174, y: -196}
-  m_SizeDelta: {x: 85.20007, y: 80.100006}
+  m_AnchoredPosition: {x: -174, y: -161.1}
+  m_SizeDelta: {x: 65.42, y: 59.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1951199984
 MonoBehaviour:
@@ -1741,6 +1819,42 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1951199982}
+--- !u!114 &1951199986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1951199982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b331731ba0a22439a0ae69e302c113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &1951199987
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1951199982}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 81.85927, y: 77.16239}
+  m_EdgeRadius: 0
 --- !u!1 &2009047464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1751,6 +1865,8 @@ GameObject:
   - component: {fileID: 2009047465}
   - component: {fileID: 2009047467}
   - component: {fileID: 2009047466}
+  - component: {fileID: 2009047469}
+  - component: {fileID: 2009047468}
   m_Layer: 0
   m_Name: MouthpiecePanel
   m_TagString: Untagged
@@ -1774,8 +1890,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -174.75995, y: -101.00003}
-  m_SizeDelta: {x: 85.20007, y: 80.100006}
+  m_AnchoredPosition: {x: -173.27002, y: -79.8}
+  m_SizeDelta: {x: 65.42, y: 59.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2009047466
 MonoBehaviour:
@@ -1810,6 +1926,42 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2009047464}
+--- !u!114 &2009047468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2009047464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b331731ba0a22439a0ae69e302c113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &2009047469
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2009047464}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 81.85927, y: 77.16239}
+  m_EdgeRadius: 0
 --- !u!1 &2060513784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,6 +1972,8 @@ GameObject:
   - component: {fileID: 2060513785}
   - component: {fileID: 2060513787}
   - component: {fileID: 2060513786}
+  - component: {fileID: 2060513789}
+  - component: {fileID: 2060513788}
   m_Layer: 0
   m_Name: HatPanel
   m_TagString: Untagged
@@ -1835,7 +1989,7 @@ RectTransform:
   m_GameObject: {fileID: 2060513784}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9999409, y: 0.9999409, z: 0.9999409}
   m_Children:
   - {fileID: 516028443}
   m_Father: {fileID: 206854984}
@@ -1843,8 +1997,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -174.75998, y: 187.29999}
-  m_SizeDelta: {x: 85.20007, y: 80.100006}
+  m_AnchoredPosition: {x: -173.27002, y: 171.1}
+  m_SizeDelta: {x: 65.42, y: 59.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2060513786
 MonoBehaviour:
@@ -1879,3 +2033,39 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2060513784}
+--- !u!114 &2060513788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2060513784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b331731ba0a22439a0ae69e302c113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &2060513789
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2060513784}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.10209274}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 81.85927, y: 77.16239}
+  m_EdgeRadius: 0

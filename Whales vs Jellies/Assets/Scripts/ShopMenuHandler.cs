@@ -16,17 +16,13 @@ public class ShopMenuHandler : MonoBehaviour {
         inventoryPanel = GameObject.Find("InventoryPanel");
 
         ChangeBackground();
-        AddItemToInventory();
-        AddItemToInventory();
-        AddItemToInventory();
-        AddItemToInventory();
-        AddItemToInventory();
-        AddItemToInventory();
-        AddItemToInventory();
+
+        AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.jellyfishSpineShooter);
+        AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.topHatSprite);
+        AddItemToInventory(ItemData.ItemTypes.MouthpiecePanel, SpriteHandler.cigarSprite);
 
         lastPosition = new Vector2(-158, 383);
     }
-	
 
     //change preview base
     public static void ChangeBackground()
@@ -45,14 +41,18 @@ public class ShopMenuHandler : MonoBehaviour {
     }
 
     //add item to inventory
-    public void AddItemToInventory()
+    public void AddItemToInventory(ItemData.ItemTypes type, Sprite sprite)
     {
         GameObject item = new GameObject("Item");
         item.transform.SetParent(inventoryPanel.transform);
         item.transform.localPosition = lastPosition;
+        item.AddComponent<BoxCollider2D>();
+        ItemData data = item.AddComponent<ItemData>();
+        data.itemType = type;
+        data.itemSprite = sprite;
 
         SpriteRenderer renderer = item.AddComponent<SpriteRenderer>();
-        renderer.sprite = SpriteHandler.jellyfishSpineShooter;
+        renderer.sprite = sprite;
         renderer.sortingOrder = 2;
 
         float shift = 244.5F / 3.25F;
