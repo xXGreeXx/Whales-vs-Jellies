@@ -20,9 +20,9 @@ public class ItemData : MonoBehaviour {
     {
         if (MainGameHandler.selectedItemInInventory != null)
         {
-            MainGameHandler.selectedItemInInventory.transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.white;
+            if (MainGameHandler.selectedItemInInventory.transform.Find("Background") != null) MainGameHandler.selectedItemInInventory.transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.white;
         }
         MainGameHandler.selectedItemInInventory = gameObject;
-        gameObject.transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.gray;
+        if(gameObject.transform.Find("Background") != null) gameObject.transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.gray;
     }
 }
