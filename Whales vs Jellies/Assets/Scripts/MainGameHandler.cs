@@ -159,18 +159,25 @@ public class MainGameHandler : MonoBehaviour {
         //write bullet data
         foreach (GameObject bullet in bulletsFiredByPlayer)
         {
-            BulletPhysicsScript physics = bullet.GetComponent<BulletPhysicsScript>();
+            if (bullet != null)
+            {
+                BulletPhysicsScript physics = bullet.GetComponent<BulletPhysicsScript>();
 
-            writer.WriteLine(bullet.transform.position.x);
-            writer.Flush();
-            writer.WriteLine(bullet.transform.position.y);
-            writer.Flush();
-            writer.WriteLine(bullet.transform.rotation.z);
-            writer.Flush();
-            writer.WriteLine(physics.bulletDamage);
-            writer.Flush();
-            writer.WriteLine(physics.bulletSpeed);
-            writer.Flush();
+                writer.WriteLine(bullet.transform.position.x);
+                writer.Flush();
+                writer.WriteLine(bullet.transform.position.y);
+                writer.Flush();
+                writer.WriteLine(bullet.transform.rotation.z);
+                writer.Flush();
+                writer.WriteLine(physics.bulletDamage);
+                writer.Flush();
+                writer.WriteLine(physics.bulletSpeed);
+                writer.Flush();
+            }
+            else
+            {
+                break;
+            }
         }
         writer.WriteLine("ENDOFBULLETS");
         writer.Flush();
@@ -255,16 +262,12 @@ public class MainGameHandler : MonoBehaviour {
                 bulletToEdit.transform.position = new Vector2(bulletX, bulletY);
                 bulletToEdit.transform.rotation = new Quaternion(0, 0, bulletRot, 1);
 
-                BulletPhysicsScript physics = bulletToEdit.GetComponent<BulletPhysicsScript>();
-                physics.bulletDamage = damage;
-                physics.bulletSpeed = speed;
-
-                bulletIndex++;
-
                 if (data[i + 5].Equals("ENDOFBULLETS"))
                 {
                     break;
                 }
+
+                bulletIndex++;
             }
 
             playerIndex++;
@@ -283,19 +286,21 @@ public class MainGameHandler : MonoBehaviour {
         GameObject bullet = new GameObject("Bullet");
         bullet.transform.position = new Vector2(x, y);
 
-        if (MainGameHandler.isWhale) bullet.layer = 11;
+        if (isWhale) bullet.layer = 11;
         else bullet.layer = 10;
 
         SpriteRenderer renderer = bullet.AddComponent<SpriteRenderer>();
         BoxCollider2D collider = bullet.AddComponent<BoxCollider2D>();
+        collider.size = new Vector2(0.25F, 0.1F);
         BulletPhysicsScript physics = bullet.AddComponent<BulletPhysicsScript>();
         Rigidbody2D body = bullet.AddComponent<Rigidbody2D>();
 
         body.gravityScale = 0;
-        body.transform.rotation = rot;
+        bullet.transform.rotation = rot;
         physics.bulletDamage = damage;
-        physics.bulletSpeed = 10F;
+        physics.bulletSpeed = 2F;
         renderer.sprite = SpriteHandler.bulletSprite;
+        renderer.sortingOrder = -2;
 
         return bullet;
     }
