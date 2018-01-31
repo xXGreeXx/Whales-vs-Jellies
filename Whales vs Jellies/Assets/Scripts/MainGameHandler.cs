@@ -12,6 +12,7 @@ public class MainGameHandler : MonoBehaviour {
     public static GameObject playerWeapon;
     public static List<GameObject> otherPlayers = new List<GameObject>();
     public static bool isWhale = false;
+    public static int playerLevel = 0;
 
     //bullet data
     public static List<GameObject> bulletsFiredByPlayer = new List<GameObject>();
@@ -21,6 +22,8 @@ public class MainGameHandler : MonoBehaviour {
     TcpClient clientInstance;
     public static String IP = "192.168.1.200";
     public static GameObject selectedItemInInventory;
+    String whaleHealth = "20000/20000";
+    String whaleLevel = "0";
 
 	//start
 	void Start ()
@@ -77,6 +80,13 @@ public class MainGameHandler : MonoBehaviour {
         //update HUD labels
         GameObject.Find("healthText").GetComponent<UnityEngine.UI.Text>().text = player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth;
         GameObject.Find("ammoText").GetComponent<UnityEngine.UI.Text>().text = playerWeapon.GetComponent<WeaponHandlerScript>().ammo + "/" + playerWeapon.GetComponent<WeaponHandlerScript>().maxAmmo;
+
+        //update whale health
+        if (player.GetComponent<PlayerData>().isWhale)
+        {
+            whaleHealth = player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth;
+        }
+        GameObject.Find("WhaleHealthText").GetComponent<UnityEngine.UI.Text>().text = whaleHealth;
     }
 
     //update
@@ -141,7 +151,7 @@ public class MainGameHandler : MonoBehaviour {
         writer.Flush();
         writer.WriteLine(player.GetComponent<PlayerData>().isWhale);
         writer.Flush();
-        writer.WriteLine(player.GetComponent<PlayerData>().health);
+        writer.WriteLine(player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth);
         writer.Flush();
         writer.WriteLine(player.transform.Find("Weapon").transform.rotation.z);
         writer.Flush();
@@ -162,6 +172,8 @@ public class MainGameHandler : MonoBehaviour {
             writer.WriteLine(physics.bulletSpeed);
             writer.Flush();
         }
+        writer.WriteLine("ENDOFBULLETS");
+        writer.Flush();
 
         //write end
         writer.WriteLine("END");
@@ -191,8 +203,11 @@ public class MainGameHandler : MonoBehaviour {
             float y = float.Parse(data[index + 1]);
             float rot = float.Parse(data[index + 2]);
             Boolean localIsWhale = Boolean.Parse(data[index + 3]);
-            float health = float.Parse(data[index + 4]);
+            String health = data[index + 4];
             float weaponRot = float.Parse(data[index + 5]);
+
+            //set whale health
+            if (localIsWhale) whaleHealth = health;
 
             if (playerIndex > otherPlayers.Count - 1)
             {
@@ -244,13 +259,12 @@ public class MainGameHandler : MonoBehaviour {
                 physics.bulletDamage = damage;
                 physics.bulletSpeed = speed;
 
-                if (data[i + 6].Equals("END"))
+                bulletIndex++;
+
+                if (data[i + 5].Equals("ENDOFBULLETS"))
                 {
-                    index = i + 6;
                     break;
                 }
-
-                bulletIndex++;
             }
 
             playerIndex++;

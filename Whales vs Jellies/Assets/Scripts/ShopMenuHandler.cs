@@ -8,7 +8,6 @@ public class ShopMenuHandler : MonoBehaviour {
     public static GameObject inventoryPanel;
     public static List<GameObject> objectsInInventory = new List<GameObject>();
     public static Vector2 lastPosition = new Vector2(-158, 383);
-
 	//start
 	void Start ()
     {
@@ -22,6 +21,7 @@ public class ShopMenuHandler : MonoBehaviour {
         AddItemToInventory(ItemData.ItemTypes.MouthpiecePanel, SpriteHandler.cigarSprite);
         AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.sunglassesSprite);
         AddItemToInventory(ItemData.ItemTypes.VestPanel, SpriteHandler.bulletProofVestSprite);
+        AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.pirateHatSprite);
 
         lastPosition = new Vector2(-158, 383);
     }

@@ -15,10 +15,14 @@ public class InventoryAddScript : MonoBehaviour {
     {
         if (MainGameHandler.selectedItemInInventory != null)
         {
+            //add item back to inventory
             ItemData data = MainGameHandler.selectedItemInInventory.GetComponent<ItemData>();
             ShopMenuHandler.AddItemToInventory(data.itemType, data.itemSprite);
 
             Destroy(MainGameHandler.selectedItemInInventory, 0);
+
+            //remove item from preview
+
         }
     }
 }
