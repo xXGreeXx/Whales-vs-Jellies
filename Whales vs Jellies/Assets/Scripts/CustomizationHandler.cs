@@ -26,6 +26,7 @@ public class CustomizationHandler : MonoBehaviour {
         MainGameHandler.selectedItemInInventory.transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.white;
 
         //put item on preview
+        Debug.Log(MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType);
         if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.Equals(ItemData.ItemTypes.HatPanel))
         {
             GameObject obj = GameObject.Instantiate(MainGameHandler.selectedItemInInventory, ShopMenuHandler.previewPanel.transform);

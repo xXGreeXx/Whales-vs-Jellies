@@ -43,7 +43,7 @@ public class ShopMenuHandler : MonoBehaviour {
     }
 
     //add item to inventory
-    public void AddItemToInventory(ItemData.ItemTypes type, Sprite sprite)
+    public static void AddItemToInventory(ItemData.ItemTypes type, Sprite sprite)
     {
         GameObject item = new GameObject("Item");
         item.transform.SetParent(inventoryPanel.transform);
