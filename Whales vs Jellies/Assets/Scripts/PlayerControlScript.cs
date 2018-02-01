@@ -14,37 +14,40 @@ public class PlayerControlScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKey(KeyCode.W)) yVel = -MainGameHandler.player.GetComponent<PlayerData>().moveSpeed;
-        else yVel = 0;
-        if (Input.GetKey(KeyCode.A)) xVel = 0.1F;
-        else if (Input.GetKey(KeyCode.D)) xVel = -0.1F;
-        else xVel = 0;
-
-        Rigidbody2D body = gameObject.GetComponent<Rigidbody2D>();
-
-        body.MoveRotation(body.rotation + xVel * 20);
-        if (body.rotation < 0) body.rotation += 360;
-        else if (body.rotation > 360) body.rotation -= 360;
-        body.AddRelativeForce(new Vector2(0, -yVel / 3), ForceMode2D.Impulse);
-        body.drag = 1;
-        Camera.main.transform.position = new Vector3(MainGameHandler.player.transform.position.x, MainGameHandler.player.transform.position.y, -10);
-
-        if (body.position.y > 3F)
+        if (!MainGameHandler.escapeMenuPanel.activeSelf)
         {
-            body.AddForce(new Vector2(0, -20));
-        }
+            if (Input.GetKey(KeyCode.W)) yVel = -MainGameHandler.player.GetComponent<PlayerData>().moveSpeed;
+            else yVel = 0;
+            if (Input.GetKey(KeyCode.A)) xVel = 0.1F;
+            else if (Input.GetKey(KeyCode.D)) xVel = -0.1F;
+            else xVel = 0;
 
-        if (MainGameHandler.isWhale)
-        {
-            SpriteRenderer renderer = body.gameObject.GetComponent<SpriteRenderer>();
+            Rigidbody2D body = gameObject.GetComponent<Rigidbody2D>();
 
-            if ((body.rotation > 180 && body.rotation < 360) || (body.rotation < 0 && body.rotation > 180))
+            body.MoveRotation(body.rotation + xVel * 20);
+            if (body.rotation < 0) body.rotation += 360;
+            else if (body.rotation > 360) body.rotation -= 360;
+            body.AddRelativeForce(new Vector2(0, -yVel / 3), ForceMode2D.Impulse);
+            body.drag = 1;
+            Camera.main.transform.position = new Vector3(MainGameHandler.player.transform.position.x, MainGameHandler.player.transform.position.y, -10);
+
+            if (body.position.y > 3F)
             {
-                renderer.flipX = true;
+                body.AddForce(new Vector2(0, -20));
             }
-            else
+
+            if (MainGameHandler.isWhale)
             {
-                renderer.flipX = false;
+                SpriteRenderer renderer = body.gameObject.GetComponent<SpriteRenderer>();
+
+                if ((body.rotation > 180 && body.rotation < 360) || (body.rotation < 0 && body.rotation > 180))
+                {
+                    renderer.flipX = true;
+                }
+                else
+                {
+                    renderer.flipX = false;
+                }
             }
         }
 	}

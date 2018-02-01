@@ -25,9 +25,16 @@ public class MainGameHandler : MonoBehaviour {
     String whaleHealth = "20000/20000";
     String whaleLevel = "0";
 
+    //ui data
+    public static GameObject escapeMenuPanel;
+
 	//start
 	void Start ()
     {
+        //find ui components
+        escapeMenuPanel = GameObject.Find("EscapeMenu");
+        escapeMenuPanel.SetActive(false);
+
         //connect to server
         clientInstance = new TcpClient();
         try
@@ -92,32 +99,38 @@ public class MainGameHandler : MonoBehaviour {
     //update
     void Update()
     {
-        //handle weapon fire/rotate
-        if (Input.GetMouseButtonDown(0))
-        {
-            playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100);
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            playerWeapon.GetComponent<WeaponHandlerScript>().ReloadWeapon();
-        }
+        //escape menu
+        if (Input.GetKeyDown(KeyCode.Escape)) escapeMenuPanel.SetActive(!escapeMenuPanel.activeSelf);
 
-        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
-        Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
-        lookPos = lookPos - transform.position;
-        float angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
-        playerWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+        if (!escapeMenuPanel.activeSelf)
+        {
+            //handle weapon fire/rotate
+            if (Input.GetMouseButtonDown(0))
+            {
+                playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100);
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                playerWeapon.GetComponent<WeaponHandlerScript>().ReloadWeapon();
+            }
 
-        SpriteRenderer renderer = playerWeapon.GetComponent<SpriteRenderer>();
-        if (angle < 0) angle += 360;
-        else if (angle > 360) angle -= 360;
-        if ((angle > 180 && angle < 360) || (angle < 0 && angle > 180))
-        {
-            renderer.flipY = true;
-        }
-        else
-        {
-            renderer.flipY = false;
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
+            Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
+            lookPos = lookPos - transform.position;
+            float angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
+            playerWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+            SpriteRenderer renderer = playerWeapon.GetComponent<SpriteRenderer>();
+            if (angle < 0) angle += 360;
+            else if (angle > 360) angle -= 360;
+            if ((angle > 180 && angle < 360) || (angle < 0 && angle > 180))
+            {
+                renderer.flipY = true;
+            }
+            else
+            {
+                renderer.flipY = false;
+            }
         }
     }
 
@@ -130,6 +143,18 @@ public class MainGameHandler : MonoBehaviour {
             return false;
         else
             return true;
+    }
+
+    //disconnect
+    public static void Disconnect()
+    {
+
+    }
+
+    //exit and save
+    public static void ExitAndSave()
+    {
+        Application.Quit();
     }
 
     //send data to server

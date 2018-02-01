@@ -17,7 +17,8 @@ public class MainMenuButtonScript : MonoBehaviour {
         }
         else if (button.Equals("Quit"))
         {
-            Application.Quit();
+            MainGameHandler.Disconnect();
+            MainGameHandler.ExitAndSave();
         }
 
         //shop
@@ -29,6 +30,17 @@ public class MainMenuButtonScript : MonoBehaviour {
         {
             MainGameHandler.isWhale = true;
             ShopMenuHandler.ChangeBackground();
+        }
+
+        //game
+        if (button.Equals("Return"))
+        {
+            MainGameHandler.escapeMenuPanel.SetActive(false);
+        }
+        else if (button.Equals("DC"))
+        {
+            MainGameHandler.Disconnect();
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }
