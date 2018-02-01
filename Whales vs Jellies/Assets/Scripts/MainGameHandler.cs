@@ -149,7 +149,7 @@ public class MainGameHandler : MonoBehaviour {
         writer.Flush();
         writer.WriteLine(player.transform.GetComponent<Rigidbody2D>().rotation);
         writer.Flush();
-        writer.WriteLine(player.GetComponent<PlayerData>().isWhale);
+        writer.WriteLine(player.GetComponent<PlayerData>().isWhale.ToString());
         writer.Flush();
         writer.WriteLine(player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth);
         writer.Flush();
@@ -191,7 +191,7 @@ public class MainGameHandler : MonoBehaviour {
             String line;
             while (!(line = reader.ReadLine()).Equals("END"))
             {
-                data.Add(line);
+                if(!line.Equals("N") || line.Equals("F")) data.Add(line); //maybe remove the IF? weird bug //TODO\\
             }
         }
 
@@ -227,7 +227,18 @@ public class MainGameHandler : MonoBehaviour {
             playerToEdit.transform.position = new Vector2(x, y);
             Rigidbody2D body = playerToEdit.GetComponent<Rigidbody2D>();
             body.rotation = rot;
+
             playerToEdit.transform.Find("Weapon").transform.rotation = new Quaternion(0, 0, weaponRot, 1);
+            if (weaponRot < 0) weaponRot += 360;
+            else if (weaponRot > 360) weaponRot -= 360;
+            if ((weaponRot > 180 && weaponRot < 360) || (weaponRot < 0 && weaponRot > 180))
+            {
+                playerToEdit.transform.Find("Weapon").GetComponent<SpriteRenderer>().flipY = true;
+            }
+            else
+            {
+                playerToEdit.transform.Find("Weapon").GetComponent<SpriteRenderer>().flipY = false;
+            }
 
             if (playerToEdit.GetComponent<PlayerData>().isWhale)
             {
