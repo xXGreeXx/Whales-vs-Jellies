@@ -216,7 +216,7 @@ public class MainGameHandler : MonoBehaviour {
             String line;
             while (!(line = reader.ReadLine()).Equals("END"))
             {
-                if(!line.Equals("N") || line.Equals("F")) data.Add(line); //maybe remove the IF? weird bug //TODO\\
+                data.Add(line);
             }
         }
 
@@ -248,11 +248,16 @@ public class MainGameHandler : MonoBehaviour {
                 otherPlayers.Add(p);
             }
 
+            //set extra data
             GameObject playerToEdit = otherPlayers[playerIndex];
             playerToEdit.transform.position = new Vector2(x, y);
             Rigidbody2D body = playerToEdit.GetComponent<Rigidbody2D>();
             body.rotation = rot;
 
+            //(FAIL-SAFE) repurpose GOs for seperate players
+            if (playerToEdit.GetComponent<PlayerData>().isWhale != localIsWhale) playerToEdit = CreatePlayer(localIsWhale);
+
+            //continue setting extra data
             playerToEdit.transform.Find("Weapon").transform.rotation = new Quaternion(0, 0, weaponRot, 1);
             if (weaponRot < 0) weaponRot += 360;
             else if (weaponRot > 360) weaponRot -= 360;
@@ -281,13 +286,14 @@ public class MainGameHandler : MonoBehaviour {
 
             //handle bullet data
             int bulletIndex = 0;
-            for (int i = index + 6; index < data.Count; index += 5)
+            int tempIndexForBullets = 0;
+            for (tempIndexForBullets = index + 6; tempIndexForBullets < data.Count; tempIndexForBullets += 5)
             {
-                float bulletX = float.Parse(data[i]);
-                float bulletY = float.Parse(data[i + 1]);
-                float bulletRot = float.Parse(data[i + 2]);
-                float damage = float.Parse(data[i + 3]);
-                float speed = float.Parse(data[i + 4]);
+                float bulletX = float.Parse(data[tempIndexForBullets]);
+                float bulletY = float.Parse(data[tempIndexForBullets + 1]);
+                float bulletRot = float.Parse(data[tempIndexForBullets + 2]);
+                float damage = float.Parse(data[tempIndexForBullets + 3]);
+                float speed = float.Parse(data[tempIndexForBullets + 4]);
 
                 if (bulletIndex > otherBullets.Count - 1)
                 {
@@ -298,13 +304,15 @@ public class MainGameHandler : MonoBehaviour {
                 bulletToEdit.transform.position = new Vector2(bulletX, bulletY);
                 bulletToEdit.transform.rotation = new Quaternion(0, 0, bulletRot, 1);
 
-                if (data[i + 5].Equals("ENDOFBULLETS"))
+                if (data[tempIndexForBullets + 5].Equals("ENDOFBULLETS"))
                 {
                     break;
                 }
 
                 bulletIndex++;
             }
+
+            index = tempIndexForBullets - 6;
 
             playerIndex++;
         }
