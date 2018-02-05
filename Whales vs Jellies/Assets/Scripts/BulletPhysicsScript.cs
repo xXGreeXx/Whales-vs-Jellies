@@ -6,7 +6,8 @@ public class BulletPhysicsScript : MonoBehaviour {
     //define global variables
     public float bulletSpeed = 1F;
     public float bulletDamage = 10F;
-	
+    public bool canCollide;
+
 	// Update is called once per frame
 	void FixedUpdate ()
     {
@@ -18,14 +19,17 @@ public class BulletPhysicsScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name.Equals("Player1"))
+        if (canCollide || (collision.gameObject.name.Equals("wall") || collision.gameObject.name.Equals("sand")))
         {
-            MainGameHandler.player.GetComponent<PlayerData>().health -= bulletDamage;
+            if (collision.gameObject.name.Equals("Player1"))
+            {
+                MainGameHandler.player.GetComponent<PlayerData>().health -= bulletDamage;
+            }
+
+            if (MainGameHandler.otherBullets.Contains(gameObject)) MainGameHandler.otherBullets.Remove(gameObject);
+            if (MainGameHandler.bulletsFiredByPlayer.Contains(gameObject)) MainGameHandler.bulletsFiredByPlayer.Remove(gameObject);
+
+            Destroy(gameObject, 0);
         }
-
-        if (MainGameHandler.otherBullets.Contains(gameObject)) MainGameHandler.otherBullets.Remove(gameObject);
-        if (MainGameHandler.bulletsFiredByPlayer.Contains(gameObject)) MainGameHandler.bulletsFiredByPlayer.Remove(gameObject);
-
-        Destroy(gameObject, 0);
     }
 }

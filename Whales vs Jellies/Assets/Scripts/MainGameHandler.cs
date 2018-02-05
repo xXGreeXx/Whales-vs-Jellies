@@ -71,7 +71,7 @@ public class MainGameHandler : MonoBehaviour {
         if (IsConnected(clientInstance.Client))
         {
             List<String> data = ReadWriteServer();
-            if (data.Count >= 6 ) ParseData(data);
+            ParseData(data);
         }
         else
         {
@@ -107,7 +107,7 @@ public class MainGameHandler : MonoBehaviour {
             //handle weapon fire/rotate
             if (Input.GetMouseButtonDown(0))
             {
-                playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100);
+                playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100, 1F);
             }
             if (Input.GetMouseButtonDown(1))
             {
@@ -255,7 +255,11 @@ public class MainGameHandler : MonoBehaviour {
             body.rotation = rot;
 
             //(FAIL-SAFE) repurpose GOs for seperate players
-            if (playerToEdit.GetComponent<PlayerData>().isWhale != localIsWhale) playerToEdit = CreatePlayer(localIsWhale);
+            if (playerToEdit.GetComponent<PlayerData>().isWhale != localIsWhale)
+            {
+                Destroy(playerToEdit);
+                playerToEdit = CreatePlayer(localIsWhale);
+            }
 
             //continue setting extra data
             playerToEdit.transform.Find("Weapon").transform.rotation = new Quaternion(0, 0, weaponRot, 1);
@@ -297,7 +301,7 @@ public class MainGameHandler : MonoBehaviour {
 
                 if (bulletIndex > otherBullets.Count - 1)
                 {
-                    otherBullets.Add(CreateBullet(x, y, new Quaternion(0, 0, bulletRot, 1), damage, speed));
+                    otherBullets.Add(CreateBullet(x, y, new Quaternion(0, 0, bulletRot, 1), damage, speed, true));
                 }
 
                 GameObject bulletToEdit = otherBullets[bulletIndex];
@@ -325,7 +329,7 @@ public class MainGameHandler : MonoBehaviour {
     }
 
     //create bullet
-    public static GameObject CreateBullet(float x, float y, Quaternion rot, float damage, float speed)
+    public static GameObject CreateBullet(float x, float y, Quaternion rot, float damage, float speed, Boolean sentByRemote)
     {
         GameObject bullet = new GameObject("Bullet");
         bullet.transform.position = new Vector2(x, y);
@@ -337,12 +341,14 @@ public class MainGameHandler : MonoBehaviour {
         BoxCollider2D collider = bullet.AddComponent<BoxCollider2D>();
         collider.size = new Vector2(0.25F, 0.1F);
         BulletPhysicsScript physics = bullet.AddComponent<BulletPhysicsScript>();
+        physics.canCollide = sentByRemote;
         Rigidbody2D body = bullet.AddComponent<Rigidbody2D>();
 
+        body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         body.gravityScale = 0;
         bullet.transform.rotation = rot;
         physics.bulletDamage = damage;
-        physics.bulletSpeed = 2F;
+        physics.bulletSpeed = speed;
         renderer.sprite = SpriteHandler.bulletSprite;
         renderer.sortingOrder = -2;
 
