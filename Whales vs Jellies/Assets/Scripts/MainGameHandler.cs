@@ -211,12 +211,13 @@ public class MainGameHandler : MonoBehaviour {
         writer.WriteLine("END");
         writer.Flush();
 
+        //read data
         if (nwStream.DataAvailable)
         {
             String line;
             while (!(line = reader.ReadLine()).Equals("END"))
             {
-                data.Add(line);
+                if (!line.Equals("")) data.Add(line);
             }
         }
 
@@ -293,6 +294,11 @@ public class MainGameHandler : MonoBehaviour {
             int tempIndexForBullets = 0;
             for (tempIndexForBullets = index + 6; tempIndexForBullets < data.Count; tempIndexForBullets += 5)
             {
+                if (data[tempIndexForBullets].Equals("ENDOFBULLETS"))
+                {
+                    break;
+                }
+
                 float bulletX = float.Parse(data[tempIndexForBullets]);
                 float bulletY = float.Parse(data[tempIndexForBullets + 1]);
                 float bulletRot = float.Parse(data[tempIndexForBullets + 2]);
@@ -316,10 +322,13 @@ public class MainGameHandler : MonoBehaviour {
                 bulletIndex++;
             }
 
-            index = tempIndexForBullets - 6;
+            index = tempIndexForBullets - 5;
 
             playerIndex++;
         }
+
+        //set player label
+        GameObject.Find("playersText").GetComponent<UnityEngine.UI.Text>().text = (1 + playerIndex) + " Jellyfish";
 
         //remove extra players
         for (int tempIndex = playerIndex; tempIndex < otherPlayers.Count; tempIndex++)
