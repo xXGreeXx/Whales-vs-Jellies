@@ -13,6 +13,7 @@ public class MainGameHandler : MonoBehaviour {
     public static List<GameObject> otherPlayers = new List<GameObject>();
     public static bool isWhale = false;
     public static int playerLevel = 0;
+    public static int lastXPEarned = 0;
 
     //bullet data
     public static List<GameObject> bulletsFiredByPlayer = new List<GameObject>();
@@ -94,6 +95,14 @@ public class MainGameHandler : MonoBehaviour {
             whaleHealth = player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth;
         }
         GameObject.Find("WhaleHealthText").GetComponent<UnityEngine.UI.Text>().text = whaleHealth;
+
+        //check if lost
+        if (player.GetComponent<PlayerData>().health <= 0)
+        {
+            playerLevel += calculateXPGain();
+            Disconnect();
+            SceneManager.LoadScene("LossScreen");
+        }
     }
 
     //update
@@ -143,6 +152,15 @@ public class MainGameHandler : MonoBehaviour {
             return false;
         else
             return true;
+    }
+
+    //calculate xp earn
+    private int calculateXPGain()
+    {
+        int xp = 5;
+
+        lastXPEarned = xp;
+        return xp;
     }
 
     //disconnect
