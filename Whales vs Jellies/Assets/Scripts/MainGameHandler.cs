@@ -72,7 +72,7 @@ public class MainGameHandler : MonoBehaviour {
         if (IsConnected(clientInstance.Client))
         {
             List<String> data = ReadWriteServer();
-            ParseData(data);
+            if(data.Count > 1) ParseData(data);
         }
         else
         {
@@ -246,11 +246,10 @@ public class MainGameHandler : MonoBehaviour {
     private void ParseData(List<String> data)
     {
         //handle data
+        int jellyCount = 0;
         int playerIndex = 0;
         for (int index = 0; index < data.Count; index += 6)
         {
-            Debug.Log(index);
-
             //player data
             float x = float.Parse(data[index]);
             float y = float.Parse(data[index + 1]);
@@ -258,6 +257,8 @@ public class MainGameHandler : MonoBehaviour {
             Boolean localIsWhale = Boolean.Parse(data[index + 3]);
             String health = data[index + 4];
             float weaponRot = float.Parse(data[index + 5]);
+
+            if (!localIsWhale) jellyCount++;
 
             //set whale health
             if (localIsWhale) whaleHealth = health;
@@ -276,11 +277,11 @@ public class MainGameHandler : MonoBehaviour {
             body.rotation = rot;
 
             //(FAIL-SAFE) repurpose GOs for seperate players
-            if (playerToEdit.GetComponent<PlayerData>().isWhale != localIsWhale)
-            {
-                Destroy(playerToEdit);
-                playerToEdit = CreatePlayer(localIsWhale);
-            }
+            //if (playerToEdit.GetComponent<PlayerData>().isWhale != localIsWhale)
+            //{
+            //    Destroy(playerToEdit);
+            //    playerToEdit = CreatePlayer(localIsWhale);
+            //}
 
             //continue setting extra data
             playerToEdit.transform.Find("Weapon").transform.rotation = new Quaternion(0, 0, weaponRot, 1);
@@ -328,7 +329,7 @@ public class MainGameHandler : MonoBehaviour {
 
                 if (bulletIndex > otherBullets.Count - 1)
                 {
-                    otherBullets.Add(CreateBullet(x, y, new Quaternion(0, 0, bulletRot, 1), damage, speed, true));
+                    otherBullets.Add(CreateBullet(x, y, new Quaternion(0, 0, bulletRot, 1), damage, speed, true, localIsWhale));
                 }
 
                 GameObject bulletToEdit = otherBullets[bulletIndex];
@@ -348,7 +349,7 @@ public class MainGameHandler : MonoBehaviour {
         }
 
         //set player label
-        GameObject.Find("playersText").GetComponent<UnityEngine.UI.Text>().text = (1 + playerIndex) + " Jellyfish";
+        GameObject.Find("playersText").GetComponent<UnityEngine.UI.Text>().text = (1 + jellyCount) + " Jellyfish";
 
         //remove extra players
         for (int tempIndex = playerIndex; tempIndex < otherPlayers.Count; tempIndex++)
@@ -358,12 +359,12 @@ public class MainGameHandler : MonoBehaviour {
     }
 
     //create bullet
-    public static GameObject CreateBullet(float x, float y, Quaternion rot, float damage, float speed, Boolean sentByRemote)
+    public static GameObject CreateBullet(float x, float y, Quaternion rot, float damage, float speed, Boolean sentByRemote, Boolean firedByWhale)
     {
         GameObject bullet = new GameObject("Bullet");
         bullet.transform.position = new Vector2(x, y);
 
-        if (isWhale) bullet.layer = 11;
+        if (firedByWhale) bullet.layer = 11;
         else bullet.layer = 10;
 
         SpriteRenderer renderer = bullet.AddComponent<SpriteRenderer>();

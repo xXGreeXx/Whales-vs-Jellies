@@ -27,7 +27,6 @@ public class BulletPhysicsScript : MonoBehaviour {
             }
 
             if (MainGameHandler.otherBullets.Contains(gameObject)) MainGameHandler.otherBullets.Remove(gameObject);
-            if (MainGameHandler.bulletsFiredByPlayer.Contains(gameObject)) MainGameHandler.bulletsFiredByPlayer.Remove(gameObject);
 
             Destroy(gameObject, 0);
         }
