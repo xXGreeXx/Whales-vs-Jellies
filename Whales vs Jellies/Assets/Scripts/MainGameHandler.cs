@@ -57,7 +57,7 @@ public class MainGameHandler : MonoBehaviour {
         UnityEngine.UI.Text text = nameTag.AddComponent<UnityEngine.UI.Text>();
 
         text.text = "Player1";
-	}
+    }
 
     //close socket with server on exit
     void OnApplicationQuit()
@@ -249,6 +249,8 @@ public class MainGameHandler : MonoBehaviour {
         int playerIndex = 0;
         for (int index = 0; index < data.Count; index += 6)
         {
+            Debug.Log(index);
+
             //player data
             float x = float.Parse(data[index]);
             float y = float.Parse(data[index + 1]);
@@ -314,6 +316,7 @@ public class MainGameHandler : MonoBehaviour {
             {
                 if (data[tempIndexForBullets].Equals("ENDOFBULLETS"))
                 {
+                    index += 1;
                     break;
                 }
 
@@ -334,13 +337,12 @@ public class MainGameHandler : MonoBehaviour {
 
                 if (data[tempIndexForBullets + 5].Equals("ENDOFBULLETS"))
                 {
+                    index = tempIndexForBullets - 5;
                     break;
                 }
 
                 bulletIndex++;
             }
-
-            index = tempIndexForBullets - 5;
 
             playerIndex++;
         }
