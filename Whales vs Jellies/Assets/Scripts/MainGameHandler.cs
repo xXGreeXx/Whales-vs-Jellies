@@ -72,7 +72,7 @@ public class MainGameHandler : MonoBehaviour {
         if (IsConnected(clientInstance.Client))
         {
             List<String> data = ReadWriteServer();
-            if(data.Count > 1) ParseData(data);
+            if(data.Count > 6) ParseData(data);
         }
         else
         {
