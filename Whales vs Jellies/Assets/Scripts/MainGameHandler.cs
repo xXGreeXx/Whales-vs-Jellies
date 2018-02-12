@@ -10,6 +10,10 @@ public class MainGameHandler : MonoBehaviour {
     //player data
     public static GameObject player;
     public static GameObject playerWeapon;
+    public static GameObject playerVest;
+    public static GameObject playerHat;
+    public static GameObject playerMouthPiece;
+    public static GameObject playerEyePiece;
     public static List<GameObject> otherPlayers = new List<GameObject>();
     public static bool isWhale = false;
     public static int playerLevel = 0;
@@ -25,6 +29,17 @@ public class MainGameHandler : MonoBehaviour {
     public static GameObject selectedItemInInventory;
     String whaleHealth = "20000/20000";
     String whaleLevel = "0";
+
+    //"cosmetic" data
+    public Dictionary<String, Sprite> weaponSpritesMap = new Dictionary<string, Sprite>()
+    {
+        { "jellyfishSpineShooter", SpriteHandler.jellyfishSpineShooter },
+    };
+    public Dictionary<String, Sprite> hatSpritesMap = new Dictionary<string, Sprite>()
+    { 
+        { "topHat", SpriteHandler.topHatSprite },
+        { "pirateHat", SpriteHandler.pirateHatSprite }
+    };
 
     //ui data
     public static GameObject escapeMenuPanel;
@@ -49,7 +64,8 @@ public class MainGameHandler : MonoBehaviour {
         player = CreatePlayer(isWhale);
         player.name = "Player1";
         player.AddComponent<PlayerControlScript>();
-        playerWeapon = CreateWeapon(player);
+        playerWeapon = CreateWeapon(player, "jellyfishSpineShooter");
+        playerHat = CreateHat(player, "topHat");
 
         //create nametag
         GameObject nameTag = new GameObject("NameTag");
@@ -266,7 +282,7 @@ public class MainGameHandler : MonoBehaviour {
             if (playerIndex > otherPlayers.Count - 1)
             {
                 GameObject p = CreatePlayer(localIsWhale);
-                CreateWeapon(p);
+                CreateWeapon(p, "jellyfishSpineShooter");
                 otherPlayers.Add(p);
             }
 
@@ -335,10 +351,11 @@ public class MainGameHandler : MonoBehaviour {
                 GameObject bulletToEdit = otherBullets[bulletIndex];
                 bulletToEdit.transform.position = new Vector2(bulletX, bulletY);
                 bulletToEdit.transform.rotation = new Quaternion(0, 0, bulletRot, 1);
+                Debug.Log("Bullet created: " + bulletIndex);
 
                 if (data[tempIndexForBullets + 5].Equals("ENDOFBULLETS"))
                 {
-                    index = tempIndexForBullets - 5;
+                    index = tempIndexForBullets;
                     break;
                 }
 
@@ -349,7 +366,7 @@ public class MainGameHandler : MonoBehaviour {
         }
 
         //set player label
-        GameObject.Find("playersText").GetComponent<UnityEngine.UI.Text>().text = (1 + jellyCount) + " Jellyfish";
+        GameObject.Find("playersText").GetComponent<UnityEngine.UI.Text>().text = (isWhale ? 0 : 1 + jellyCount) + " Jellyfish";
 
         //remove extra players
         for (int tempIndex = playerIndex; tempIndex < otherPlayers.Count; tempIndex++)
@@ -440,21 +457,39 @@ public class MainGameHandler : MonoBehaviour {
         return p;
     }
 
-    //create bullet
-    private GameObject CreateWeapon(GameObject parent)
+    //create weapon
+    private GameObject CreateWeapon(GameObject parent, String weaponType)
     {
         //create weapon
         GameObject weapon = new GameObject("Weapon");
         weapon.transform.SetParent(parent.transform);
-        weapon.transform.position = new Vector2(parent.transform.position.x, parent.transform.position.y + 0.2F);
+        weapon.transform.position = new Vector2(parent.transform.position.x, parent.transform.position.y - 0.1F);
         weapon.transform.localScale = new Vector2(0.5F, 0.5F);
+
         SpriteRenderer weaponRenderer = weapon.AddComponent<SpriteRenderer>();
-        weaponRenderer.sprite = SpriteHandler.jellyfishSpineShooter;
+        weaponRenderer.sprite = weaponSpritesMap[weaponType];
         weaponRenderer.sortingOrder = -1;
+
         WeaponHandlerScript weaponData = weapon.AddComponent<WeaponHandlerScript>();
         weaponData.maxAmmo = 10;
         weaponData.ammo = weaponData.maxAmmo;
 
         return weapon;
+    }
+
+    //create hat
+    private GameObject CreateHat(GameObject parent, String hatType)
+    {
+        //create weapon
+        GameObject hat = new GameObject("Hat");
+        hat.transform.SetParent(parent.transform);
+        hat.transform.position = new Vector2(parent.transform.position.x + 0.01F, parent.transform.position.y + 0.4F);
+        hat.transform.localScale = new Vector2(0.9F, 0.6F);
+
+        SpriteRenderer hatRenderer = hat.AddComponent<SpriteRenderer>();
+        hatRenderer.sprite = hatSpritesMap[hatType];
+        hatRenderer.sortingOrder = -1;
+
+        return hat;
     }
 }

@@ -7,7 +7,7 @@ public class ShopMenuHandler : MonoBehaviour {
     public static GameObject previewPanel;
     public static GameObject inventoryPanel;
     public static List<GameObject> objectsInInventory = new List<GameObject>();
-    public static Vector2 lastPosition = new Vector2(-158, 383);
+    public static Vector2 lastPosition;
 	//start
 	void Start ()
     {
@@ -23,7 +23,7 @@ public class ShopMenuHandler : MonoBehaviour {
         AddItemToInventory(ItemData.ItemTypes.VestPanel, SpriteHandler.bulletProofVestSprite);
         AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.pirateHatSprite);
 
-        lastPosition = new Vector2(-158, 383);
+        lastPosition = inventoryPanel.transform.position - inventoryPanel.transform.position;
     }
 
     //change preview base
