@@ -40,6 +40,18 @@ public class MainGameHandler : MonoBehaviour {
         { "topHat", SpriteHandler.topHatSprite },
         { "pirateHat", SpriteHandler.pirateHatSprite }
     };
+    public Dictionary<String, Sprite> eyepieceSpritesMap = new Dictionary<string, Sprite>()
+    {
+        { "sunglasses", SpriteHandler.sunglassesSprite },
+    };
+    public Dictionary<String, Sprite> mouthpieceSpritesMap = new Dictionary<string, Sprite>()
+    {
+        { "cigar", SpriteHandler.cigarSprite },
+    };
+    public Dictionary<String, Sprite> vestSpritesMap = new Dictionary<string, Sprite>()
+    {
+        { "bulletProofVest", SpriteHandler.bulletProofVestSprite },
+    };
 
     //ui data
     public static GameObject escapeMenuPanel;
@@ -65,7 +77,9 @@ public class MainGameHandler : MonoBehaviour {
         player.name = "Player1";
         player.AddComponent<PlayerControlScript>();
         playerWeapon = CreateWeapon(player, "jellyfishSpineShooter");
-        playerHat = CreateHat(player, "topHat");
+        playerEyePiece = CreateGlasses(player, "sunglasses");
+        playerHat = CreateHat(player, "pirateHat");
+        playerMouthPiece = CreateMouthpiece(player, "cigar");
 
         //create nametag
         GameObject nameTag = new GameObject("NameTag");
@@ -488,8 +502,40 @@ public class MainGameHandler : MonoBehaviour {
 
         SpriteRenderer hatRenderer = hat.AddComponent<SpriteRenderer>();
         hatRenderer.sprite = hatSpritesMap[hatType];
-        hatRenderer.sortingOrder = -1;
+        hatRenderer.sortingOrder = 0;
 
         return hat;
+    }
+
+    //create glasses
+    private GameObject CreateGlasses(GameObject parent, String glassesType)
+    {
+        //create weapon
+        GameObject glasses = new GameObject("Glasses");
+        glasses.transform.SetParent(parent.transform);
+        glasses.transform.position = new Vector2(parent.transform.position.x + 0.005F, parent.transform.position.y + 0.24F);
+        glasses.transform.localScale = new Vector2(0.9F, 0.6F);
+
+        SpriteRenderer hatRenderer = glasses.AddComponent<SpriteRenderer>();
+        hatRenderer.sprite = eyepieceSpritesMap[glassesType];
+        hatRenderer.sortingOrder = -1;
+
+        return glasses;
+    }
+
+    //create mouthpiece
+    private GameObject CreateMouthpiece(GameObject parent, String mouthpieceType)
+    {
+        //create weapon
+        GameObject mouthpiece = new GameObject("Mouthpiece");
+        mouthpiece.transform.SetParent(parent.transform);
+        mouthpiece.transform.position = new Vector2(parent.transform.position.x - 0.17F, parent.transform.position.y + 0.09F);
+        mouthpiece.transform.localScale = new Vector2(1.13F, 0.8F);
+
+        SpriteRenderer hatRenderer = mouthpiece.AddComponent<SpriteRenderer>();
+        hatRenderer.sprite = mouthpieceSpritesMap[mouthpieceType];
+        hatRenderer.sortingOrder = -1;
+
+        return mouthpiece;
     }
 }
