@@ -14,10 +14,14 @@ public class MainGameHandler : MonoBehaviour {
     public static GameObject playerHat;
     public static GameObject playerMouthPiece;
     public static GameObject playerEyePiece;
-    public static List<GameObject> otherPlayers = new List<GameObject>();
     public static bool isWhale = false;
     public static int playerLevel = 0;
-    public static int lastXPEarned = 0;
+
+    public static String weaponType = "jellyfishSpineShooter";
+    public static String vestType = "";
+    public static String hatType = "topHat";
+    public static String mouthpieceType = "";
+    public static String eyepieceType = "sunglasses";
 
     //bullet data
     public static List<GameObject> bulletsFiredByPlayer = new List<GameObject>();
@@ -29,6 +33,8 @@ public class MainGameHandler : MonoBehaviour {
     public static GameObject selectedItemInInventory;
     String whaleHealth = "20000/20000";
     String whaleLevel = "0";
+    public static List<GameObject> otherPlayers = new List<GameObject>();
+    public static int lastXPEarned = 0;
 
     //"cosmetic" data
     public Dictionary<String, Sprite> weaponSpritesMap = new Dictionary<string, Sprite>()
@@ -76,10 +82,11 @@ public class MainGameHandler : MonoBehaviour {
         player = CreatePlayer(isWhale);
         player.name = "Player1";
         player.AddComponent<PlayerControlScript>();
-        playerWeapon = CreateWeapon(player, "jellyfishSpineShooter");
-        playerEyePiece = CreateGlasses(player, "sunglasses");
-        playerHat = CreateHat(player, "pirateHat");
-        playerMouthPiece = CreateMouthpiece(player, "cigar");
+        if (!weaponType.Equals(String.Empty)) playerWeapon = CreateWeapon(player, weaponType);
+        if (!eyepieceType.Equals(String.Empty)) playerEyePiece = CreateGlasses(player, eyepieceType);
+        if (!hatType.Equals(String.Empty)) playerHat = CreateHat(player, hatType);
+        if (!mouthpieceType.Equals(String.Empty)) playerMouthPiece = CreateMouthpiece(player, mouthpieceType);
+        if (!vestType.Equals(String.Empty)) playerVest = CreateVest(player, vestType);
 
         //create nametag
         GameObject nameTag = new GameObject("NameTag");
@@ -451,7 +458,7 @@ public class MainGameHandler : MonoBehaviour {
             p.layer = 8;
             bodyBase.rotation = 90;
             renderer.sprite = SpriteHandler.whaleSprite;
-            renderer.sortingOrder = -2;
+            renderer.sortingOrder = -3;
         }
         else
         {
@@ -465,7 +472,7 @@ public class MainGameHandler : MonoBehaviour {
             bodyBase.sharedMaterial = mat;
             p.transform.position = new Vector2(UnityEngine.Random.Range(-39, -10), UnityEngine.Random.Range(2, -18));
             renderer.sprite = SpriteHandler.jellyFishSprite;
-            renderer.sortingOrder = -2;
+            renderer.sortingOrder = -3;
         }
 
         return p;
@@ -537,5 +544,21 @@ public class MainGameHandler : MonoBehaviour {
         hatRenderer.sortingOrder = -1;
 
         return mouthpiece;
+    }
+
+    //create mouthpiece
+    private GameObject CreateVest(GameObject parent, String vestType)
+    {
+        //create weapon
+        GameObject vest = new GameObject("Vest");
+        vest.transform.SetParent(parent.transform);
+        vest.transform.position = new Vector2(parent.transform.position.x - 0.01F, parent.transform.position.y - 0.09F);
+        vest.transform.localScale = new Vector2(1.7F, 1.1F);
+
+        SpriteRenderer hatRenderer = vest.AddComponent<SpriteRenderer>();
+        hatRenderer.sprite = vestSpritesMap[vestType];
+        hatRenderer.sortingOrder = -2;
+
+        return vest;
     }
 }
