@@ -18,9 +18,9 @@ public class MainGameHandler : MonoBehaviour {
     public static int playerLevel = 0;
 
     public static String weaponType = "jellyfishSpineShooter";
-    public static String vestType = "";
+    public static String vestType = "bulletProofVest";
     public static String hatType = "topHat";
-    public static String mouthpieceType = "";
+    public static String mouthpieceType = "cigar";
     public static String eyepieceType = "sunglasses";
 
     //bullet data
@@ -109,7 +109,7 @@ public class MainGameHandler : MonoBehaviour {
         if (IsConnected(clientInstance.Client))
         {
             List<String> data = ReadWriteServer();
-            if(data.Count > 6) ParseData(data);
+            if(data.Count >= 10) ParseData(data);
         }
         else
         {
@@ -235,6 +235,16 @@ public class MainGameHandler : MonoBehaviour {
         writer.Flush();
         writer.WriteLine(player.transform.Find("Weapon").transform.rotation.z);
         writer.Flush();
+        writer.WriteLine(weaponType);
+        writer.Flush();
+        writer.WriteLine(vestType);
+        writer.Flush();
+        writer.WriteLine(hatType);
+        writer.Flush();
+        writer.WriteLine(mouthpieceType);
+        writer.Flush();
+        writer.WriteLine(eyepieceType);
+        writer.Flush();
 
         //write bullet data
         foreach (GameObject bullet in bulletsFiredByPlayer)
@@ -282,10 +292,12 @@ public class MainGameHandler : MonoBehaviour {
     //parse data from server
     private void ParseData(List<String> data)
     {
+        int amountOfDataPerPlayer = 11;
+
         //handle data
         int jellyCount = 0;
         int playerIndex = 0;
-        for (int index = 0; index < data.Count; index += 6)
+        for (int index = 0; index < data.Count; index += amountOfDataPerPlayer)
         {
             //player data
             float x = float.Parse(data[index]);
@@ -294,6 +306,11 @@ public class MainGameHandler : MonoBehaviour {
             Boolean localIsWhale = Boolean.Parse(data[index + 3]);
             String health = data[index + 4];
             float weaponRot = float.Parse(data[index + 5]);
+            String localWeapon = data[index + 6];
+            String localVest = data[index + 7];
+            String localHat = data[index + 8];
+            String localMouthpiece = data[index + 9];
+            String localEyepiece = data[index + 10];
 
             if (!localIsWhale) jellyCount++;
 
@@ -303,7 +320,11 @@ public class MainGameHandler : MonoBehaviour {
             if (playerIndex > otherPlayers.Count - 1)
             {
                 GameObject p = CreatePlayer(localIsWhale);
-                CreateWeapon(p, "jellyfishSpineShooter");
+                if (weaponSpritesMap.ContainsKey(localWeapon)) CreateWeapon(p, localWeapon);
+                if (vestSpritesMap.ContainsKey(localVest)) CreateVest(p, localVest);
+                if (hatSpritesMap.ContainsKey(localHat)) CreateHat(p, localHat);
+                if (mouthpieceSpritesMap.ContainsKey(localMouthpiece)) CreateMouthpiece(p, localMouthpiece);
+                if (eyepieceSpritesMap.ContainsKey(localEyepiece)) CreateGlasses(p, localEyepiece);
                 otherPlayers.Add(p);
             }
 
@@ -350,7 +371,7 @@ public class MainGameHandler : MonoBehaviour {
             //handle bullet data
             int bulletIndex = 0;
             int tempIndexForBullets = 0;
-            for (tempIndexForBullets = index + 6; tempIndexForBullets < data.Count; tempIndexForBullets += 5)
+            for (tempIndexForBullets = index + amountOfDataPerPlayer; tempIndexForBullets < data.Count; tempIndexForBullets += 5)
             {
                 if (data[tempIndexForBullets].Equals("ENDOFBULLETS"))
                 {
