@@ -18,10 +18,10 @@ public class MainGameHandler : MonoBehaviour {
     public static int playerLevel = 0;
 
     public static String weaponType = "jellyfishSpineShooter";
-    public static String vestType = "bulletProofVest";
-    public static String hatType = "topHat";
-    public static String mouthpieceType = "cigar";
-    public static String eyepieceType = "sunglasses";
+    public static String vestType = "EMPTY";
+    public static String hatType = "EMPTY";
+    public static String mouthpieceType = "EMPTY";
+    public static String eyepieceType = "EMPTY";
 
     //bullet data
     public static List<GameObject> bulletsFiredByPlayer = new List<GameObject>();
@@ -37,25 +37,30 @@ public class MainGameHandler : MonoBehaviour {
     public static int lastXPEarned = 0;
 
     //"cosmetic" data
-    public Dictionary<String, Sprite> weaponSpritesMap = new Dictionary<string, Sprite>()
+    public static Dictionary<String, Sprite> weaponSpritesMap = new Dictionary<string, Sprite>()
     {
+        {"EMPTY", new Sprite() },
         { "jellyfishSpineShooter", SpriteHandler.jellyfishSpineShooter },
     };
-    public Dictionary<String, Sprite> hatSpritesMap = new Dictionary<string, Sprite>()
-    { 
+    public static Dictionary<String, Sprite> hatSpritesMap = new Dictionary<string, Sprite>()
+    {
+        {"EMPTY", new Sprite() },
         { "topHat", SpriteHandler.topHatSprite },
         { "pirateHat", SpriteHandler.pirateHatSprite }
     };
-    public Dictionary<String, Sprite> eyepieceSpritesMap = new Dictionary<string, Sprite>()
+    public static Dictionary<String, Sprite> eyepieceSpritesMap = new Dictionary<string, Sprite>()
     {
+        {"EMPTY", new Sprite() },
         { "sunglasses", SpriteHandler.sunglassesSprite },
     };
-    public Dictionary<String, Sprite> mouthpieceSpritesMap = new Dictionary<string, Sprite>()
+    public static Dictionary<String, Sprite> mouthpieceSpritesMap = new Dictionary<string, Sprite>()
     {
+        {"EMPTY", new Sprite() },
         { "cigar", SpriteHandler.cigarSprite },
     };
-    public Dictionary<String, Sprite> vestSpritesMap = new Dictionary<string, Sprite>()
+    public static Dictionary<String, Sprite> vestSpritesMap = new Dictionary<string, Sprite>()
     {
+        {"EMPTY", new Sprite() },
         { "bulletProofVest", SpriteHandler.bulletProofVestSprite },
     };
 

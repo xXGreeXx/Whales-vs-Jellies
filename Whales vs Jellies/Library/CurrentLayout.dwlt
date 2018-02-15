@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 342}
   m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
-  controlID: 105
+  controlID: 9
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 342}
   m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
-  controlID: 31
+  controlID: 10
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -368,21 +368,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 9025ffff3e26ffff4227ffff4c27ffff5427ffff5827fffff636ffff8237ffff8437ffff8e41ffff3e42ffff4243ffff4c43ffff5443ffff5843ffffce58ffff345affff5e6affffde6affffe06affff2270ffffca70ffffce71ffffd871ffffe071ffffe471ffff9e7effffca82ffff5e8bffffd291ffff7692ffff7a93ffff8493ffff8c93ffff9093ffffb49fffff86e9ffff88efffff38f0ffff3cf1ffff46f1ffff4ef1ffff52f1ffff38f9ffff3af9ffff1afcffff00000000
+    m_ExpandedIDs: 6ec7ffffbcccffff60cdffff64ceffff6eceffff76ceffff7aceffff74d8ffff74ddffff18deffff1cdfffff26dfffff2edfffff32dfffff1afcffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Player1
-      m_OriginalName: Player1
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: -1736
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 8}
     m_SearchString: 
@@ -423,9 +423,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.9260106, y: 0.99332356, z: 0}
+    m_Target: {x: 0.919045, y: 0.042318493, z: 0}
     speed: 2
-    m_Value: {x: 1.9260106, y: 0.99332356, z: 0}
+    m_Value: {x: 0.919045, y: 0.042318493, z: 0}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -452,9 +452,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 30.30088
+    m_Target: 19.844702
     speed: 2
-    m_Value: 30.30088
+    m_Value: 19.844702
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -541,7 +541,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 42260000
     m_LastClickedID: 9794
-    m_ExpandedIDs: 000000002426000000ca9a3bffffff7f
+    m_ExpandedIDs: 0000000024260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +8,9 @@ public class ShopMenuHandler : MonoBehaviour {
     public static GameObject inventoryPanel;
     public static List<GameObject> objectsInInventory = new List<GameObject>();
     public static Vector2 lastPosition;
-	//start
-	void Start ()
+
+    //start
+    void Start ()
     {
         previewPanel = GameObject.Find("PreviewPanel");
         inventoryPanel = GameObject.Find("InventoryPanel");
