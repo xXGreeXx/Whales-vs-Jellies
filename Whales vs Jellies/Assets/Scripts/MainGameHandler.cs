@@ -52,6 +52,7 @@ public class MainGameHandler : MonoBehaviour {
     {
         {"EMPTY", new Sprite() },
         { "sunglasses", SpriteHandler.sunglassesSprite },
+        { "visor", SpriteHandler.visorSprite },
     };
     public static Dictionary<String, Sprite> mouthpieceSpritesMap = new Dictionary<string, Sprite>()
     {

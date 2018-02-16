@@ -77,5 +77,7 @@ public class CustomizationHandler : MonoBehaviour {
             MainGameHandler.vestType = MainGameHandler.vestSpritesMap.FirstOrDefault(x => x.Value == obj.GetComponent<SpriteRenderer>().sprite).Key;
             Destroy(obj.transform.Find("Background").gameObject);
         }
+
+        MainGameHandler.selectedItemInInventory = null;
     }
 }

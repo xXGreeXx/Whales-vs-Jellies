@@ -11,6 +11,7 @@ public class SpriteHandler : MonoBehaviour {
     public static Sprite topHatSprite;
     public static Sprite cigarSprite;
     public static Sprite sunglassesSprite;
+    public static Sprite visorSprite;
     public static Sprite bulletProofVestSprite;
     public static Sprite pirateHatSprite;
     public static Sprite bulletSprite;
@@ -26,6 +27,7 @@ public class SpriteHandler : MonoBehaviour {
         topHatSprite = Resources.Load("topHat", typeof(Sprite)) as Sprite;
         cigarSprite = Resources.Load("cigar", typeof(Sprite)) as Sprite;
         sunglassesSprite = Resources.Load("sunglasses", typeof(Sprite)) as Sprite;
+        visorSprite = Resources.Load("visor", typeof(Sprite)) as Sprite;
         bulletProofVestSprite = Resources.Load("bulletProofVest", typeof(Sprite)) as Sprite;
         pirateHatSprite = Resources.Load("pirateHat", typeof(Sprite)) as Sprite;
         bulletSprite = Resources.Load("jellyfishSpine", typeof(Sprite)) as Sprite;

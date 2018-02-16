@@ -23,6 +23,7 @@ public class ShopMenuHandler : MonoBehaviour {
         AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.sunglassesSprite);
         AddItemToInventory(ItemData.ItemTypes.VestPanel, SpriteHandler.bulletProofVestSprite);
         AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.pirateHatSprite);
+        AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.visorSprite);
 
         lastPosition = inventoryPanel.transform.position - inventoryPanel.transform.position;
     }

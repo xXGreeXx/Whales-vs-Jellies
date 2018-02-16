@@ -19,10 +19,20 @@ public class InventoryAddScript : MonoBehaviour {
             ItemData data = MainGameHandler.selectedItemInInventory.GetComponent<ItemData>();
             ShopMenuHandler.AddItemToInventory(data.itemType, data.itemSprite);
 
-            Destroy(MainGameHandler.selectedItemInInventory, 0);
-
             //remove item from preview
+            for (int index = 0; index < ShopMenuHandler.previewPanel.transform.Find("vestPanel").transform.childCount; index++)
+            {
+                GameObject child = ShopMenuHandler.previewPanel.transform.Find("vestPanel").transform.GetChild(index).gameObject;
+                if (child.GetComponent<SpriteRenderer>().sprite.Equals(MainGameHandler.selectedItemInInventory.GetComponent<SpriteRenderer>().sprite))
+                {
+                    Destroy(child, 0);
+                    break;
+                }
+            }
 
+            //delete object
+            Destroy(MainGameHandler.selectedItemInInventory, 0);
+            MainGameHandler.selectedItemInInventory = null;
         }
     }
 }
