@@ -28,6 +28,13 @@ public class ShopMenuHandler : MonoBehaviour {
         lastPosition = inventoryPanel.transform.position - inventoryPanel.transform.position;
     }
 
+    //fixed update
+    void FixedUpdate()
+    {
+        GameObject.Find("XPBarText").GetComponent<UnityEngine.UI.Text>().text = MainGameHandler.playerCurrentXP + "/" + MainGameHandler.xpNeededForNextLevel;
+        GameObject.Find("goldText").GetComponent<UnityEngine.UI.Text>().text = MainGameHandler.currency.ToString();
+    }
+
     //change preview base
     public static void ChangeBackground()
     {

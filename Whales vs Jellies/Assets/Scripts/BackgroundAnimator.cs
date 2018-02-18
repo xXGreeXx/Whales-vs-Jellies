@@ -28,7 +28,7 @@ public class BackgroundAnimator : MonoBehaviour {
             }
             else
             {
-                renderer.sprite = framesOfAnimation[Random.Range(-1, framesOfAnimation.Count)];
+                renderer.sprite = framesOfAnimation[Random.Range(0, framesOfAnimation.Count)];
             }
 
             currentValue = 0F;

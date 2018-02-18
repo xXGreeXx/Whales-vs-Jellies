@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Net;
 using System.Net.Sockets;
+using Net = System.Net.NetworkInformation;
 using System.IO;
-using System.Text;
 
 public class MainGameHandler : MonoBehaviour {
     //player data
@@ -16,7 +17,11 @@ public class MainGameHandler : MonoBehaviour {
     public static GameObject playerEyePiece;
     public static bool isWhale = false;
     public static int playerLevel = 0;
+    public static int playerCurrentXP = 0;
+    public static int xpNeededForNextLevel = 100;
+    public static int currency = 0;
 
+    //player "cosmetic" data
     public static String weaponType = "jellyfishSpineShooter";
     public static String vestType = "EMPTY";
     public static String hatType = "EMPTY";
@@ -111,11 +116,17 @@ public class MainGameHandler : MonoBehaviour {
     //fixed update
     void FixedUpdate ()
     {
+        //update ping label
+        //IPAddress ip = IPAddress.Parse(IP);
+        //Debug.Log(ip.AddressFamily);
+        //Net.PingReply reply = new Net.Ping().Send(IP);
+        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = "0ms";
+
         //interface server
         if (IsConnected(clientInstance.Client))
         {
             List<String> data = ReadWriteServer();
-            if(data.Count >= 10) ParseData(data);
+            if(data.Count >= 5) ParseData(data);
         }
         else
         {
@@ -142,7 +153,7 @@ public class MainGameHandler : MonoBehaviour {
         //check if lost
         if (player.GetComponent<PlayerData>().health <= 0)
         {
-            playerLevel += calculateXPGain();
+            playerCurrentXP += calculateXPGain();
             Disconnect();
             SceneManager.LoadScene("LossScreen");
         }
