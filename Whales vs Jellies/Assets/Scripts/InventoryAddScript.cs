@@ -31,14 +31,31 @@ public class InventoryAddScript : MonoBehaviour {
                 ItemData data = MainGameHandler.selectedItemInInventory.GetComponent<ItemData>();
                 ShopMenuHandler.AddItemToInventory(data.itemType, data.itemSprite);
 
-                //remove item from preview
-                for (int index = 0; index < ShopMenuHandler.previewPanel.transform.Find("vestPanel").transform.childCount; index++)
+                //remove item from panel
+                for (int index = 0; index < ShopMenuHandler.previewPanel.transform.Find("HatPanel").transform.childCount; index++)
                 {
-                    GameObject child = ShopMenuHandler.previewPanel.transform.Find("vestPanel").transform.GetChild(index).gameObject;
-                    if (child.GetComponent<SpriteRenderer>().sprite.Equals(MainGameHandler.selectedItemInInventory.GetComponent<SpriteRenderer>().sprite))
+                    GameObject child = ShopMenuHandler.previewPanel.transform.Find("HatPanel").transform.GetChild(index).gameObject;
+                    if (child.GetComponent<SpriteRenderer>())
                     {
-                        Destroy(child, 0);
-                        break;
+                        if (child.GetComponent<SpriteRenderer>().sprite.Equals(MainGameHandler.selectedItemInInventory.GetComponent<SpriteRenderer>().sprite))
+                        {
+                            Destroy(child, 0);
+                            break;
+                        }
+                    }
+                }
+
+                //remove item from preview
+                for (int index = 0; index < ShopMenuHandler.previewPanel.transform.childCount; index++)
+                {
+                    GameObject child = ShopMenuHandler.previewPanel.transform.GetChild(index).gameObject;
+                    if (child.GetComponent<SpriteRenderer>())
+                    {
+                        if (child.GetComponent<SpriteRenderer>().sprite.Equals(MainGameHandler.selectedItemInInventory.GetComponent<SpriteRenderer>().sprite))
+                        {
+                            Destroy(child, 0);
+                            break;
+                        }
                     }
                 }
 
