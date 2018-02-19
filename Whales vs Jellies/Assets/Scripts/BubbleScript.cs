@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class BubbleScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	//update
+	void FixedUpdate ()
+    {
+        gameObject.transform.position += new Vector3(Random.Range(-0.005F, 0.005F), 0.05F, 0);
+
+        if (gameObject.transform.position.y > 2)
+        {
+            Destroy(gameObject);
+        }
 	}
 }

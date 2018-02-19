@@ -171,6 +171,7 @@ public class MainGameHandler : MonoBehaviour {
             if (Input.GetMouseButtonDown(0))
             {
                 playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100, 1F);
+                for(int i = 0; i < UnityEngine.Random.Range(3, 7); i++) CreateBubble(player.transform.position.x + (i / 5.5F) * UnityEngine.Random.Range(-0.5F, 0.5F), player.transform.position.y);
             }
             if (Input.GetMouseButtonDown(1))
             {
@@ -432,6 +433,19 @@ public class MainGameHandler : MonoBehaviour {
         {
             RemovePlayer(tempIndex);
         }
+    }
+
+    //create bubble
+    public static void CreateBubble(float x, float y)
+    {
+        GameObject b = new GameObject("bubble");
+        b.transform.position = new Vector2(x, y);
+        b.transform.localScale = new Vector2(0.5F, 0.5F);
+        b.AddComponent<BubbleScript>();
+        SpriteRenderer renderer = b.AddComponent<SpriteRenderer>();
+
+        renderer.sortingOrder = 2;
+        renderer.sprite = SpriteHandler.bubbleSprite;
     }
 
     //create bullet

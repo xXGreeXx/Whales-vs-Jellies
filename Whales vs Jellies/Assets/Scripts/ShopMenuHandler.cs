@@ -17,6 +17,8 @@ public class ShopMenuHandler : MonoBehaviour {
 
         ChangeBackground();
 
+        lastPosition = new Vector2(-158, 222);
+
         AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.jellyfishSpineShooter);
         AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.topHatSprite);
         AddItemToInventory(ItemData.ItemTypes.MouthpiecePanel, SpriteHandler.cigarSprite);
@@ -24,8 +26,6 @@ public class ShopMenuHandler : MonoBehaviour {
         AddItemToInventory(ItemData.ItemTypes.VestPanel, SpriteHandler.bulletProofVestSprite);
         AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.pirateHatSprite);
         AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.visorSprite);
-
-        lastPosition = inventoryPanel.transform.position - inventoryPanel.transform.position;
     }
 
     //fixed update

@@ -15,6 +15,7 @@ public class BulletPhysicsScript : MonoBehaviour {
         Rigidbody2D body = gameObject.transform.GetComponent<Rigidbody2D>();
 
         body.AddRelativeForce(new Vector2(bulletSpeed, 0), ForceMode2D.Impulse);
+        MainGameHandler.CreateBubble(body.position.x, body.position.y);
 	}
 
     void OnCollisionEnter2D(Collision2D collision)
