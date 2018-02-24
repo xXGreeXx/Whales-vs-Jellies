@@ -17,6 +17,8 @@ public class ShopMenuHandler : MonoBehaviour {
         inventoryPanel = GameObject.Find("InventoryPanel");
         descriptionPanel = GameObject.Find("descriptionPanel");
 
+        descriptionPanel.SetActive(false);
+
         ChangeBackground();
 
         lastPosition = new Vector3(-158, 222, -15);
