@@ -29,7 +29,7 @@ public class InventoryAddScript : MonoBehaviour {
             {
                 //add item back to inventory
                 ItemData data = MainGameHandler.selectedItemInInventory.GetComponent<ItemData>();
-                ShopMenuHandler.AddItemToInventory(data.itemType, data.itemSprite);
+                ShopMenuHandler.AddItemToInventory(data.itemType, data.itemSprite, data.description);
 
                 //remove item from panel
                 for (int index = 0; index < ShopMenuHandler.previewPanel.transform.Find("HatPanel").transform.childCount; index++)

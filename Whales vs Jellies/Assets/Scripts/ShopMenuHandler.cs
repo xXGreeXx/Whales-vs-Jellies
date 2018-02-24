@@ -6,6 +6,7 @@ public class ShopMenuHandler : MonoBehaviour {
     //define global variables
     public static GameObject previewPanel;
     public static GameObject inventoryPanel;
+    public static GameObject descriptionPanel;
     public static List<GameObject> objectsInInventory = new List<GameObject>();
     public static Vector3 lastPosition;
 
@@ -14,18 +15,19 @@ public class ShopMenuHandler : MonoBehaviour {
     {
         previewPanel = GameObject.Find("PreviewPanel");
         inventoryPanel = GameObject.Find("InventoryPanel");
+        descriptionPanel = GameObject.Find("descriptionPanel");
 
         ChangeBackground();
 
         lastPosition = new Vector3(-158, 222, -15);
 
-        AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.jellyfishSpineShooter);
-        AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.topHatSprite);
-        AddItemToInventory(ItemData.ItemTypes.MouthpiecePanel, SpriteHandler.cigarSprite);
-        AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.sunglassesSprite);
-        AddItemToInventory(ItemData.ItemTypes.VestPanel, SpriteHandler.bulletProofVestSprite);
-        AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.pirateHatSprite);
-        AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.visorSprite);
+        AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.jellyfishSpineShooter, "JellyfishSpineShooter \nThis weapon packs a sting! High single target damage.");
+        AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.topHatSprite, "TopHat \nWant to impress your friends? Look like a businessman? This is for you!");
+        AddItemToInventory(ItemData.ItemTypes.MouthpiecePanel, SpriteHandler.cigarSprite, "Cigar \nNo description needed.");
+        AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.sunglassesSprite, "Sunglasses \nBlock harmful ultraviolet rays AND looks great!");
+        AddItemToInventory(ItemData.ItemTypes.VestPanel, SpriteHandler.bulletProofVestSprite, "BulletproofVest \nIf you die, money back guaranteed!");
+        AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.pirateHatSprite, "PirateHat \nSteal the treasures of your foes!");
+        AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.visorSprite, "Visor \nGreat eye protection + solar eclipse viewing or your money back!");
     }
 
     //fixed update
@@ -52,7 +54,7 @@ public class ShopMenuHandler : MonoBehaviour {
     }
 
     //add item to inventory
-    public static void AddItemToInventory(ItemData.ItemTypes type, Sprite sprite)
+    public static void AddItemToInventory(ItemData.ItemTypes type, Sprite sprite, String desc)
     {
         GameObject item = new GameObject("Item");
         item.transform.SetParent(inventoryPanel.transform);
@@ -61,6 +63,7 @@ public class ShopMenuHandler : MonoBehaviour {
         ItemData data = item.AddComponent<ItemData>();
         data.itemType = type;
         data.itemSprite = sprite;
+        data.description = desc;
 
         SpriteRenderer renderer = item.AddComponent<SpriteRenderer>();
         renderer.sprite = sprite;
