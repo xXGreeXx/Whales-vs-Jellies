@@ -13,9 +13,12 @@ public class BulletPhysicsScript : MonoBehaviour {
     {
         //move bullet
         Rigidbody2D body = gameObject.transform.GetComponent<Rigidbody2D>();
-
         body.AddRelativeForce(new Vector2(bulletSpeed, 0), ForceMode2D.Impulse);
-        MainGameHandler.CreateBubble(body.position.x, body.position.y);
+
+        if (!canCollide)
+        {
+            MainGameHandler.CreateBubble(body.position.x, body.position.y);
+        }
 	}
 
     void OnCollisionEnter2D(Collision2D collision)

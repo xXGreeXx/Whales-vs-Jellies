@@ -33,7 +33,7 @@ public class MainGameHandler : MonoBehaviour {
     public static List<GameObject> otherBullets = new List<GameObject>();
 
     //game data
-    TcpClient clientInstance;
+    public static TcpClient clientInstance;
     public static String IP = "192.168.1.200";
     public static GameObject selectedItemInInventory;
     String whaleHealth = "20000/20000";
@@ -126,7 +126,7 @@ public class MainGameHandler : MonoBehaviour {
         if (IsConnected(clientInstance.Client))
         {
             List<String> data = ReadWriteServer();
-            if(data.Count >= 5) ParseData(data);
+            if(data.Count >= 12) ParseData(data);
         }
         else
         {
@@ -221,7 +221,7 @@ public class MainGameHandler : MonoBehaviour {
     //disconnect
     public static void Disconnect()
     {
-
+        clientInstance.Close();
     }
 
     //exit and save
@@ -284,7 +284,7 @@ public class MainGameHandler : MonoBehaviour {
             }
             else
             {
-                break;
+                continue;
             }
         }
         writer.WriteLine("ENDOFBULLETS");
@@ -411,7 +411,6 @@ public class MainGameHandler : MonoBehaviour {
                 GameObject bulletToEdit = otherBullets[bulletIndex];
                 bulletToEdit.transform.position = new Vector2(bulletX, bulletY);
                 bulletToEdit.transform.rotation = new Quaternion(0, 0, bulletRot, 1);
-                Debug.Log("Bullet created: " + bulletIndex);
 
                 if (data[tempIndexForBullets + 5].Equals("ENDOFBULLETS"))
                 {
