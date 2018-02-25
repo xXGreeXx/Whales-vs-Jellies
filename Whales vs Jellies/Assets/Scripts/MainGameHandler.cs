@@ -118,7 +118,6 @@ public class MainGameHandler : MonoBehaviour {
     {
         //update ping label
         //IPAddress ip = IPAddress.Parse(IP);
-        //Debug.Log(ip.AddressFamily);
         //Net.PingReply reply = new Net.Ping().Send(IP);
         GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = "0ms";
 
@@ -275,7 +274,7 @@ public class MainGameHandler : MonoBehaviour {
                 writer.Flush();
                 writer.WriteLine(bullet.transform.position.y);
                 writer.Flush();
-                writer.WriteLine(bullet.transform.rotation.z);
+                writer.WriteLine(bullet.transform.rotation.eulerAngles.z);
                 writer.Flush();
                 writer.WriteLine(physics.bulletDamage);
                 writer.Flush();
@@ -405,12 +404,12 @@ public class MainGameHandler : MonoBehaviour {
 
                 if (bulletIndex > otherBullets.Count - 1)
                 {
-                    otherBullets.Add(CreateBullet(x, y, new Quaternion(0, 0, bulletRot, 1), damage, speed, true, localIsWhale));
+                    otherBullets.Add(CreateBullet(x, y, Quaternion.Euler(0, 0, bulletRot), damage, speed, true, localIsWhale));
                 }
 
                 GameObject bulletToEdit = otherBullets[bulletIndex];
                 bulletToEdit.transform.position = new Vector2(bulletX, bulletY);
-                bulletToEdit.transform.rotation = new Quaternion(0, 0, bulletRot, 1);
+                bulletToEdit.transform.rotation = Quaternion.Euler(0, 0, bulletRot);
 
                 if (data[tempIndexForBullets + 5].Equals("ENDOFBULLETS"))
                 {

@@ -46,7 +46,7 @@ public class ShopMenuHandler : MonoBehaviour {
         {
             previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.whaleSprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 270);
-            previewPanel.transform.localScale = new Vector2(-1, 1);
+            previewPanel.transform.localScale = new Vector2(-1, -1);
         }
         else
         {
