@@ -438,7 +438,7 @@ public class MainGameHandler : MonoBehaviour {
     {
         GameObject b = new GameObject("bubble");
         b.transform.position = new Vector2(x, y);
-        b.transform.localScale = new Vector2(0.5F, 0.5F);
+        b.transform.localScale = new Vector2(0.2F, 0.2F);
         b.AddComponent<BubbleScript>();
         SpriteRenderer renderer = b.AddComponent<SpriteRenderer>();
 
