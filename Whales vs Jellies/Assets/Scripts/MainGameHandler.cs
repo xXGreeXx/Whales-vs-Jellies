@@ -347,16 +347,12 @@ public class MainGameHandler : MonoBehaviour {
 
             //set extra data
             GameObject playerToEdit = otherPlayers[playerIndex];
+
+            if (playerToEdit.transform.position != new Vector3(x, y, 0)) playerToEdit.GetComponent<ActiveAnimator>().PlaySet(0);
+
             playerToEdit.transform.position = new Vector2(x, y);
             Rigidbody2D body = playerToEdit.GetComponent<Rigidbody2D>();
             body.rotation = rot;
-
-            //(FAIL-SAFE) repurpose GOs for seperate players
-            //if (playerToEdit.GetComponent<PlayerData>().isWhale != localIsWhale)
-            //{
-            //    Destroy(playerToEdit);
-            //    playerToEdit = CreatePlayer(localIsWhale);
-            //}
 
             //continue setting extra data
             playerToEdit.transform.Find("Weapon").transform.rotation = new Quaternion(0, 0, weaponRot, 1);
@@ -512,6 +508,22 @@ public class MainGameHandler : MonoBehaviour {
         }
         else
         {
+            //add active animator for jellyfish
+            ActiveAnimator animator = p.AddComponent<ActiveAnimator>();
+            List<Sprite> moveSet = new List<Sprite>();
+            moveSet.Add(SpriteHandler.moonJellySprite);
+            moveSet.Add(SpriteHandler.moonJellySpriteAnim1);
+            moveSet.Add(SpriteHandler.moonJellySpriteAnim2);
+            moveSet.Add(SpriteHandler.moonJellySpriteAnim3);
+            moveSet.Add(SpriteHandler.moonJellySpriteAnim2);
+            moveSet.Add(SpriteHandler.moonJellySpriteAnim1);
+            moveSet.Add(SpriteHandler.moonJellySprite);
+
+            animator.animationSets.Add(moveSet);
+
+            //do other stuff
+            p.transform.localScale = new Vector2(0.6F, 0.6F);
+
             collider.size = new Vector2(0.5F, 0.7F);
             data.maxHealth = 100;
             data.health = data.maxHealth;
@@ -520,8 +532,9 @@ public class MainGameHandler : MonoBehaviour {
             PhysicsMaterial2D mat = new PhysicsMaterial2D();
             mat.bounciness = 1;
             bodyBase.sharedMaterial = mat;
+
             p.transform.position = new Vector2(UnityEngine.Random.Range(-39, -10), UnityEngine.Random.Range(2, -18));
-            renderer.sprite = SpriteHandler.jellyFishSprite;
+            renderer.sprite = SpriteHandler.moonJellySprite;
             renderer.sortingOrder = -3;
         }
 

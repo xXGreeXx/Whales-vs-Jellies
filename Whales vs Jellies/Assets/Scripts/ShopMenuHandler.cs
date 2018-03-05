@@ -50,7 +50,7 @@ public class ShopMenuHandler : MonoBehaviour {
         }
         else
         {
-            previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.jellyFishSprite;
+            previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.moonJellySprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }

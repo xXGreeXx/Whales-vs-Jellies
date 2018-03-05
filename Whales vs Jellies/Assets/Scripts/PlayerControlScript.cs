@@ -22,6 +22,11 @@ public class PlayerControlScript : MonoBehaviour {
             else if (Input.GetKey(KeyCode.D)) xVel = -0.1F;
             else xVel = 0;
 
+            if (yVel != 0)
+            {
+                gameObject.GetComponent<ActiveAnimator>().PlaySet(0);
+            }
+
             Rigidbody2D body = gameObject.GetComponent<Rigidbody2D>();
 
             body.MoveRotation(body.rotation + xVel * 20);

@@ -5,7 +5,10 @@ using UnityEngine;
 public class SpriteHandler : MonoBehaviour {
 
     //define global variables
-    public static Sprite jellyFishSprite;
+    public static Sprite moonJellySprite;
+    public static Sprite moonJellySpriteAnim1;
+    public static Sprite moonJellySpriteAnim2;
+    public static Sprite moonJellySpriteAnim3;
     public static Sprite whaleSprite;
     public static Sprite jellyfishSpineShooter;
     public static Sprite topHatSprite;
@@ -22,7 +25,10 @@ public class SpriteHandler : MonoBehaviour {
     void Start ()
     {
         //load sprites
-        jellyFishSprite = Resources.Load("jellyfish", typeof(Sprite)) as Sprite;
+        moonJellySprite = Resources.Load("MoonJellyAnim/moonjelly0", typeof(Sprite)) as Sprite;
+        moonJellySpriteAnim1 = Resources.Load("MoonJellyAnim/moonjelly1", typeof(Sprite)) as Sprite;
+        moonJellySpriteAnim2 = Resources.Load("MoonJellyAnim/moonjelly2", typeof(Sprite)) as Sprite;
+        moonJellySpriteAnim3 = Resources.Load("MoonJellyAnim/moonjelly3", typeof(Sprite)) as Sprite;
         whaleSprite = Resources.Load("whale", typeof(Sprite)) as Sprite;
         jellyfishSpineShooter = Resources.Load("jellyfishSpineShooter", typeof(Sprite)) as Sprite;
         topHatSprite = Resources.Load("topHat", typeof(Sprite)) as Sprite;
