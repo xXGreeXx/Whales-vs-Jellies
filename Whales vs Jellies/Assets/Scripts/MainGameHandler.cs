@@ -504,7 +504,7 @@ public class MainGameHandler : MonoBehaviour {
             p.layer = 8;
             bodyBase.rotation = 90;
             renderer.sprite = SpriteHandler.whaleSprite;
-            renderer.sortingOrder = -3;
+            renderer.sortingOrder = -4;
         }
         else
         {
@@ -535,7 +535,7 @@ public class MainGameHandler : MonoBehaviour {
 
             p.transform.position = new Vector2(UnityEngine.Random.Range(-39, -10), UnityEngine.Random.Range(2, -18));
             renderer.sprite = SpriteHandler.moonJellySprite;
-            renderer.sortingOrder = -3;
+            renderer.sortingOrder = -4;
         }
 
         return p;
@@ -552,7 +552,7 @@ public class MainGameHandler : MonoBehaviour {
 
         SpriteRenderer weaponRenderer = weapon.AddComponent<SpriteRenderer>();
         weaponRenderer.sprite = weaponSpritesMap[weaponType];
-        weaponRenderer.sortingOrder = -1;
+        weaponRenderer.sortingOrder = -3;
 
         WeaponHandlerScript weaponData = weapon.AddComponent<WeaponHandlerScript>();
         weaponData.maxAmmo = 10;
@@ -572,7 +572,7 @@ public class MainGameHandler : MonoBehaviour {
 
         SpriteRenderer hatRenderer = hat.AddComponent<SpriteRenderer>();
         hatRenderer.sprite = hatSpritesMap[hatType];
-        hatRenderer.sortingOrder = 0;
+        hatRenderer.sortingOrder = -2;
 
         return hat;
     }
@@ -588,7 +588,7 @@ public class MainGameHandler : MonoBehaviour {
 
         SpriteRenderer hatRenderer = glasses.AddComponent<SpriteRenderer>();
         hatRenderer.sprite = eyepieceSpritesMap[glassesType];
-        hatRenderer.sortingOrder = -1;
+        hatRenderer.sortingOrder = -3;
 
         return glasses;
     }
@@ -604,7 +604,7 @@ public class MainGameHandler : MonoBehaviour {
 
         SpriteRenderer hatRenderer = mouthpiece.AddComponent<SpriteRenderer>();
         hatRenderer.sprite = mouthpieceSpritesMap[mouthpieceType];
-        hatRenderer.sortingOrder = -1;
+        hatRenderer.sortingOrder = -2;
 
         return mouthpiece;
     }
@@ -620,7 +620,7 @@ public class MainGameHandler : MonoBehaviour {
 
         SpriteRenderer hatRenderer = vest.AddComponent<SpriteRenderer>();
         hatRenderer.sprite = vestSpritesMap[vestType];
-        hatRenderer.sortingOrder = -2;
+        hatRenderer.sortingOrder = -3;
 
         return vest;
     }
