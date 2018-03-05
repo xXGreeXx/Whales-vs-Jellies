@@ -9,6 +9,7 @@ public class ShopMenuHandler : MonoBehaviour {
     public static GameObject descriptionPanel;
     public static List<GameObject> objectsInInventory = new List<GameObject>();
     public static Vector3 lastPosition;
+    private static float shift = 244.5F / 3.25F;
 
     //start
     void Start ()
@@ -44,7 +45,7 @@ public class ShopMenuHandler : MonoBehaviour {
     {
         if (MainGameHandler.isWhale)
         {
-            previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.whaleSprite;
+            previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.bottleNoseSprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 270);
             previewPanel.transform.localScale = new Vector2(-1, -1);
         }
@@ -52,6 +53,28 @@ public class ShopMenuHandler : MonoBehaviour {
         {
             previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.moonJellySprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+    //push items to right spot
+    public static void PushItems()
+    {
+        lastPosition = new Vector3(-158, 222, -15);
+        for (int index = 0; index < inventoryPanel.transform.childCount; index++)
+        {
+            GameObject item = inventoryPanel.transform.GetChild(index).gameObject;
+
+            if (item.name.Equals("Item"))
+            {
+                item.transform.localPosition = lastPosition;
+
+                lastPosition.x += shift;
+                if (lastPosition.x + 158 > shift * 5)
+                {
+                    lastPosition.x = -158;
+                    lastPosition.y -= shift;
+                }
+            }
         }
     }
 
@@ -71,8 +94,6 @@ public class ShopMenuHandler : MonoBehaviour {
         renderer.sprite = sprite;
         renderer.sortingOrder = 2;
 
-        float shift = 244.5F / 3.25F;
-
         lastPosition.x += shift;
         if (lastPosition.x + 158 > shift * 5)
         {
@@ -88,5 +109,7 @@ public class ShopMenuHandler : MonoBehaviour {
         SpriteRenderer backgroundRenderer = background.AddComponent<SpriteRenderer>();
         backgroundRenderer.sortingOrder = 1;
         backgroundRenderer.sprite = SpriteHandler.backgroundSprite;
+
+        PushItems();
     }
 }

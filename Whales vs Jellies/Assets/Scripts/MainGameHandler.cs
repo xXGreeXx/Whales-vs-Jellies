@@ -8,6 +8,13 @@ using Net = System.Net.NetworkInformation;
 using System.IO;
 
 public class MainGameHandler : MonoBehaviour {
+    //enums
+    public enum CreatureTypes
+    {
+        MoonJelly,
+        BottleNose
+    }
+
     //player data
     public static GameObject player;
     public static GameObject playerWeapon;
@@ -16,6 +23,7 @@ public class MainGameHandler : MonoBehaviour {
     public static GameObject playerMouthPiece;
     public static GameObject playerEyePiece;
     public static bool isWhale = false;
+    public static CreatureTypes type;
     public static int playerLevel = 0;
     public static int playerCurrentXP = 0;
     public static int xpNeededForNextLevel = 100;
@@ -98,13 +106,6 @@ public class MainGameHandler : MonoBehaviour {
         if (!hatType.Equals(String.Empty)) playerHat = CreateHat(player, hatType);
         if (!mouthpieceType.Equals(String.Empty)) playerMouthPiece = CreateMouthpiece(player, mouthpieceType);
         if (!vestType.Equals(String.Empty)) playerVest = CreateVest(player, vestType);
-
-        //create nametag
-        GameObject nameTag = new GameObject("NameTag");
-        nameTag.transform.SetParent(player.transform);
-        UnityEngine.UI.Text text = nameTag.AddComponent<UnityEngine.UI.Text>();
-
-        text.text = "Player1";
     }
 
     //close socket with server on exit
@@ -300,6 +301,11 @@ public class MainGameHandler : MonoBehaviour {
             while (!(line = reader.ReadLine()).Equals("END"))
             {
                 if (!line.Equals("")) data.Add(line);
+
+                if (line.Equals("") || line == null) //fail safe, this is hanging some times
+                {
+                    break;
+                }
             }
         }
 
@@ -503,7 +509,7 @@ public class MainGameHandler : MonoBehaviour {
             p.transform.localScale = new Vector3(3, 3, 1);
             p.layer = 8;
             bodyBase.rotation = 90;
-            renderer.sprite = SpriteHandler.whaleSprite;
+            renderer.sprite = SpriteHandler.bottleNoseSprite;
             renderer.sortingOrder = -4;
         }
         else
