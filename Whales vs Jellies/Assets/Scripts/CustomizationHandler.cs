@@ -24,20 +24,20 @@ public class CustomizationHandler : MonoBehaviour {
     #endregion
 
     #region BottleNose
-    Vector3 bottlenoseHatPoint = new Vector3(72.7F, 119.6F);
+    Vector3 bottlenoseHatPoint = new Vector3(76.4F, 117.8F);
     Vector3 bottlenoseHatScale = new Vector3(255, 255);
 
-    Vector3 bottlenoseGunPoint = new Vector3(-29, 34);
-    Vector3 bottlenoseGunScale = new Vector3(255, 255);
+    Vector3 bottlenoseGunPoint = new Vector3(-41, 52);
+    Vector3 bottlenoseGunScale = new Vector3(173, 190);
 
-    Vector3 bottlenoseEyePoint = new Vector3(19, 140.4F);
-    Vector3 bottlenoseEyeScale = new Vector3(255, 255);
+    Vector3 bottlenoseEyePoint = new Vector3(16, 135);
+    Vector3 bottlenoseEyeScale = new Vector3(95, 255);
 
-    Vector3 bottlenoseMouthPoint = new Vector3(-34.9F, 174);
-    Vector3 bottlenoseMouthScale = new Vector3(255, 255);
+    Vector3 bottlenoseMouthPoint = new Vector3(-38.9F, 186);
+    Vector3 bottlenoseMouthScale = new Vector3(218, 205);
 
-    Vector3 bottlenoseVestPoint = new Vector3(4, -4);
-    Vector3 bottlenoseVestScale = new Vector3(255, 255);
+    Vector3 bottlenoseVestPoint = new Vector3(15, -59);
+    Vector3 bottlenoseVestScale = new Vector3(334, 492);
     #endregion
 
     //on mouse down
@@ -58,7 +58,7 @@ public class CustomizationHandler : MonoBehaviour {
         MainGameHandler.selectedItemInInventory.transform.Find("Background").GetComponent<SpriteRenderer>().color = Color.white;
 
         //put item on preview
-        if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.ToString().Equals("HatPanel"))
+        if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.ToString().Equals("HatPanel") && gameObject.name.Equals("HatPanel"))
         {
             GameObject obj = GameObject.Instantiate(MainGameHandler.selectedItemInInventory, ShopMenuHandler.previewPanel.transform);
 
@@ -66,7 +66,7 @@ public class CustomizationHandler : MonoBehaviour {
             Vector2 scalePoint = Vector2.zero;
 
             if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.MoonJelly)) { attachPoint = moonjellyfishHatPoint; scalePoint = moonjellyfishHatScale; }
-            if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)){ attachPoint = bottlenoseHatPoint; scalePoint = bottlenoseHatScale; }
+            else if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)){ attachPoint = bottlenoseHatPoint; scalePoint = bottlenoseHatScale; }
 
             obj.transform.localPosition = attachPoint;
             obj.transform.localScale = scalePoint;
@@ -83,7 +83,7 @@ public class CustomizationHandler : MonoBehaviour {
             MainGameHandler.hatType = MainGameHandler.hatSpritesMap.FirstOrDefault(x => x.Value == obj.GetComponent<SpriteRenderer>().sprite).Key;
             Destroy(obj.transform.Find("Background").gameObject);
         }
-        if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.ToString().Equals("GunPanel"))
+        else if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.ToString().Equals("GunPanel") && gameObject.name.Equals("GunPanel"))
         {
             GameObject obj = GameObject.Instantiate(MainGameHandler.selectedItemInInventory, ShopMenuHandler.previewPanel.transform);
 
@@ -91,7 +91,7 @@ public class CustomizationHandler : MonoBehaviour {
             Vector2 scalePoint = Vector2.zero;
 
             if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.MoonJelly)) { attachPoint = moonjellyfishGunPoint; scalePoint = moonjellyfishGunScale; }
-            if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)) { attachPoint = bottlenoseGunPoint;  scalePoint = bottlenoseGunScale; }
+            else if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)) { attachPoint = bottlenoseGunPoint;  scalePoint = bottlenoseGunScale; }
 
             obj.transform.localPosition = attachPoint;
             obj.transform.localScale = scalePoint;
@@ -108,7 +108,7 @@ public class CustomizationHandler : MonoBehaviour {
             MainGameHandler.weaponType = MainGameHandler.weaponSpritesMap.FirstOrDefault(x => x.Value == obj.GetComponent<SpriteRenderer>().sprite).Key;
             Destroy(obj.transform.Find("Background").gameObject);
         }
-        if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.ToString().Equals("EyepiecePanel"))
+        else if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.ToString().Equals("EyepiecePanel") && gameObject.name.Equals("EyepiecePanel"))
         {
             GameObject obj = GameObject.Instantiate(MainGameHandler.selectedItemInInventory, ShopMenuHandler.previewPanel.transform);
 
@@ -116,7 +116,7 @@ public class CustomizationHandler : MonoBehaviour {
             Vector2 scalePoint = Vector2.zero;
 
             if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.MoonJelly)) { attachPoint = moonjellyfishEyePoint; scalePoint = moonjellyfishEyeScale; }
-            if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)) { attachPoint = bottlenoseEyePoint; scalePoint = bottlenoseEyeScale; }
+            else if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)) { attachPoint = bottlenoseEyePoint; scalePoint = bottlenoseEyeScale; }
 
             obj.transform.localPosition = attachPoint;
             obj.transform.localScale = scalePoint;
@@ -133,7 +133,7 @@ public class CustomizationHandler : MonoBehaviour {
             MainGameHandler.eyepieceType = MainGameHandler.eyepieceSpritesMap.FirstOrDefault(x => x.Value == obj.GetComponent<SpriteRenderer>().sprite).Key;
             Destroy(obj.transform.Find("Background").gameObject);
         }
-        if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.ToString().Equals("MouthpiecePanel"))
+        else if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.ToString().Equals("MouthpiecePanel") && gameObject.name.Equals("MouthpiecePanel"))
         {
             GameObject obj = GameObject.Instantiate(MainGameHandler.selectedItemInInventory, ShopMenuHandler.previewPanel.transform);
 
@@ -141,7 +141,7 @@ public class CustomizationHandler : MonoBehaviour {
             Vector2 scalePoint = Vector2.zero;
 
             if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.MoonJelly)) { attachPoint = moonjellyfishMouthPoint; scalePoint = moonjellyfishMouthScale; }
-            if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)) { attachPoint = bottlenoseMouthPoint; scalePoint = bottlenoseMouthScale; }
+            else if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)) { attachPoint = bottlenoseMouthPoint; scalePoint = bottlenoseMouthScale; }
 
             obj.transform.localPosition = attachPoint;
             obj.transform.localScale = scalePoint;
@@ -158,7 +158,7 @@ public class CustomizationHandler : MonoBehaviour {
             MainGameHandler.mouthpieceType = MainGameHandler.mouthpieceSpritesMap.FirstOrDefault(x => x.Value == obj.GetComponent<SpriteRenderer>().sprite).Key;
             Destroy(obj.transform.Find("Background").gameObject);
         }
-        if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.ToString().Equals("VestPanel"))
+        else if (MainGameHandler.selectedItemInInventory.GetComponent<ItemData>().itemType.ToString().Equals("VestPanel") && gameObject.name.Equals("VestPanel"))
         {
             GameObject obj = GameObject.Instantiate(MainGameHandler.selectedItemInInventory, ShopMenuHandler.previewPanel.transform);
 
@@ -166,7 +166,7 @@ public class CustomizationHandler : MonoBehaviour {
             Vector2 scalePoint = Vector2.zero;
 
             if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.MoonJelly)) { attachPoint = moonjellyfishVestPoint; scalePoint = moonjellyfishVestScale; }
-            if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)) { attachPoint = bottlenoseVestPoint; scalePoint = bottlenoseVestScale; }
+            else if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)) { attachPoint = bottlenoseVestPoint; scalePoint = bottlenoseVestScale; }
             
             obj.transform.localPosition = attachPoint;
             obj.transform.localScale = scalePoint;

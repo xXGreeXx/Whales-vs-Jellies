@@ -26,11 +26,13 @@ public class ShopMenuHandler : MonoBehaviour {
 
         AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.jellyfishSpineShooter, "JellyfishSpineShooter \nThis weapon packs a sting! High single target damage.");
         AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.topHatSprite, "TopHat \nWant to impress your friends? Look like a businessman? This is for you!");
-        AddItemToInventory(ItemData.ItemTypes.MouthpiecePanel, SpriteHandler.cigarSprite, "Cigar \nNo description needed.");
+        AddItemToInventory(ItemData.ItemTypes.MouthpiecePanel, SpriteHandler.cigarSprite, "Cigar \nThis just raises further questions.");
         AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.sunglassesSprite, "Sunglasses \nBlock harmful ultraviolet rays AND looks great!");
         AddItemToInventory(ItemData.ItemTypes.VestPanel, SpriteHandler.bulletProofVestSprite, "BulletproofVest \nIf you die, money back guaranteed!");
         AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.pirateHatSprite, "PirateHat \nSteal the treasures of your foes!");
         AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.visorSprite, "Visor \nGreat eye protection + solar eclipse viewing or your money back!");
+
+        MainGameHandler.type = MainGameHandler.CreatureTypes.MoonJelly;
     }
 
     //fixed update
