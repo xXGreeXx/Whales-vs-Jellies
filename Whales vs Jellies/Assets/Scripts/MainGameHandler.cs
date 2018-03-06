@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Net;
 using System.Net.Sockets;
-using Net = System.Net.NetworkInformation;
+using System.Diagnostics;
 using System.IO;
 
 public class MainGameHandler : MonoBehaviour {
@@ -117,11 +117,6 @@ public class MainGameHandler : MonoBehaviour {
     //fixed update
     void FixedUpdate ()
     {
-        //update ping label
-        //IPAddress ip = IPAddress.Parse(IP);
-        //Net.PingReply reply = new Net.Ping().Send(IP);
-        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = "0ms";
-
         //interface server
         if (IsConnected(clientInstance.Client))
         {
@@ -295,6 +290,8 @@ public class MainGameHandler : MonoBehaviour {
         writer.Flush();
 
         //read data
+        Stopwatch watch = Stopwatch.StartNew();
+
         if (nwStream.DataAvailable)
         {
             String line;
@@ -307,7 +304,13 @@ public class MainGameHandler : MonoBehaviour {
                     break;
                 }
             }
+
+
         }
+
+        watch.Stop();
+        //update ping label
+        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = watch.ElapsedMilliseconds + "ms";
 
         return data;
     }
