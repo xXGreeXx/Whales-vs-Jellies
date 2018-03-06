@@ -98,7 +98,7 @@ public class MainGameHandler : MonoBehaviour {
         catch (Exception) { SceneManager.LoadScene("MainMenu"); }
 
         //create player
-        player = CreatePlayer(isWhale);
+        player = CreatePlayer(type);
         player.name = "Player1";
         player.AddComponent<PlayerControlScript>();
         if (!weaponType.Equals(String.Empty)) playerWeapon = CreateWeapon(player, weaponType);
@@ -242,7 +242,7 @@ public class MainGameHandler : MonoBehaviour {
         writer.Flush();
         writer.WriteLine(player.transform.GetComponent<Rigidbody2D>().rotation);
         writer.Flush();
-        writer.WriteLine(player.GetComponent<PlayerData>().isWhale.ToString());
+        writer.WriteLine(type.ToString());
         writer.Flush();
         writer.WriteLine(player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth);
         writer.Flush();
@@ -329,7 +329,7 @@ public class MainGameHandler : MonoBehaviour {
             float x = float.Parse(data[index]);
             float y = float.Parse(data[index + 1]);
             float rot = float.Parse(data[index + 2]);
-            Boolean localIsWhale = Boolean.Parse(data[index + 3]);
+            CreatureTypes localType = (CreatureTypes)Enum.Parse(typeof(CreatureTypes), data[index + 3]);
             String health = data[index + 4];
             float weaponRot = float.Parse(data[index + 5]);
             String localWeapon = data[index + 6];
@@ -338,6 +338,8 @@ public class MainGameHandler : MonoBehaviour {
             String localMouthpiece = data[index + 9];
             String localEyepiece = data[index + 10];
 
+            Boolean localIsWhale = IsWhaleOrNot(localType);
+
             if (!localIsWhale) jellyCount++;
 
             //set whale health
@@ -345,7 +347,7 @@ public class MainGameHandler : MonoBehaviour {
 
             if (playerIndex > otherPlayers.Count - 1)
             {
-                GameObject p = CreatePlayer(localIsWhale);
+                GameObject p = CreatePlayer(localType);
                 if (weaponSpritesMap.ContainsKey(localWeapon)) CreateWeapon(p, localWeapon);
                 if (vestSpritesMap.ContainsKey(localVest)) CreateVest(p, localVest);
                 if (hatSpritesMap.ContainsKey(localHat)) CreateHat(p, localHat);
@@ -438,6 +440,15 @@ public class MainGameHandler : MonoBehaviour {
         }
     }
 
+    //determine if whale
+    public Boolean IsWhaleOrNot(CreatureTypes type)
+    {
+        if (type.Equals(CreatureTypes.BottleNose)) return true;
+        else if (type.Equals(CreatureTypes.MoonJelly)) return false;
+
+        return false; //make compiler happy
+    }
+
     //create bubble
     public static void CreateBubble(float x, float y)
     {
@@ -486,7 +497,7 @@ public class MainGameHandler : MonoBehaviour {
     }
 
     //create player
-    private GameObject CreatePlayer(Boolean localIsWhale)
+    private GameObject CreatePlayer(CreatureTypes localType)
     {
         GameObject p = new GameObject("Player");
         PlayerData data = p.AddComponent<PlayerData>();
@@ -499,23 +510,30 @@ public class MainGameHandler : MonoBehaviour {
         bodyBase.gravityScale = 0;
         SpriteRenderer renderer = p.AddComponent<SpriteRenderer>();
 
-        data.isWhale = localIsWhale;
-
-        if (localIsWhale)
+        //bottlenose creation
+        if (localType.Equals(CreatureTypes.BottleNose))
         {
-            collider.size = new Vector2(0.5F, 1F);
+            ActiveAnimator animator = p.AddComponent<ActiveAnimator>();
+            List<Sprite> moveSet = new List<Sprite>();
+            moveSet.Add(SpriteHandler.bottleNoseSprite);
+
+            animator.animationSets.Add(moveSet);
+
+            collider.size = new Vector2(2.9F, 8F);
             data.maxHealth = 20000;
             data.health = data.maxHealth;
             data.moveSpeed = 0.3F;
+            data.isWhale = IsWhaleOrNot(localType);
 
             p.transform.position = new Vector2(32.8F, -10);
-            p.transform.localScale = new Vector3(3, 3, 1);
+            p.transform.localScale = new Vector3(0.25F, 0.25F, 1);
             p.layer = 8;
             bodyBase.rotation = 90;
             renderer.sprite = SpriteHandler.bottleNoseSprite;
             renderer.sortingOrder = -4;
         }
-        else
+        //moonjelly creation
+        else if(localType.Equals(CreatureTypes.MoonJelly))
         {
             //add active animator for jellyfish
             ActiveAnimator animator = p.AddComponent<ActiveAnimator>();
@@ -537,6 +555,7 @@ public class MainGameHandler : MonoBehaviour {
             data.maxHealth = 100;
             data.health = data.maxHealth;
             data.moveSpeed = 0.15F;
+            data.isWhale = IsWhaleOrNot(localType);
 
             PhysicsMaterial2D mat = new PhysicsMaterial2D();
             mat.bounciness = 1;
