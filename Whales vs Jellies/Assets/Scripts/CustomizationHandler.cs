@@ -7,37 +7,37 @@ public class CustomizationHandler : MonoBehaviour {
     //define global variables
 
     #region MoonJelly
-    Vector3 moonjellyfishHatPoint = new Vector3(10.8F, 172.6F);
-    Vector3 moonjellyfishHatScale = new Vector3(255, 255);
+    public static Vector3 moonjellyfishHatPoint = new Vector3(10.8F, 172.6F);
+    public static Vector3 moonjellyfishHatScale = new Vector3(255, 255);
 
-    Vector3 moonjellyfishGunPoint = new Vector3(35, -82);
-    Vector3 moonjellyfishGunScale = new Vector3(255, 255);
+    public static Vector3 moonjellyfishGunPoint = new Vector3(35, -82);
+    public static Vector3 moonjellyfishGunScale = new Vector3(255, 255);
 
-    Vector3 moonjellyfishEyePoint = new Vector3(-13, 97);
-    Vector3 moonjellyfishEyeScale = new Vector3(255, 255);
+    public static Vector3 moonjellyfishEyePoint = new Vector3(-13, 97);
+    public static Vector3 moonjellyfishEyeScale = new Vector3(255, 255);
 
-    Vector3 moonjellyfishMouthPoint = new Vector3(-53, 40);
-    Vector3 moonjellyfishMouthScale = new Vector3(255, 255);
+    public static Vector3 moonjellyfishMouthPoint = new Vector3(-53, 40);
+    public static Vector3 moonjellyfishMouthScale = new Vector3(255, 255);
 
-    Vector3 moonjellyfishVestPoint = new Vector3(24, -91);
-    Vector3 moonjellyfishVestScale = new Vector3(255, 255);
+    public static Vector3 moonjellyfishVestPoint = new Vector3(28, -97);
+    public static Vector3 moonjellyfishVestScale = new Vector3(520, 394);
     #endregion
 
     #region BottleNose
-    Vector3 bottlenoseHatPoint = new Vector3(76.4F, 117.8F);
-    Vector3 bottlenoseHatScale = new Vector3(255, 255);
+    public static Vector3 bottlenoseHatPoint = new Vector3(76.4F, 117.8F);
+    public static Vector3 bottlenoseHatScale = new Vector3(255, 255);
 
-    Vector3 bottlenoseGunPoint = new Vector3(-41, 52);
-    Vector3 bottlenoseGunScale = new Vector3(173, 190);
+    public static Vector3 bottlenoseGunPoint = new Vector3(-41, 52);
+    public static Vector3 bottlenoseGunScale = new Vector3(173, 190);
 
-    Vector3 bottlenoseEyePoint = new Vector3(16, 135);
-    Vector3 bottlenoseEyeScale = new Vector3(95, 255);
+    public static Vector3 bottlenoseEyePoint = new Vector3(16, 135);
+    public static Vector3 bottlenoseEyeScale = new Vector3(95, 255);
 
-    Vector3 bottlenoseMouthPoint = new Vector3(-38.9F, 186);
-    Vector3 bottlenoseMouthScale = new Vector3(218, 205);
+    public static Vector3 bottlenoseMouthPoint = new Vector3(-38.9F, 186);
+    public static Vector3 bottlenoseMouthScale = new Vector3(218, 205);
 
-    Vector3 bottlenoseVestPoint = new Vector3(15, -59);
-    Vector3 bottlenoseVestScale = new Vector3(334, 492);
+    public static Vector3 bottlenoseVestPoint = new Vector3(15, -59);
+    public static Vector3 bottlenoseVestScale = new Vector3(334, 492);
     #endregion
 
     //on mouse down

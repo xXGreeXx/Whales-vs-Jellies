@@ -101,11 +101,11 @@ public class MainGameHandler : MonoBehaviour {
         player = CreatePlayer(type);
         player.name = "Player1";
         player.AddComponent<PlayerControlScript>();
-        if (!weaponType.Equals(String.Empty)) playerWeapon = CreateWeapon(player, weaponType);
-        if (!eyepieceType.Equals(String.Empty)) playerEyePiece = CreateGlasses(player, eyepieceType);
-        if (!hatType.Equals(String.Empty)) playerHat = CreateHat(player, hatType);
-        if (!mouthpieceType.Equals(String.Empty)) playerMouthPiece = CreateMouthpiece(player, mouthpieceType);
-        if (!vestType.Equals(String.Empty)) playerVest = CreateVest(player, vestType);
+        if (!weaponType.Equals(String.Empty)) playerWeapon = CreateWeapon(player, weaponType, type);
+        if (!eyepieceType.Equals(String.Empty)) playerEyePiece = CreateGlasses(player, eyepieceType, type);
+        if (!hatType.Equals(String.Empty)) playerHat = CreateHat(player, hatType, type);
+        if (!mouthpieceType.Equals(String.Empty)) playerMouthPiece = CreateMouthpiece(player, mouthpieceType, type);
+        if (!vestType.Equals(String.Empty)) playerVest = CreateVest(player, vestType, type);
     }
 
     //close socket with server on exit
@@ -348,11 +348,11 @@ public class MainGameHandler : MonoBehaviour {
             if (playerIndex > otherPlayers.Count - 1)
             {
                 GameObject p = CreatePlayer(localType);
-                if (weaponSpritesMap.ContainsKey(localWeapon)) CreateWeapon(p, localWeapon);
-                if (vestSpritesMap.ContainsKey(localVest)) CreateVest(p, localVest);
-                if (hatSpritesMap.ContainsKey(localHat)) CreateHat(p, localHat);
-                if (mouthpieceSpritesMap.ContainsKey(localMouthpiece)) CreateMouthpiece(p, localMouthpiece);
-                if (eyepieceSpritesMap.ContainsKey(localEyepiece)) CreateGlasses(p, localEyepiece);
+                if (weaponSpritesMap.ContainsKey(localWeapon)) CreateWeapon(p, localWeapon, localType);
+                if (vestSpritesMap.ContainsKey(localVest)) CreateVest(p, localVest, localType);
+                if (hatSpritesMap.ContainsKey(localHat)) CreateHat(p, localHat, localType);
+                if (mouthpieceSpritesMap.ContainsKey(localMouthpiece)) CreateMouthpiece(p, localMouthpiece, localType);
+                if (eyepieceSpritesMap.ContainsKey(localEyepiece)) CreateGlasses(p, localEyepiece, localType);
                 otherPlayers.Add(p);
             }
 
@@ -570,7 +570,7 @@ public class MainGameHandler : MonoBehaviour {
     }
 
     //create weapon
-    private GameObject CreateWeapon(GameObject parent, String weaponType)
+    private GameObject CreateWeapon(GameObject parent, String weaponType, CreatureTypes localType)
     {
         //create weapon
         GameObject weapon = new GameObject("Weapon");
@@ -590,13 +590,22 @@ public class MainGameHandler : MonoBehaviour {
     }
 
     //create hat
-    private GameObject CreateHat(GameObject parent, String hatType)
+    private GameObject CreateHat(GameObject parent, String hatType, CreatureTypes localType)
     {
         //create weapon
         GameObject hat = new GameObject("Hat");
         hat.transform.SetParent(parent.transform);
-        hat.transform.position = new Vector2(parent.transform.position.x + 0.01F, parent.transform.position.y + 0.4F);
-        hat.transform.localScale = new Vector2(0.9F, 0.6F);
+
+        Vector3 attachPoint = Vector3.zero;
+        Vector3 scalePoint = Vector3.zero;
+
+        if (localType.Equals(CreatureTypes.MoonJelly)) { attachPoint = CustomizationHandler.moonjellyfishHatPoint; scalePoint = CustomizationHandler.moonjellyfishHatScale; }
+        if (localType.Equals(CreatureTypes.BottleNose)) { attachPoint = CustomizationHandler.bottlenoseHatPoint; scalePoint = CustomizationHandler.bottlenoseHatScale; }
+
+        attachPoint /= 275;
+        scalePoint /= 200;
+        hat.transform.localPosition = attachPoint;
+        hat.transform.localScale = scalePoint;
 
         SpriteRenderer hatRenderer = hat.AddComponent<SpriteRenderer>();
         hatRenderer.sprite = hatSpritesMap[hatType];
@@ -606,13 +615,22 @@ public class MainGameHandler : MonoBehaviour {
     }
 
     //create glasses
-    private GameObject CreateGlasses(GameObject parent, String glassesType)
+    private GameObject CreateGlasses(GameObject parent, String glassesType, CreatureTypes localType)
     {
         //create weapon
         GameObject glasses = new GameObject("Glasses");
         glasses.transform.SetParent(parent.transform);
-        glasses.transform.position = new Vector2(parent.transform.position.x + 0.005F, parent.transform.position.y + 0.24F);
-        glasses.transform.localScale = new Vector2(0.9F, 0.6F);
+
+        Vector3 attachPoint = Vector3.zero;
+        Vector3 scalePoint = Vector3.zero;
+
+        if (localType.Equals(CreatureTypes.MoonJelly)) { attachPoint = CustomizationHandler.moonjellyfishEyePoint; scalePoint = CustomizationHandler.moonjellyfishEyeScale; }
+        if (localType.Equals(CreatureTypes.BottleNose)) { attachPoint = CustomizationHandler.bottlenoseEyePoint; scalePoint = CustomizationHandler.bottlenoseEyeScale; }
+
+        attachPoint /= 325;
+        scalePoint /= 200;
+        glasses.transform.localPosition = attachPoint;
+        glasses.transform.localScale = scalePoint;
 
         SpriteRenderer hatRenderer = glasses.AddComponent<SpriteRenderer>();
         hatRenderer.sprite = eyepieceSpritesMap[glassesType];
@@ -622,13 +640,22 @@ public class MainGameHandler : MonoBehaviour {
     }
 
     //create mouthpiece
-    private GameObject CreateMouthpiece(GameObject parent, String mouthpieceType)
+    private GameObject CreateMouthpiece(GameObject parent, String mouthpieceType, CreatureTypes localType)
     {
         //create weapon
         GameObject mouthpiece = new GameObject("Mouthpiece");
         mouthpiece.transform.SetParent(parent.transform);
-        mouthpiece.transform.position = new Vector2(parent.transform.position.x - 0.17F, parent.transform.position.y + 0.09F);
-        mouthpiece.transform.localScale = new Vector2(1.13F, 0.8F);
+
+        Vector3 attachPoint = Vector3.zero;
+        Vector3 scalePoint = Vector3.zero;
+
+        if (localType.Equals(CreatureTypes.MoonJelly)) { attachPoint = CustomizationHandler.moonjellyfishMouthPoint; scalePoint = CustomizationHandler.moonjellyfishMouthScale; }
+        if (localType.Equals(CreatureTypes.BottleNose)) { attachPoint = CustomizationHandler.bottlenoseMouthPoint; scalePoint = CustomizationHandler.bottlenoseMouthScale; }
+
+        attachPoint /= 450;
+        scalePoint /= 200;
+        mouthpiece.transform.localPosition = attachPoint;
+        mouthpiece.transform.localScale = scalePoint;
 
         SpriteRenderer hatRenderer = mouthpiece.AddComponent<SpriteRenderer>();
         hatRenderer.sprite = mouthpieceSpritesMap[mouthpieceType];
@@ -637,14 +664,23 @@ public class MainGameHandler : MonoBehaviour {
         return mouthpiece;
     }
 
-    //create mouthpiece
-    private GameObject CreateVest(GameObject parent, String vestType)
+    //create vest
+    private GameObject CreateVest(GameObject parent, String vestType, CreatureTypes localType)
     {
         //create weapon
         GameObject vest = new GameObject("Vest");
         vest.transform.SetParent(parent.transform);
-        vest.transform.position = new Vector2(parent.transform.position.x - 0.01F, parent.transform.position.y - 0.09F);
-        vest.transform.localScale = new Vector2(1.7F, 1.1F);
+
+        Vector3 attachPoint = Vector3.zero;
+        Vector3 scalePoint = Vector3.zero;
+
+        if (localType.Equals(CreatureTypes.MoonJelly)) { attachPoint = CustomizationHandler.moonjellyfishVestPoint; scalePoint = CustomizationHandler.moonjellyfishVestScale; }
+        if (localType.Equals(CreatureTypes.BottleNose)) { attachPoint = CustomizationHandler.bottlenoseVestPoint; scalePoint = CustomizationHandler.bottlenoseVestScale; }
+
+        attachPoint /= 275;
+        scalePoint /= 200;
+        vest.transform.localPosition = attachPoint;
+        vest.transform.localScale = scalePoint;
 
         SpriteRenderer hatRenderer = vest.AddComponent<SpriteRenderer>();
         hatRenderer.sprite = vestSpritesMap[vestType];
