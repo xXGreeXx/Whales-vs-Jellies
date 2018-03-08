@@ -42,7 +42,7 @@ public class MainGameHandler : MonoBehaviour {
 
     //game data
     public static TcpClient clientInstance;
-    public static String IP = "192.168.1.200";
+    public static String IP = "";
     public static GameObject selectedItemInInventory;
     String whaleHealth = "20000/20000";
     String whaleLevel = "0";
@@ -575,8 +575,27 @@ public class MainGameHandler : MonoBehaviour {
         //create weapon
         GameObject weapon = new GameObject("Weapon");
         weapon.transform.SetParent(parent.transform);
-        weapon.transform.position = new Vector2(parent.transform.position.x, parent.transform.position.y - 0.1F);
-        weapon.transform.localScale = new Vector2(0.5F, 0.5F);
+
+        Vector3 attachPoint = Vector3.zero;
+        Vector3 scalePoint = Vector3.zero;
+
+        if (localType.Equals(CreatureTypes.MoonJelly)) { attachPoint = CustomizationHandler.moonjellyfishGunPoint; scalePoint = CustomizationHandler.moonjellyfishGunScale; }
+        if (localType.Equals(CreatureTypes.BottleNose)) { attachPoint = CustomizationHandler.bottlenoseGunPoint; scalePoint = CustomizationHandler.bottlenoseGunScale; }
+
+        if (IsWhaleOrNot(localType))
+        {
+            attachPoint /= 200;
+            scalePoint /= 100;
+            weapon.transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        else
+        {
+            attachPoint /= 275;
+            scalePoint /= 200;
+        }
+
+        weapon.transform.localPosition = attachPoint;
+        weapon.transform.localScale = scalePoint;
 
         SpriteRenderer weaponRenderer = weapon.AddComponent<SpriteRenderer>();
         weaponRenderer.sprite = weaponSpritesMap[weaponType];
@@ -602,8 +621,18 @@ public class MainGameHandler : MonoBehaviour {
         if (localType.Equals(CreatureTypes.MoonJelly)) { attachPoint = CustomizationHandler.moonjellyfishHatPoint; scalePoint = CustomizationHandler.moonjellyfishHatScale; }
         if (localType.Equals(CreatureTypes.BottleNose)) { attachPoint = CustomizationHandler.bottlenoseHatPoint; scalePoint = CustomizationHandler.bottlenoseHatScale; }
 
-        attachPoint /= 275;
-        scalePoint /= 200;
+        if (IsWhaleOrNot(localType))
+        {
+            attachPoint /= 40;
+            scalePoint /= 55;
+            hat.transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        else
+        {
+            attachPoint /= 275;
+            scalePoint /= 200;
+        }
+
         hat.transform.localPosition = attachPoint;
         hat.transform.localScale = scalePoint;
 
@@ -627,8 +656,18 @@ public class MainGameHandler : MonoBehaviour {
         if (localType.Equals(CreatureTypes.MoonJelly)) { attachPoint = CustomizationHandler.moonjellyfishEyePoint; scalePoint = CustomizationHandler.moonjellyfishEyeScale; }
         if (localType.Equals(CreatureTypes.BottleNose)) { attachPoint = CustomizationHandler.bottlenoseEyePoint; scalePoint = CustomizationHandler.bottlenoseEyeScale; }
 
-        attachPoint /= 325;
-        scalePoint /= 200;
+        if (IsWhaleOrNot(localType))
+        {
+            attachPoint /= 200;
+            scalePoint /= 100;
+            glasses.transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        else
+        {
+            attachPoint /= 325;
+            scalePoint /= 200;
+        }
+
         glasses.transform.localPosition = attachPoint;
         glasses.transform.localScale = scalePoint;
 
@@ -652,8 +691,18 @@ public class MainGameHandler : MonoBehaviour {
         if (localType.Equals(CreatureTypes.MoonJelly)) { attachPoint = CustomizationHandler.moonjellyfishMouthPoint; scalePoint = CustomizationHandler.moonjellyfishMouthScale; }
         if (localType.Equals(CreatureTypes.BottleNose)) { attachPoint = CustomizationHandler.bottlenoseMouthPoint; scalePoint = CustomizationHandler.bottlenoseMouthScale; }
 
-        attachPoint /= 450;
-        scalePoint /= 200;
+        if (IsWhaleOrNot(localType))
+        {
+            attachPoint /= 45;
+            scalePoint /= 55;
+            mouthpiece.transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        else
+        {
+            attachPoint /= 450;
+            scalePoint /= 200;
+        }
+
         mouthpiece.transform.localPosition = attachPoint;
         mouthpiece.transform.localScale = scalePoint;
 
@@ -677,8 +726,18 @@ public class MainGameHandler : MonoBehaviour {
         if (localType.Equals(CreatureTypes.MoonJelly)) { attachPoint = CustomizationHandler.moonjellyfishVestPoint; scalePoint = CustomizationHandler.moonjellyfishVestScale; }
         if (localType.Equals(CreatureTypes.BottleNose)) { attachPoint = CustomizationHandler.bottlenoseVestPoint; scalePoint = CustomizationHandler.bottlenoseVestScale; }
 
-        attachPoint /= 275;
-        scalePoint /= 200;
+        if (IsWhaleOrNot(localType))
+        {
+            attachPoint /= 200;
+            scalePoint /= 100;
+            vest.transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        else
+        {
+            attachPoint /= 275;
+            scalePoint /= 200;
+        }
+
         vest.transform.localPosition = attachPoint;
         vest.transform.localScale = scalePoint;
 

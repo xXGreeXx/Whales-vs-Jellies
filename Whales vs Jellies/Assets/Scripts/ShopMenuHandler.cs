@@ -45,6 +45,10 @@ public class ShopMenuHandler : MonoBehaviour {
     //change preview base
     public static void ChangeBackground()
     {
+        //clear existing stuff
+        ClearPreview();
+
+        //change
         if (MainGameHandler.isWhale)
         {
             previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.bottleNoseSprite;
@@ -113,5 +117,31 @@ public class ShopMenuHandler : MonoBehaviour {
         backgroundRenderer.sprite = SpriteHandler.backgroundSprite;
 
         PushItems();
+    }
+
+    //remove items from preview //TODO\\
+    public static void ClearPreview()
+    {
+        //remove item from panel
+        for (int index = 0; index < previewPanel.transform.childCount; index++)
+        {
+            GameObject child = previewPanel.transform.GetChild(index).gameObject;
+            if (child.GetComponent<SpriteRenderer>())
+            {
+                Destroy(child, 0);
+                break;
+            }
+        }
+
+        //remove item from preview
+        for (int index = 0; index < previewPanel.transform.childCount; index++)
+        {
+            GameObject child = previewPanel.transform.GetChild(index).gameObject;
+            if (child.GetComponent<SpriteRenderer>())
+            {
+                Destroy(child, 0);
+                break;
+            }
+        }
     }
 }
