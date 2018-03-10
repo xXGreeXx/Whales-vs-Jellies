@@ -27,13 +27,13 @@ public class CustomizationHandler : MonoBehaviour {
     public static Vector3 bottlenoseHatPoint = new Vector3(76.4F, 117.8F);
     public static Vector3 bottlenoseHatScale = new Vector3(255, 255);
 
-    public static Vector3 bottlenoseGunPoint = new Vector3(-41, 52);
-    public static Vector3 bottlenoseGunScale = new Vector3(173, 190);
+    public static Vector3 bottlenoseGunPoint = new Vector3(-87, 89);
+    public static Vector3 bottlenoseGunScale = new Vector3(130, 148);
 
     public static Vector3 bottlenoseEyePoint = new Vector3(16, 135);
     public static Vector3 bottlenoseEyeScale = new Vector3(95, 255);
 
-    public static Vector3 bottlenoseMouthPoint = new Vector3(-38.9F, 186);
+    public static Vector3 bottlenoseMouthPoint = new Vector3(-24.6F, 153);
     public static Vector3 bottlenoseMouthScale = new Vector3(218, 205);
 
     public static Vector3 bottlenoseVestPoint = new Vector3(15, -59);

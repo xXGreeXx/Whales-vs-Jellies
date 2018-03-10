@@ -49,6 +49,9 @@ public class MainGameHandler : MonoBehaviour {
     public static List<GameObject> otherPlayers = new List<GameObject>();
     public static int lastXPEarned = 0;
 
+    //single player game data
+    public static List<GameObject> AIs = new List<GameObject>();
+
     //"cosmetic" data
     public static Dictionary<String, Sprite> weaponSpritesMap = new Dictionary<string, Sprite>()
     {
@@ -89,13 +92,20 @@ public class MainGameHandler : MonoBehaviour {
         escapeMenuPanel.SetActive(false);
 
         //connect to server
-        clientInstance = new TcpClient();
-        try
+        if (!IP.Equals(String.Empty))
         {
-            clientInstance.Connect(IP, 8888);
-            clientInstance.NoDelay = true;
+            clientInstance = new TcpClient();
+            try
+            {
+                clientInstance.Connect(IP, 8888);
+                clientInstance.NoDelay = true;
+            }
+            catch (Exception) { SceneManager.LoadScene("MainMenu"); }
         }
-        catch (Exception) { SceneManager.LoadScene("MainMenu"); }
+        else
+        {
+            InitializeAI();
+        }
 
         //create player
         player = CreatePlayer(type);
@@ -108,6 +118,12 @@ public class MainGameHandler : MonoBehaviour {
         if (!vestType.Equals(String.Empty)) playerVest = CreateVest(player, vestType, type);
     }
 
+    //initialize AI //TODO\\
+    private void InitializeAI()
+    {
+
+    }
+
     //close socket with server on exit
     void OnApplicationQuit()
     {
@@ -118,20 +134,23 @@ public class MainGameHandler : MonoBehaviour {
     void FixedUpdate ()
     {
         //interface server
-        if (IsConnected(clientInstance.Client))
+        if (!IP.Equals(String.Empty))
         {
-            List<String> data = ReadWriteServer();
-            if(data.Count >= 12) ParseData(data);
-        }
-        else
-        {
-            clientInstance.GetStream().Close();
-            clientInstance.Close();
-            clientInstance = null;
+            if (IsConnected(clientInstance.Client))
+            {
+                List<String> data = ReadWriteServer();
+                if (data.Count >= 12) ParseData(data);
+            }
+            else
+            {
+                clientInstance.GetStream().Close();
+                clientInstance.Close();
+                clientInstance = null;
 
-            for (int index = 0; index < otherPlayers.Count; index++) RemovePlayer(index);
+                for (int index = 0; index < otherPlayers.Count; index++) RemovePlayer(index);
 
-            SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene("MainMenu");
+            }
         }
 
         //update HUD labels
@@ -514,7 +533,13 @@ public class MainGameHandler : MonoBehaviour {
         if (localType.Equals(CreatureTypes.BottleNose))
         {
             ActiveAnimator animator = p.AddComponent<ActiveAnimator>();
+            animator.interval = 0.5F;
+
             List<Sprite> moveSet = new List<Sprite>();
+            moveSet.Add(SpriteHandler.bottleNoseSprite);
+            moveSet.Add(SpriteHandler.bottleNoseSpriteAnim1);
+            moveSet.Add(SpriteHandler.bottleNoseSpriteAnim2);
+            moveSet.Add(SpriteHandler.bottleNoseSpriteAnim1);
             moveSet.Add(SpriteHandler.bottleNoseSprite);
 
             animator.animationSets.Add(moveSet);
@@ -584,8 +609,8 @@ public class MainGameHandler : MonoBehaviour {
 
         if (IsWhaleOrNot(localType))
         {
-            attachPoint /= 200;
-            scalePoint /= 100;
+            attachPoint /= 100;
+            scalePoint /= 75;
             weapon.transform.rotation = Quaternion.Euler(0, 0, -90);
         }
         else
@@ -658,8 +683,8 @@ public class MainGameHandler : MonoBehaviour {
 
         if (IsWhaleOrNot(localType))
         {
-            attachPoint /= 200;
-            scalePoint /= 100;
+            attachPoint /= 40;
+            scalePoint /= 50;
             glasses.transform.rotation = Quaternion.Euler(0, 0, -90);
         }
         else
@@ -693,7 +718,7 @@ public class MainGameHandler : MonoBehaviour {
 
         if (IsWhaleOrNot(localType))
         {
-            attachPoint /= 45;
+            attachPoint /= 38;
             scalePoint /= 55;
             mouthpiece.transform.rotation = Quaternion.Euler(0, 0, -90);
         }

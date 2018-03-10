@@ -119,17 +119,20 @@ public class ShopMenuHandler : MonoBehaviour {
         PushItems();
     }
 
-    //remove items from preview //TODO\\
+    //remove items from preview
     public static void ClearPreview()
     {
         //remove item from panel
         for (int index = 0; index < previewPanel.transform.childCount; index++)
         {
             GameObject child = previewPanel.transform.GetChild(index).gameObject;
-            if (child.GetComponent<SpriteRenderer>())
+            for (int child2Index = 0; child2Index < child.transform.childCount; child2Index++)
             {
-                Destroy(child, 0);
-                break;
+                GameObject child2 = child.transform.GetChild(child2Index).gameObject;
+                if (child2.GetComponent<SpriteRenderer>())
+                {
+                    Destroy(child2, 0);
+                }
             }
         }
 
@@ -140,7 +143,6 @@ public class ShopMenuHandler : MonoBehaviour {
             if (child.GetComponent<SpriteRenderer>())
             {
                 Destroy(child, 0);
-                break;
             }
         }
     }
