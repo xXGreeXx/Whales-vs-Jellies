@@ -51,6 +51,7 @@ public class MainGameHandler : MonoBehaviour {
 
     //single player game data
     public static List<GameObject> AIs = new List<GameObject>();
+    private static int amountOfAIs = 100;
 
     //"cosmetic" data
     public static Dictionary<String, Sprite> weaponSpritesMap = new Dictionary<string, Sprite>()
@@ -118,10 +119,27 @@ public class MainGameHandler : MonoBehaviour {
         if (!vestType.Equals(String.Empty)) playerVest = CreateVest(player, vestType, type);
     }
 
-    //initialize AI //TODO\\
+    //initialize AI
     private void InitializeAI()
     {
+        for (int i = 0; i < amountOfAIs; i++)
+        {
+            GameObject AIGO = CreatePlayer(CreatureTypes.MoonJelly);
+            AIGO.name = "AI";
+            PlayerData AIData = AIGO.AddComponent<PlayerData>();
+            AI AICore = AIGO.AddComponent<AI>();
 
+            AIData.health = 100;
+            AIData.maxHealth = 100;
+            AIData.ammo = 10;
+            AIData.maxAmmo = 10;
+
+            CreateWeapon(AIGO, "jellyfishSpineShooter", CreatureTypes.MoonJelly);
+            CreateMouthpiece(AIGO, "cigar", CreatureTypes.MoonJelly);
+            CreateHat(AIGO, "topHat", CreatureTypes.MoonJelly);
+
+            AIs.Add(AIGO);
+        }
     }
 
     //close socket with server on exit
@@ -151,6 +169,10 @@ public class MainGameHandler : MonoBehaviour {
 
                 SceneManager.LoadScene("MainMenu");
             }
+        }
+        else
+        {
+            GameObject.Find("playersText").GetComponent<UnityEngine.UI.Text>().text = AIs.Count + " Jellyfish";
         }
 
         //update HUD labels
@@ -555,7 +577,7 @@ public class MainGameHandler : MonoBehaviour {
             p.layer = 8;
             bodyBase.rotation = 90;
             renderer.sprite = SpriteHandler.bottleNoseSprite;
-            renderer.sortingOrder = -4;
+            renderer.sortingOrder = -5;
         }
         //moonjelly creation
         else if(localType.Equals(CreatureTypes.MoonJelly))
@@ -588,7 +610,7 @@ public class MainGameHandler : MonoBehaviour {
 
             p.transform.position = new Vector2(UnityEngine.Random.Range(-39, -10), UnityEngine.Random.Range(2, -18));
             renderer.sprite = SpriteHandler.moonJellySprite;
-            renderer.sortingOrder = -4;
+            renderer.sortingOrder = -5;
         }
 
         return p;
@@ -615,8 +637,8 @@ public class MainGameHandler : MonoBehaviour {
         }
         else
         {
-            attachPoint /= 275;
-            scalePoint /= 200;
+            attachPoint /= 300;
+            scalePoint /= 255;
         }
 
         weapon.transform.localPosition = attachPoint;
@@ -768,7 +790,7 @@ public class MainGameHandler : MonoBehaviour {
 
         SpriteRenderer hatRenderer = vest.AddComponent<SpriteRenderer>();
         hatRenderer.sprite = vestSpritesMap[vestType];
-        hatRenderer.sortingOrder = -3;
+        hatRenderer.sortingOrder = -4;
 
         return vest;
     }

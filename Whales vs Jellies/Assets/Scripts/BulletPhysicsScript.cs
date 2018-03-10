@@ -23,11 +23,11 @@ public class BulletPhysicsScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (canCollide || (collision.gameObject.name.Equals("wall") || collision.gameObject.name.Equals("sand")))
+        if (canCollide || (collision.gameObject.name.Equals("wall") || collision.gameObject.name.Equals("sand") || collision.gameObject.name.Equals("AI")))
         {
-            if (collision.gameObject.name.Equals("Player1"))
+            if (collision.gameObject.name.Equals("Player1") || collision.gameObject.name.Equals("AI"))
             {
-                MainGameHandler.player.GetComponent<PlayerData>().health -= bulletDamage;
+                collision.gameObject.GetComponent<PlayerData>().health -= bulletDamage;
             }
 
             if (MainGameHandler.otherBullets.Contains(gameObject)) MainGameHandler.otherBullets.Remove(gameObject);

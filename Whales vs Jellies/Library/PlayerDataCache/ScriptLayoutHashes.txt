@@ -115,6 +115,7 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
 d38b19fa841132f228cd306a215ef9dc Assembly-CSharp.dll:.ItemData
+1f70a2d997e82a29ab3ee44d09a56cf6 Assembly-CSharp.dll:.AI
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.MainGameHandler
 f736fe81dbaceec5eb4c33a277c4618f Assembly-CSharp.dll:.ActiveAnimator
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
@@ -143,4 +144,3 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.Spa
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.BubbleScript
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.InventoryAddScript
 00477205062265513efa8ea41de9f833 Assembly-CSharp.dll:.PlayerData
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.AI
