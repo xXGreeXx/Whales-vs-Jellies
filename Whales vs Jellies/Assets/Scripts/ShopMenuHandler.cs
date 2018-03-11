@@ -14,6 +14,8 @@ public class ShopMenuHandler : MonoBehaviour {
     //start
     void Start ()
     {
+        MainGameHandler.isWhale = false;
+
         previewPanel = GameObject.Find("PreviewPanel");
         inventoryPanel = GameObject.Find("InventoryPanel");
         descriptionPanel = GameObject.Find("descriptionPanel");

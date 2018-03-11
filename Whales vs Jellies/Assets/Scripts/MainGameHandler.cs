@@ -122,6 +122,9 @@ public class MainGameHandler : MonoBehaviour {
     //initialize AI
     private void InitializeAI()
     {
+        foreach (GameObject a in AIs) Destroy(a, 0);
+        AIs = new List<GameObject>();
+
         for (int i = 0; i < amountOfAIs; i++)
         {
             GameObject AIGO = CreatePlayer(CreatureTypes.MoonJelly);
@@ -135,7 +138,7 @@ public class MainGameHandler : MonoBehaviour {
 
             CreateWeapon(AIGO, "jellyfishSpineShooter", CreatureTypes.MoonJelly);
             CreateMouthpiece(AIGO, "cigar", CreatureTypes.MoonJelly);
-            CreateHat(AIGO, "topHat", CreatureTypes.MoonJelly);
+            CreateGlasses(AIGO, "sunglasses", CreatureTypes.MoonJelly);
 
             AIs.Add(AIGO);
         }
@@ -283,7 +286,7 @@ public class MainGameHandler : MonoBehaviour {
     //disconnect
     public static void Disconnect()
     {
-        clientInstance.Close();
+
     }
 
     //exit and save
@@ -377,7 +380,7 @@ public class MainGameHandler : MonoBehaviour {
 
         watch.Stop();
         //update ping label
-        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = watch.ElapsedMilliseconds + "ms";
+        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = watch.ElapsedMilliseconds / 11 + "ms"; //amount of data per player
 
         return data;
     }
