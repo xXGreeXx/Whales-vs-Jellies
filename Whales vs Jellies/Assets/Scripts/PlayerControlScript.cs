@@ -47,11 +47,39 @@ public class PlayerControlScript : MonoBehaviour {
 
                 if ((body.rotation > 180 && body.rotation < 360) || (body.rotation < 0 && body.rotation > 180))
                 {
+                    //flip items
+                    for (int child = 0; child < MainGameHandler.player.transform.childCount; child++)
+                    {
+                        GameObject childGO = MainGameHandler.player.transform.GetChild(child).gameObject;
+
+                        if (!renderer.flipX)
+                        {
+                            childGO.transform.localPosition = Vector2.Scale(childGO.transform.localPosition, new Vector2(-1, 1));
+                            childGO.GetComponent<SpriteRenderer>().flipY = true;
+                        }
+                    }
+
+                    //flip whale
                     renderer.flipX = true;
+
                 }
                 else
                 {
+                    //flip items
+                    for (int child = 0; child < MainGameHandler.player.transform.childCount; child++)
+                    {
+                        GameObject childGO = MainGameHandler.player.transform.GetChild(child).gameObject;
+
+                        if (renderer.flipX)
+                        {
+                            childGO.transform.localPosition = Vector2.Scale(childGO.transform.localPosition, new Vector2(-1, 1));
+                            childGO.GetComponent<SpriteRenderer>().flipY = false;
+                        }
+                    }
+
+                    //flip whale
                     renderer.flipX = false;
+
                 }
             }
         }

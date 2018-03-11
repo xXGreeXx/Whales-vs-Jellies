@@ -15,13 +15,14 @@ public class AI : MonoBehaviour {
         diff.Normalize();
         float deg = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
 
-        float yVel = 0.05F;
+        float yVel = 0.033F;
 
         if (yVel != 0)
         {
             gameObject.GetComponent<ActiveAnimator>().PlaySet(0);
         }
 
+        gameObject.transform.Find("Weapon").transform.rotation = Quaternion.Euler(new Vector3(0, 0, deg));
         Rigidbody2D body = gameObject.GetComponent<Rigidbody2D>();
 
         body.MoveRotation(deg - 90);
@@ -38,6 +39,12 @@ public class AI : MonoBehaviour {
         {
             MainGameHandler.AIs.Remove(gameObject);
             Destroy(gameObject, 0);
+        }
+
+        if (Random.Range(0, 400) == 1)
+        {
+            gameObject.transform.Find("Weapon").GetComponent<WeaponHandlerScript>().ReloadWeapon();
+            gameObject.transform.Find("Weapon").GetComponent<WeaponHandlerScript>().FireWeapon(100, 0.1F, false, true);
         }
     }
 }

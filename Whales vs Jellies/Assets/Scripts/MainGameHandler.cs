@@ -126,13 +126,12 @@ public class MainGameHandler : MonoBehaviour {
         {
             GameObject AIGO = CreatePlayer(CreatureTypes.MoonJelly);
             AIGO.name = "AI";
+
             PlayerData AIData = AIGO.AddComponent<PlayerData>();
             AI AICore = AIGO.AddComponent<AI>();
 
             AIData.health = 100;
             AIData.maxHealth = 100;
-            AIData.ammo = 10;
-            AIData.maxAmmo = 10;
 
             CreateWeapon(AIGO, "jellyfishSpineShooter", CreatureTypes.MoonJelly);
             CreateMouthpiece(AIGO, "cigar", CreatureTypes.MoonJelly);
@@ -206,7 +205,7 @@ public class MainGameHandler : MonoBehaviour {
             //handle weapon fire/rotate
             if (Input.GetMouseButtonDown(0))
             {
-                playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100, 1F);
+                playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100, 1F, isWhale, false);
                 for(int i = 0; i < UnityEngine.Random.Range(3, 7); i++) CreateBubble(player.transform.position.x + (i / 5.5F) * UnityEngine.Random.Range(-0.5F, 0.5F), player.transform.position.y);
             }
             if (Input.GetMouseButtonDown(1))
@@ -519,6 +518,7 @@ public class MainGameHandler : MonoBehaviour {
         physics.canCollide = sentByRemote;
         Rigidbody2D body = bullet.AddComponent<Rigidbody2D>();
 
+        body.mass = 1F;
         body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         body.gravityScale = 0;
         bullet.transform.rotation = rot;
@@ -554,6 +554,8 @@ public class MainGameHandler : MonoBehaviour {
         //bottlenose creation
         if (localType.Equals(CreatureTypes.BottleNose))
         {
+            bodyBase.mass = 100;
+
             ActiveAnimator animator = p.AddComponent<ActiveAnimator>();
             animator.interval = 0.5F;
 
@@ -569,7 +571,7 @@ public class MainGameHandler : MonoBehaviour {
             collider.size = new Vector2(2.9F, 8F);
             data.maxHealth = 20000;
             data.health = data.maxHealth;
-            data.moveSpeed = 0.3F;
+            data.moveSpeed = 30F;
             data.isWhale = IsWhaleOrNot(localType);
 
             p.transform.position = new Vector2(32.8F, -10);

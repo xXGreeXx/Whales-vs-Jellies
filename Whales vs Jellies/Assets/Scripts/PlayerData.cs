@@ -5,7 +5,5 @@ public class PlayerData : MonoBehaviour {
     public bool isWhale;
     public float health;
     public float maxHealth;
-    public int ammo;
-    public int maxAmmo;
     public float moveSpeed;
 }

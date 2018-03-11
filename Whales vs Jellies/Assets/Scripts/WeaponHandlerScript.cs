@@ -6,11 +6,11 @@ public class WeaponHandlerScript : MonoBehaviour {
     public int maxAmmo;
 
     //fire weapon
-    public void FireWeapon(int damage, float speed)
+    public void FireWeapon(int damage, float speed, bool localIsWhale, bool sentByRemote)
     {
         if (ammo > 0)
         {
-            MainGameHandler.bulletsFiredByPlayer.Add(MainGameHandler.CreateBullet(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.rotation, damage, speed, false, MainGameHandler.isWhale));
+            MainGameHandler.bulletsFiredByPlayer.Add(MainGameHandler.CreateBullet(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.rotation, damage, speed, sentByRemote, localIsWhale));
             ammo--;
         }
     }
