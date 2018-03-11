@@ -184,6 +184,33 @@ public class MainGameHandler : MonoBehaviour {
             whaleHealth = player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth;
         }
         GameObject.Find("WhaleHealthText").GetComponent<UnityEngine.UI.Text>().text = whaleHealth;
+        String whaleHealthLow = "0";
+        String whaleHealthHigh = "0";
+        int i = 0;
+        foreach (char c in whaleHealth)
+        {
+            String key = c.ToString();
+            if (key.Equals("/"))
+            {
+                whaleHealthHigh = whaleHealth.Substring(i + 1, whaleHealth.Length - (i + 1));
+                break;
+            }
+            else
+            {
+                whaleHealthLow += c;
+            }
+
+            i++;
+        }
+
+        float whaleHealthLowParsed = float.Parse(whaleHealthLow);
+        float whaleHealthHighParsed = float.Parse(whaleHealthHigh);
+        GameObject whaleHealthForeground = GameObject.Find("WhaleHealthForeground");
+        GameObject whaleHealthBackground = GameObject.Find("WhaleHealthBackground");
+
+        float finalX = (whaleHealthLowParsed / whaleHealthHighParsed * whaleHealthBackground.GetComponent<RectTransform>().rect.width);
+
+        whaleHealthForeground.GetComponent<RectTransform>().sizeDelta = new Vector2(finalX, whaleHealthBackground.GetComponent<RectTransform>().rect.height);
 
         //check if lost
         if (player.GetComponent<PlayerData>().health <= 0)
@@ -584,6 +611,8 @@ public class MainGameHandler : MonoBehaviour {
         //moonjelly creation
         else if(localType.Equals(CreatureTypes.MoonJelly))
         {
+            bodyBase.mass = 5;
+
             //add active animator for jellyfish
             ActiveAnimator animator = p.AddComponent<ActiveAnimator>();
             List<Sprite> moveSet = new List<Sprite>();
@@ -603,7 +632,7 @@ public class MainGameHandler : MonoBehaviour {
             collider.size = new Vector2(0.5F, 0.7F);
             data.maxHealth = 100;
             data.health = data.maxHealth;
-            data.moveSpeed = 0.15F;
+            data.moveSpeed = 0.75F;
             data.isWhale = IsWhaleOrNot(localType);
 
             PhysicsMaterial2D mat = new PhysicsMaterial2D();

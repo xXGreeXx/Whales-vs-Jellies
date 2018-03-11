@@ -15,7 +15,7 @@ public class AI : MonoBehaviour {
         diff.Normalize();
         float deg = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
 
-        float yVel = 0.033F;
+        float yVel = 0.25F;
 
         if (yVel != 0)
         {
