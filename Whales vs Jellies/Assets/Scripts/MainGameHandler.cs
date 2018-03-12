@@ -222,6 +222,14 @@ public class MainGameHandler : MonoBehaviour {
             Disconnect();
             SceneManager.LoadScene("LossScreen");
         }
+
+        //check if won
+        if ((IP.Equals("") && AIs.Count <= 0)) //TODO include multiplayer win too
+        {
+            playerCurrentXP += calculateXPGain();
+            Disconnect();
+            SceneManager.LoadScene("WinScreen");
+        }
     }
 
     //update
@@ -277,7 +285,7 @@ public class MainGameHandler : MonoBehaviour {
     //calculate xp earn
     private int calculateXPGain()
     {
-        int xp = 5;
+        int xp = 1500;
 
         lastXPEarned = xp;
         return xp;
