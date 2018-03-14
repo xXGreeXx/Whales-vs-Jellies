@@ -11,6 +11,9 @@ public class ShopMenuHandler : MonoBehaviour {
     public static Vector3 lastPosition;
     private static float shift = 244.5F / 3.25F;
 
+    public static GameObject shopMenuForJellies;
+    public static GameObject shopMenuForWhales;
+
     //start
     void Start ()
     {
@@ -19,6 +22,8 @@ public class ShopMenuHandler : MonoBehaviour {
         previewPanel = GameObject.Find("PreviewPanel");
         inventoryPanel = GameObject.Find("InventoryPanel");
         descriptionPanel = GameObject.Find("descriptionPanel");
+        shopMenuForJellies = GameObject.Find("ShopPanelForJellies");
+        shopMenuForWhales = GameObject.Find("ShopPanelForWhales");
 
         descriptionPanel.SetActive(false);
 
@@ -54,12 +59,18 @@ public class ShopMenuHandler : MonoBehaviour {
         //change
         if (MainGameHandler.isWhale)
         {
+            shopMenuForJellies.SetActive(false);
+            shopMenuForWhales.SetActive(true);
+
             previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.bottleNoseSprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 270);
             previewPanel.transform.localScale = new Vector2(-1, -1);
         }
         else
         {
+            shopMenuForJellies.SetActive(true);
+            shopMenuForWhales.SetActive(false);
+
             previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.moonJellySprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 0);
         }

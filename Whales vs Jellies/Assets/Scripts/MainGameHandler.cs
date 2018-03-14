@@ -626,7 +626,7 @@ public class MainGameHandler : MonoBehaviour {
             animator.animationSets.Add(moveSet);
 
             collider.size = new Vector2(2.9F, 8F);
-            data.maxHealth = 20000;
+            data.maxHealth = 10000;
             data.health = data.maxHealth;
             data.moveSpeed = 30F;
             data.isWhale = IsWhaleOrNot(localType);
