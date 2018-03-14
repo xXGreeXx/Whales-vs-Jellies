@@ -24,7 +24,7 @@ public class MainGameHandler : MonoBehaviour {
     public static GameObject playerEyePiece;
     public static bool isWhale = false;
     public static CreatureTypes type;
-    public static int playerLevel = 0;
+    public static int playerLevel = 1;
     public static int playerCurrentXP = 0;
     public static int xpNeededForNextLevel = 100;
     public static int currency = 0;
@@ -219,6 +219,9 @@ public class MainGameHandler : MonoBehaviour {
         if (player.GetComponent<PlayerData>().health <= 0)
         {
             playerCurrentXP += calculateXPGain();
+            currency += lastXPEarned;
+            CheckIfLeveled();
+
             Disconnect();
             SceneManager.LoadScene("LossScreen");
         }
@@ -227,6 +230,9 @@ public class MainGameHandler : MonoBehaviour {
         if ((IP.Equals("") && AIs.Count <= 0)) //TODO include multiplayer win too
         {
             playerCurrentXP += calculateXPGain();
+            currency += lastXPEarned;
+            CheckIfLeveled();
+
             Disconnect();
             SceneManager.LoadScene("WinScreen");
         }
@@ -268,6 +274,19 @@ public class MainGameHandler : MonoBehaviour {
             {
                 renderer.flipY = false;
             }
+        }
+    }
+
+    //check if player leveled up
+    public void CheckIfLeveled()
+    {
+        while (playerCurrentXP >= xpNeededForNextLevel)
+        {
+            playerCurrentXP -= xpNeededForNextLevel;
+            playerLevel++;
+
+            float unTruncatedXPForNextLevel = xpNeededForNextLevel * 1.35F;
+            xpNeededForNextLevel = (int)Math.Round(unTruncatedXPForNextLevel);
         }
     }
 

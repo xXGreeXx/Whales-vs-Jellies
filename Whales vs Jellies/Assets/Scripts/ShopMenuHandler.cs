@@ -42,6 +42,7 @@ public class ShopMenuHandler : MonoBehaviour {
     {
         GameObject.Find("XPBarText").GetComponent<UnityEngine.UI.Text>().text = MainGameHandler.playerCurrentXP + "/" + MainGameHandler.xpNeededForNextLevel;
         GameObject.Find("goldText").GetComponent<UnityEngine.UI.Text>().text = MainGameHandler.currency.ToString();
+        GameObject.Find("levelText").GetComponent<UnityEngine.UI.Text>().text = "Lvl: " + MainGameHandler.playerLevel.ToString();
     }
 
     //change preview base
