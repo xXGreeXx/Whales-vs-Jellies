@@ -55,7 +55,7 @@ public class MainGameHandler : MonoBehaviour {
     public static List<GameObject> AIs = new List<GameObject>();
     private static int amountOfAIs = 100;
 
-    //"cosmetic" data
+    //"cosmetic" maps
     public static Dictionary<String, Sprite> weaponSpritesMap = new Dictionary<string, Sprite>()
     {
         {"EMPTY", new Sprite() },
@@ -93,6 +93,11 @@ public class MainGameHandler : MonoBehaviour {
         //find ui components
         escapeMenuPanel = GameObject.Find("EscapeMenu");
         escapeMenuPanel.SetActive(false);
+
+        //reset static variables
+        bulletsFiredByPlayer = new List<GameObject>();
+        otherBullets = new List<GameObject>();
+        otherPlayers = new List<GameObject>();
 
         //connect to server
         if (!IP.Equals(String.Empty))
@@ -406,10 +411,10 @@ public class MainGameHandler : MonoBehaviour {
 
 
         }
-
         watch.Stop();
+
         //update ping label
-        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = watch.ElapsedMilliseconds / 11 + "ms"; //amount of data per player
+        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = watch.ElapsedMilliseconds / 11 + "ms"; //TODO\\ amount of data per player
 
         return data;
     }
@@ -553,12 +558,21 @@ public class MainGameHandler : MonoBehaviour {
     {
         GameObject b = new GameObject("bubble");
         b.transform.position = new Vector2(x, y);
-        b.transform.localScale = new Vector2(0.2F, 0.2F);
+        b.transform.localScale = new Vector2(0.13F, 0.13F);
         b.AddComponent<BubbleScript>();
         SpriteRenderer renderer = b.AddComponent<SpriteRenderer>();
 
+        BackgroundAnimator animator = b.AddComponent<BackgroundAnimator>();
+        List<Sprite> set = new List<Sprite>();
+        set.Add(SpriteHandler.bubbleSpriteAnim1);
+        set.Add(SpriteHandler.bubbleSpriteAnim2);
+
+        animator.framesOfAnimation = set;
+        animator.random = true;
+        animator.interval = 0.45F;
+
         renderer.sortingOrder = 2;
-        renderer.sprite = SpriteHandler.bubbleSprite;
+        renderer.sprite = SpriteHandler.bubbleSpriteAnim2;
     }
 
     //create bullet
@@ -838,9 +852,8 @@ public class MainGameHandler : MonoBehaviour {
 
         if (IsWhaleOrNot(localType))
         {
-            attachPoint /= 200;
-            scalePoint /= 100;
-            vest.transform.rotation = Quaternion.Euler(0, 0, -90);
+            attachPoint /= 250;
+            scalePoint /= 50;
         }
         else
         {

@@ -21,7 +21,8 @@ public class SpriteHandler : MonoBehaviour {
     public static Sprite pirateHatSprite;
     public static Sprite bulletSprite;
     public static Sprite backgroundSprite;
-    public static Sprite bubbleSprite;
+    public static Sprite bubbleSpriteAnim1;
+    public static Sprite bubbleSpriteAnim2;
 
     //start
     void Start ()
@@ -43,6 +44,7 @@ public class SpriteHandler : MonoBehaviour {
         pirateHatSprite = Resources.Load("pirateHat", typeof(Sprite)) as Sprite;
         bulletSprite = Resources.Load("jellyfishSpine", typeof(Sprite)) as Sprite;
         backgroundSprite = Resources.Load("background", typeof(Sprite)) as Sprite;
-        bubbleSprite = Resources.Load("bubble", typeof(Sprite)) as Sprite;
+        bubbleSpriteAnim1 = Resources.Load("BubbleAnim/bubble1", typeof(Sprite)) as Sprite;
+        bubbleSpriteAnim2 = Resources.Load("BubbleAnim/bubble2", typeof(Sprite)) as Sprite;
     }
 }
