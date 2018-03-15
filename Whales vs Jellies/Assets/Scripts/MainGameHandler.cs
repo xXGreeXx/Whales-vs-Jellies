@@ -29,6 +29,8 @@ public class MainGameHandler : MonoBehaviour {
     public static int xpNeededForNextLevel = 100;
     public static int currency = 0;
 
+    public static float damageDealtToWhale = 0;
+
     //player "cosmetic" data
     public static String weaponType = "jellyfishSpineShooter";
     public static String vestType = "EMPTY";
