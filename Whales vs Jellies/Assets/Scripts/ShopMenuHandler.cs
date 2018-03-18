@@ -31,7 +31,8 @@ public class ShopMenuHandler : MonoBehaviour {
 
         lastPosition = new Vector3(-158, 222, -15);
 
-        AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.jellyfishSpineShooter, "JellyfishSpineShooter \nThis weapon packs a sting! High single target damage.");
+        AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.nematocystSprite, "Nematocyst \nThis weapon packs a sting! High single target damage.");
+        AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.harpoonGunSprite, "HarpoonGun \nHook your foes!");
         AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.topHatSprite, "TopHat \nWant to impress your friends? Look like a businessman? This is for you!");
         AddItemToInventory(ItemData.ItemTypes.MouthpiecePanel, SpriteHandler.cigarSprite, "Cigar \nThis just raises further questions.");
         AddItemToInventory(ItemData.ItemTypes.EyepiecePanel, SpriteHandler.sunglassesSprite, "Sunglasses \nBlock harmful ultraviolet rays AND looks great!");
@@ -65,6 +66,13 @@ public class ShopMenuHandler : MonoBehaviour {
             previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.bottleNoseSprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 270);
             previewPanel.transform.localScale = new Vector2(-1, -1);
+
+            for (int index = 0; index < previewPanel.transform.childCount; index++)
+            {
+                GameObject child = previewPanel.transform.GetChild(index).gameObject;
+
+                child.transform.rotation = Quaternion.Euler(0, 0, -90);
+            }
         }
         else
         {
@@ -73,6 +81,13 @@ public class ShopMenuHandler : MonoBehaviour {
 
             previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.moonJellySprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            for (int index = 0; index < previewPanel.transform.childCount; index++)
+            {
+                GameObject child = previewPanel.transform.GetChild(index).gameObject;
+
+                child.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
         }
     }
 

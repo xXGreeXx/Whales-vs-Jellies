@@ -12,7 +12,8 @@ public class SpriteHandler : MonoBehaviour {
     public static Sprite bottleNoseSprite;
     public static Sprite bottleNoseSpriteAnim1;
     public static Sprite bottleNoseSpriteAnim2;
-    public static Sprite jellyfishSpineShooter;
+    public static Sprite nematocystSprite;
+    public static Sprite harpoonGunSprite;
     public static Sprite topHatSprite;
     public static Sprite cigarSprite;
     public static Sprite sunglassesSprite;
@@ -35,7 +36,8 @@ public class SpriteHandler : MonoBehaviour {
         bottleNoseSprite = Resources.Load("BottleNoseAnim/bottlenose0", typeof(Sprite)) as Sprite;
         bottleNoseSpriteAnim1 = Resources.Load("BottleNoseAnim/bottlenose1", typeof(Sprite)) as Sprite;
         bottleNoseSpriteAnim2 = Resources.Load("BottleNoseAnim/bottlenose2", typeof(Sprite)) as Sprite;
-        jellyfishSpineShooter = Resources.Load("jellyfishSpineShooter", typeof(Sprite)) as Sprite;
+        nematocystSprite = Resources.Load("jellyfishSpineShooter", typeof(Sprite)) as Sprite;
+        harpoonGunSprite = Resources.Load("harpoonGun", typeof(Sprite)) as Sprite;
         topHatSprite = Resources.Load("topHat", typeof(Sprite)) as Sprite;
         cigarSprite = Resources.Load("cigar", typeof(Sprite)) as Sprite;
         sunglassesSprite = Resources.Load("sunglasses", typeof(Sprite)) as Sprite;

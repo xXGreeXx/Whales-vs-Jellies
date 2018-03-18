@@ -15,6 +15,12 @@ public class MainGameHandler : MonoBehaviour {
         BottleNose
     }
 
+    public enum WeaponTypes
+    {
+        Nematocyst,
+        HarpoonGun
+    }
+
     //player data
     public static GameObject player;
     public static GameObject playerWeapon;
@@ -32,7 +38,7 @@ public class MainGameHandler : MonoBehaviour {
     public static float damageDealtToWhale = 0;
 
     //player "cosmetic" data
-    public static String weaponType = "jellyfishSpineShooter";
+    public static String weaponType = "harpoonGun";
     public static String vestType = "EMPTY";
     public static String hatType = "EMPTY";
     public static String mouthpieceType = "EMPTY";
@@ -59,7 +65,8 @@ public class MainGameHandler : MonoBehaviour {
     public static Dictionary<String, Sprite> weaponSpritesMap = new Dictionary<string, Sprite>()
     {
         {"EMPTY", new Sprite() },
-        { "jellyfishSpineShooter", SpriteHandler.jellyfishSpineShooter },
+        { "nematocyst", SpriteHandler.nematocystSprite },
+        { "harpoonGun", SpriteHandler.harpoonGunSprite },
     };
     public static Dictionary<String, Sprite> hatSpritesMap = new Dictionary<string, Sprite>()
     {
@@ -143,7 +150,7 @@ public class MainGameHandler : MonoBehaviour {
             AIData.health = 100;
             AIData.maxHealth = 100;
 
-            CreateWeapon(AIGO, "jellyfishSpineShooter", CreatureTypes.MoonJelly);
+            CreateWeapon(AIGO, "nematocyst", CreatureTypes.MoonJelly);
             CreateMouthpiece(AIGO, "cigar", CreatureTypes.MoonJelly);
             CreateGlasses(AIGO, "sunglasses", CreatureTypes.MoonJelly);
 
@@ -254,14 +261,27 @@ public class MainGameHandler : MonoBehaviour {
         if (!escapeMenuPanel.activeSelf)
         {
             //handle weapon fire/rotate
-            if (Input.GetMouseButtonDown(0))
+            WeaponHandlerScript script = playerWeapon.GetComponent<WeaponHandlerScript>();
+
+            if (script.fullyAuto)
             {
-                playerWeapon.GetComponent<WeaponHandlerScript>().FireWeapon(100, 1F, isWhale, false);
-                for(int i = 0; i < UnityEngine.Random.Range(3, 7); i++) CreateBubble(player.transform.position.x + (i / 5.5F) * UnityEngine.Random.Range(-0.5F, 0.5F), player.transform.position.y);
+                if (Input.GetMouseButton(0))
+                {
+                    script.FireWeapon(isWhale, false);
+                    for (int i = 0; i < UnityEngine.Random.Range(3, 7); i++) CreateBubble(player.transform.position.x + (i / 5.5F) * UnityEngine.Random.Range(-0.5F, 0.5F), player.transform.position.y);
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    script.FireWeapon(isWhale, false);
+                    for (int i = 0; i < UnityEngine.Random.Range(3, 7); i++) CreateBubble(player.transform.position.x + (i / 5.5F) * UnityEngine.Random.Range(-0.5F, 0.5F), player.transform.position.y);
+                }
             }
             if (Input.GetMouseButtonDown(1))
             {
-                playerWeapon.GetComponent<WeaponHandlerScript>().ReloadWeapon();
+                script.ReloadWeapon();
             }
 
             Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
@@ -594,11 +614,13 @@ public class MainGameHandler : MonoBehaviour {
         body.mass = 1F;
         body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         body.gravityScale = 0;
+
         bullet.transform.rotation = rot;
         physics.bulletDamage = damage;
-        physics.bulletSpeed = speed;
         renderer.sprite = SpriteHandler.bulletSprite;
         renderer.sortingOrder = -2;
+
+        body.AddRelativeForce(new Vector2(speed, 0), ForceMode2D.Impulse);
 
         return bullet;
     }
@@ -726,8 +748,23 @@ public class MainGameHandler : MonoBehaviour {
         weaponRenderer.sortingOrder = -3;
 
         WeaponHandlerScript weaponData = weapon.AddComponent<WeaponHandlerScript>();
-        weaponData.maxAmmo = 10;
-        weaponData.ammo = weaponData.maxAmmo;
+        if (weaponType.Equals("nematocyst"))
+        {
+            weaponData.maxAmmo = 10;
+            weaponData.ammo = weaponData.maxAmmo;
+            weaponData.bulletSpeed = 40;
+            weaponData.damage = 100;
+            weaponData.firingSpeed = 8;
+        }
+        else if (weaponType.Equals("harpoonGun"))
+        {
+            weaponData.maxAmmo = 30;
+            weaponData.ammo = weaponData.maxAmmo;
+            weaponData.bulletSpeed = 30;
+            weaponData.damage = 150;
+            weaponData.firingSpeed = 4;
+            weaponData.fullyAuto = true;
+        }
 
         return weapon;
     }

@@ -11,9 +11,8 @@ public class BulletPhysicsScript : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-        //move bullet
         Rigidbody2D body = gameObject.transform.GetComponent<Rigidbody2D>();
-        body.AddRelativeForce(new Vector2(bulletSpeed, 0), ForceMode2D.Impulse);
+        if (body.velocity == Vector2.zero) Destroy(gameObject, 0);
 
         if (!canCollide)
         {
