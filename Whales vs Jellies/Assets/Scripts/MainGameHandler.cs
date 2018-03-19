@@ -17,8 +17,8 @@ public class MainGameHandler : MonoBehaviour {
 
     public enum WeaponTypes
     {
-        Nematocyst,
-        HarpoonGun
+        nematocyst,
+        harpoonGun
     }
 
     //player data
@@ -268,7 +268,7 @@ public class MainGameHandler : MonoBehaviour {
                 if (Input.GetMouseButton(0))
                 {
                     script.FireWeapon(isWhale, false);
-                    for (int i = 0; i < UnityEngine.Random.Range(3, 7); i++) CreateBubble(player.transform.position.x + (i / 5.5F) * UnityEngine.Random.Range(-0.5F, 0.5F), player.transform.position.y);
+                    if(script.canFire && !script.reloading) for (int i = 0; i < UnityEngine.Random.Range(3, 7); i++) CreateBubble(player.transform.position.x + (i / 5.5F) * UnityEngine.Random.Range(-0.5F, 0.5F), player.transform.position.y);
                 }
             }
             else
@@ -276,7 +276,7 @@ public class MainGameHandler : MonoBehaviour {
                 if (Input.GetMouseButtonDown(0))
                 {
                     script.FireWeapon(isWhale, false);
-                    for (int i = 0; i < UnityEngine.Random.Range(3, 7); i++) CreateBubble(player.transform.position.x + (i / 5.5F) * UnityEngine.Random.Range(-0.5F, 0.5F), player.transform.position.y);
+                    if(script.canFire && !script.reloading) for (int i = 0; i < UnityEngine.Random.Range(3, 7); i++) CreateBubble(player.transform.position.x + (i / 5.5F) * UnityEngine.Random.Range(-0.5F, 0.5F), player.transform.position.y);
                 }
             }
             if (Input.GetMouseButtonDown(1))
@@ -535,7 +535,7 @@ public class MainGameHandler : MonoBehaviour {
 
                 if (bulletIndex > otherBullets.Count - 1)
                 {
-                    otherBullets.Add(CreateBullet(x, y, Quaternion.Euler(0, 0, bulletRot), damage, speed, true, localIsWhale));
+                    otherBullets.Add(CreateBullet(x, y, Quaternion.Euler(0, 0, bulletRot), damage, speed, true, localIsWhale, (WeaponTypes)Enum.Parse(typeof(WeaponTypes), weaponType)));
                 }
 
                 GameObject bulletToEdit = otherBullets[bulletIndex];
@@ -591,12 +591,12 @@ public class MainGameHandler : MonoBehaviour {
         animator.random = true;
         animator.interval = 0.45F;
 
-        renderer.sortingOrder = 2;
+        renderer.sortingOrder = -3;
         renderer.sprite = SpriteHandler.bubbleSpriteAnim2;
     }
 
     //create bullet
-    public static GameObject CreateBullet(float x, float y, Quaternion rot, float damage, float speed, Boolean sentByRemote, Boolean firedByWhale)
+    public static GameObject CreateBullet(float x, float y, Quaternion rot, float damage, float speed, Boolean sentByRemote, Boolean firedByWhale, WeaponTypes weaponUsed)
     {
         GameObject bullet = new GameObject("Bullet");
         bullet.transform.position = new Vector2(x, y);
@@ -617,7 +617,8 @@ public class MainGameHandler : MonoBehaviour {
 
         bullet.transform.rotation = rot;
         physics.bulletDamage = damage;
-        renderer.sprite = SpriteHandler.bulletSprite;
+        if (weaponUsed.Equals(WeaponTypes.nematocyst)) renderer.sprite = SpriteHandler.jellySpineSprite;
+        else if (weaponUsed.Equals(WeaponTypes.harpoonGun)) renderer.sprite = SpriteHandler.harpoonSprite;
         renderer.sortingOrder = -2;
 
         body.AddRelativeForce(new Vector2(speed, 0), ForceMode2D.Impulse);
@@ -762,9 +763,10 @@ public class MainGameHandler : MonoBehaviour {
             weaponData.ammo = weaponData.maxAmmo;
             weaponData.bulletSpeed = 30;
             weaponData.damage = 150;
-            weaponData.firingSpeed = 4;
+            weaponData.firingSpeed = 2;
             weaponData.fullyAuto = true;
         }
+        weaponData.type = (WeaponTypes)Enum.Parse(typeof(WeaponTypes), weaponType);
 
         return weapon;
     }
