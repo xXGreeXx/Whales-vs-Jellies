@@ -94,6 +94,9 @@ public class MainGameHandler : MonoBehaviour {
     //ui data
     public static GameObject escapeMenuPanel;
 
+    //net code data
+    public const int amountOfDataPerPlayer = 12;
+
 	//start
 	void Start ()
     {
@@ -173,7 +176,7 @@ public class MainGameHandler : MonoBehaviour {
             if (IsConnected(clientInstance.Client))
             {
                 List<String> data = ReadWriteServer();
-                if (data.Count >= 12) ParseData(data);
+                if (data.Count >= amountOfDataPerPlayer + 1) ParseData(data);
             }
             else
             {
@@ -199,8 +202,10 @@ public class MainGameHandler : MonoBehaviour {
         if (player.GetComponent<PlayerData>().isWhale)
         {
             whaleHealth = player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth;
+            whaleLevel = Convert.ToString(playerLevel);
         }
         GameObject.Find("WhaleHealthText").GetComponent<UnityEngine.UI.Text>().text = whaleHealth;
+        GameObject.Find("WhaleLevelText").GetComponent<UnityEngine.UI.Text>().text = "Level: " + whaleLevel;
         String whaleHealthLow = "0";
         String whaleHealthHigh = "0";
         int i = 0;
@@ -382,6 +387,8 @@ public class MainGameHandler : MonoBehaviour {
         writer.Flush();
         writer.WriteLine(eyepieceType);
         writer.Flush();
+        writer.WriteLine(playerLevel);
+        writer.Flush();
 
         //write bullet data
         foreach (GameObject bullet in bulletsFiredByPlayer)
@@ -434,7 +441,7 @@ public class MainGameHandler : MonoBehaviour {
         watch.Stop();
 
         //update ping label
-        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = watch.ElapsedMilliseconds / 11 + "ms"; //TODO\\ amount of data per player
+        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = watch.ElapsedMilliseconds / amountOfDataPerPlayer + "ms";
 
         return data;
     }
@@ -442,8 +449,6 @@ public class MainGameHandler : MonoBehaviour {
     //parse data from server
     private void ParseData(List<String> data)
     {
-        int amountOfDataPerPlayer = 11;
-
         //handle data
         int jellyCount = 0;
         int playerIndex = 0;
@@ -461,13 +466,18 @@ public class MainGameHandler : MonoBehaviour {
             String localHat = data[index + 8];
             String localMouthpiece = data[index + 9];
             String localEyepiece = data[index + 10];
+            int localLevel = int.Parse(data[index + 11]);
 
             Boolean localIsWhale = IsWhaleOrNot(localType);
 
             if (!localIsWhale) jellyCount++;
 
             //set whale health
-            if (localIsWhale) whaleHealth = health;
+            if (localIsWhale)
+            {
+                whaleHealth = health;
+                whaleLevel = Convert.ToString(localLevel);
+            }
 
             if (playerIndex > otherPlayers.Count - 1)
             {

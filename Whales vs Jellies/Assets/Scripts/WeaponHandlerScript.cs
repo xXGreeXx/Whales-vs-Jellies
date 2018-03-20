@@ -28,7 +28,7 @@ public class WeaponHandlerScript : MonoBehaviour {
         if (reloading)
         {
             ammo++;
-            if (ammo == maxAmmo)
+            if (ammo >= maxAmmo)
             {
                 reloading = false;
             }
