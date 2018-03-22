@@ -95,7 +95,7 @@ public class MainGameHandler : MonoBehaviour {
     public static GameObject escapeMenuPanel;
 
     //net code data
-    public const int amountOfDataPerPlayer = 12;
+    public const int amountOfDataPerPlayer = 13;
 
 	//start
 	void Start ()
@@ -176,7 +176,8 @@ public class MainGameHandler : MonoBehaviour {
             if (IsConnected(clientInstance.Client))
             {
                 List<String> data = ReadWriteServer();
-                if (data.Count >= amountOfDataPerPlayer + 1) ParseData(data);
+                String command;
+                if (data.Count >= amountOfDataPerPlayer + 1) ParseData(data, out command);
             }
             else
             {
@@ -364,6 +365,9 @@ public class MainGameHandler : MonoBehaviour {
         StreamReader reader = new StreamReader(writer.BaseStream);
 
         //write player data
+        String command = "n";
+        writer.Flush();
+        writer.WriteLine(command);
         writer.Flush();
         writer.WriteLine(player.transform.position.x);
         writer.Flush();
@@ -447,26 +451,29 @@ public class MainGameHandler : MonoBehaviour {
     }
 
     //parse data from server
-    private void ParseData(List<String> data)
+    private void ParseData(List<String> data, out String command)
     {
+        command = "end"; //make compiler happy
+
         //handle data
         int jellyCount = 0;
         int playerIndex = 0;
         for (int index = 0; index < data.Count; index += amountOfDataPerPlayer)
         {
             //player data
-            float x = float.Parse(data[index]);
-            float y = float.Parse(data[index + 1]);
-            float rot = float.Parse(data[index + 2]);
-            CreatureTypes localType = (CreatureTypes)Enum.Parse(typeof(CreatureTypes), data[index + 3]);
-            String health = data[index + 4];
-            float weaponRot = float.Parse(data[index + 5]);
-            String localWeapon = data[index + 6];
-            String localVest = data[index + 7];
-            String localHat = data[index + 8];
-            String localMouthpiece = data[index + 9];
-            String localEyepiece = data[index + 10];
-            int localLevel = int.Parse(data[index + 11]);
+            command = data[index];
+            float x = float.Parse(data[index + 1]);
+            float y = float.Parse(data[index + 2]);
+            float rot = float.Parse(data[index + 3]);
+            CreatureTypes localType = (CreatureTypes)Enum.Parse(typeof(CreatureTypes), data[index + 4]);
+            String health = data[index + 5];
+            float weaponRot = float.Parse(data[index + 6]);
+            String localWeapon = data[index + 7];
+            String localVest = data[index + 8];
+            String localHat = data[index + 9];
+            String localMouthpiece = data[index + 10];
+            String localEyepiece = data[index + 11];
+            int localLevel = int.Parse(data[index + 12]);
 
             Boolean localIsWhale = IsWhaleOrNot(localType);
 
