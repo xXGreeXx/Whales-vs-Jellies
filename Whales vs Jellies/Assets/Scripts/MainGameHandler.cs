@@ -17,6 +17,7 @@ public class MainGameHandler : MonoBehaviour {
 
     public enum WeaponTypes
     {
+        EMPTY,
         nematocyst,
         harpoonGun
     }
@@ -34,6 +35,10 @@ public class MainGameHandler : MonoBehaviour {
     public static int playerCurrentXP = 0;
     public static int xpNeededForNextLevel = 100;
     public static int currency = 0;
+    public static float attack;
+    public static float defense;
+    public static float health;
+    public static float speed;
 
     public static float damageDealtToWhale = 0;
 
@@ -95,7 +100,9 @@ public class MainGameHandler : MonoBehaviour {
     public static GameObject escapeMenuPanel;
 
     //net code data
-    public const int amountOfDataPerPlayer = 13;
+    public const int amountOfDataPerNewPlayer = 13;
+    public const int amountOfDataPerUpdatePlayer = 6;
+    private Boolean sentBaseData = false;
 
 	//start
 	void Start ()
@@ -177,7 +184,7 @@ public class MainGameHandler : MonoBehaviour {
             {
                 List<String> data = ReadWriteServer();
                 String command;
-                if (data.Count >= amountOfDataPerPlayer + 1) ParseData(data, out command);
+                if (data.Count >= amountOfDataPerNewPlayer + 1) ParseData(data, out command);
             }
             else
             {
@@ -365,34 +372,56 @@ public class MainGameHandler : MonoBehaviour {
         StreamReader reader = new StreamReader(writer.BaseStream);
 
         //write player data
-        String command = "n";
-        writer.Flush();
-        writer.WriteLine(command);
-        writer.Flush();
-        writer.WriteLine(player.transform.position.x);
-        writer.Flush();
-        writer.WriteLine(player.transform.position.y);
-        writer.Flush();
-        writer.WriteLine(player.transform.GetComponent<Rigidbody2D>().rotation);
-        writer.Flush();
-        writer.WriteLine(type.ToString());
-        writer.Flush();
-        writer.WriteLine(player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth);
-        writer.Flush();
-        writer.WriteLine(player.transform.Find("Weapon").transform.rotation.z);
-        writer.Flush();
-        writer.WriteLine(weaponType);
-        writer.Flush();
-        writer.WriteLine(vestType);
-        writer.Flush();
-        writer.WriteLine(hatType);
-        writer.Flush();
-        writer.WriteLine(mouthpieceType);
-        writer.Flush();
-        writer.WriteLine(eyepieceType);
-        writer.Flush();
-        writer.WriteLine(playerLevel);
-        writer.Flush();
+        if (!sentBaseData)
+        {
+            String command = "n";
+            writer.Flush();
+            writer.WriteLine(command);
+            writer.Flush();
+            writer.WriteLine(player.transform.position.x);
+            writer.Flush();
+            writer.WriteLine(player.transform.position.y);
+            writer.Flush();
+            writer.WriteLine(player.transform.GetComponent<Rigidbody2D>().rotation);
+            writer.Flush();
+            writer.WriteLine(type.ToString());
+            writer.Flush();
+            writer.WriteLine(player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth);
+            writer.Flush();
+            writer.WriteLine(player.transform.Find("Weapon").transform.rotation.z);
+            writer.Flush();
+            writer.WriteLine(weaponType);
+            writer.Flush();
+            writer.WriteLine(vestType);
+            writer.Flush();
+            writer.WriteLine(hatType);
+            writer.Flush();
+            writer.WriteLine(mouthpieceType);
+            writer.Flush();
+            writer.WriteLine(eyepieceType);
+            writer.Flush();
+            writer.WriteLine(playerLevel);
+            writer.Flush();
+
+            sentBaseData = true;
+        }
+        else
+        {
+            String command = "u";
+            writer.Flush();
+            writer.WriteLine(command);
+            writer.Flush();
+            writer.WriteLine(player.transform.position.x);
+            writer.Flush();
+            writer.WriteLine(player.transform.position.y);
+            writer.Flush();
+            writer.WriteLine(player.transform.GetComponent<Rigidbody2D>().rotation);
+            writer.Flush();
+            writer.WriteLine(player.GetComponent<PlayerData>().health + "/" + player.GetComponent<PlayerData>().maxHealth);
+            writer.Flush();
+            writer.WriteLine(player.transform.Find("Weapon").transform.rotation.z);
+            writer.Flush();
+        }
 
         //write bullet data
         foreach (GameObject bullet in bulletsFiredByPlayer)
@@ -434,7 +463,7 @@ public class MainGameHandler : MonoBehaviour {
             {
                 if (!line.Equals("")) data.Add(line);
 
-                if (line.Equals("") || line == null) //fail safe, this is hanging some times
+                if (line.Equals("") || line == null || watch.ElapsedMilliseconds >= 3000) //fail safe, this is hanging some times
                 {
                     break;
                 }
@@ -445,7 +474,7 @@ public class MainGameHandler : MonoBehaviour {
         watch.Stop();
 
         //update ping label
-        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = watch.ElapsedMilliseconds / amountOfDataPerPlayer + "ms";
+        GameObject.Find("pingText").GetComponent<UnityEngine.UI.Text>().text = watch.ElapsedMilliseconds / amountOfDataPerNewPlayer + "ms";
 
         return data;
     }
@@ -453,41 +482,37 @@ public class MainGameHandler : MonoBehaviour {
     //parse data from server
     private void ParseData(List<String> data, out String command)
     {
-        command = "end"; //make compiler happy
+        command = "e"; //make compiler happy
 
         //handle data
         int jellyCount = 0;
         int playerIndex = 0;
-        for (int index = 0; index < data.Count; index += amountOfDataPerPlayer)
+        for (int index = 0; index < data.Count; index += 0)
         {
             //player data
+            float x = 0;
+            float y = 0;
+            float rot = 0;
+            String health = "/";
+            float weaponRot = 0;
+
             command = data[index];
-            float x = float.Parse(data[index + 1]);
-            float y = float.Parse(data[index + 2]);
-            float rot = float.Parse(data[index + 3]);
-            CreatureTypes localType = (CreatureTypes)Enum.Parse(typeof(CreatureTypes), data[index + 4]);
-            String health = data[index + 5];
-            float weaponRot = float.Parse(data[index + 6]);
-            String localWeapon = data[index + 7];
-            String localVest = data[index + 8];
-            String localHat = data[index + 9];
-            String localMouthpiece = data[index + 10];
-            String localEyepiece = data[index + 11];
-            int localLevel = int.Parse(data[index + 12]);
-
-            Boolean localIsWhale = IsWhaleOrNot(localType);
-
-            if (!localIsWhale) jellyCount++;
-
-            //set whale health
-            if (localIsWhale)
+            UnityEngine.Debug.Log(command);
+            if (command.Equals("n"))
             {
-                whaleHealth = health;
-                whaleLevel = Convert.ToString(localLevel);
-            }
+                x = float.Parse(data[index + 1]);
+                y = float.Parse(data[index + 2]);
+                rot = float.Parse(data[index + 3]);
+                CreatureTypes localType = (CreatureTypes)Enum.Parse(typeof(CreatureTypes), data[index + 4]);
+                health = data[index + 5];
+                weaponRot = float.Parse(data[index + 6]);
+                String localWeapon = data[index + 7];
+                String localVest = data[index + 8];
+                String localHat = data[index + 9];
+                String localMouthpiece = data[index + 10];
+                String localEyepiece = data[index + 11];
+                int localLevel = int.Parse(data[index + 12]);
 
-            if (playerIndex > otherPlayers.Count - 1)
-            {
                 GameObject p = CreatePlayer(localType);
                 if (weaponSpritesMap.ContainsKey(localWeapon)) CreateWeapon(p, localWeapon, localType);
                 if (vestSpritesMap.ContainsKey(localVest)) CreateVest(p, localVest, localType);
@@ -495,10 +520,31 @@ public class MainGameHandler : MonoBehaviour {
                 if (mouthpieceSpritesMap.ContainsKey(localMouthpiece)) CreateMouthpiece(p, localMouthpiece, localType);
                 if (eyepieceSpritesMap.ContainsKey(localEyepiece)) CreateGlasses(p, localEyepiece, localType);
                 otherPlayers.Add(p);
+
+                index += amountOfDataPerNewPlayer;
+            }
+            else if(command.Equals("u"))
+            {
+                x = float.Parse(data[index + 1]);
+                y = float.Parse(data[index + 2]);
+                rot = float.Parse(data[index + 3]);
+                health = data[index + 4];
+                weaponRot = float.Parse(data[index + 5]);
+
+                index += amountOfDataPerUpdatePlayer;
             }
 
             //set extra data
             GameObject playerToEdit = otherPlayers[playerIndex];
+            PlayerData playerInformation = playerToEdit.GetComponent<PlayerData>();
+
+            Boolean localIsWhale = playerInformation.isWhale;
+            if (localIsWhale)
+            {
+                whaleHealth = health;
+                //whaleLevel = Convert.ToString(localLevel); //TODO\\
+            }
+            else jellyCount++;
 
             if (playerToEdit.transform.position != new Vector3(x, y, 0)) playerToEdit.GetComponent<ActiveAnimator>().PlaySet(0);
 
@@ -536,7 +582,7 @@ public class MainGameHandler : MonoBehaviour {
             //handle bullet data
             int bulletIndex = 0;
             int tempIndexForBullets = 0;
-            for (tempIndexForBullets = index + amountOfDataPerPlayer; tempIndexForBullets < data.Count; tempIndexForBullets += 5)
+            for (tempIndexForBullets = index + amountOfDataPerNewPlayer; tempIndexForBullets < data.Count; tempIndexForBullets += 5)
             {
                 if (data[tempIndexForBullets].Equals("ENDOFBULLETS"))
                 {
@@ -574,11 +620,11 @@ public class MainGameHandler : MonoBehaviour {
         //set player label
         GameObject.Find("playersText").GetComponent<UnityEngine.UI.Text>().text = (isWhale ? 0 : 1 + jellyCount) + " Jellyfish";
 
-        //remove extra players
-        for (int tempIndex = playerIndex; tempIndex < otherPlayers.Count; tempIndex++)
-        {
-            RemovePlayer(tempIndex);
-        }
+        //remove extra players //TODO\\
+        //for (int tempIndex = playerIndex; tempIndex < otherPlayers.Count; tempIndex++)
+        //{
+        //    RemovePlayer(tempIndex);
+        //}
     }
 
     //determine if whale
