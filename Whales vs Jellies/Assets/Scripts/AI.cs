@@ -44,7 +44,8 @@ public class AI : MonoBehaviour {
         if (Random.Range(0, 400) == 1)
         {
             gameObject.transform.Find("Weapon").GetComponent<WeaponHandlerScript>().FireWeapon(false, true);
-            gameObject.transform.Find("Weapon").GetComponent<WeaponHandlerScript>().ReloadWeapon();
+
+            if (gameObject.transform.Find("Weapon").GetComponent<WeaponHandlerScript>().ammo == 0) gameObject.transform.Find("Weapon").GetComponent<WeaponHandlerScript>().ReloadWeapon();
         }
     }
 }

@@ -10,6 +10,8 @@ public class WeaponHandlerScript : MonoBehaviour {
     public bool fullyAuto = false;
 
     public MainGameHandler.WeaponTypes type;
+    public Sprite loadedSprite;
+    public Sprite unloadedSprite;
 
     private float round = 0;
     public bool canFire = true;
@@ -23,6 +25,7 @@ public class WeaponHandlerScript : MonoBehaviour {
         {
             round = 0;
             canFire = true;
+            gameObject.GetComponent<SpriteRenderer>().sprite = loadedSprite;
         }
 
         if (reloading)
@@ -41,8 +44,9 @@ public class WeaponHandlerScript : MonoBehaviour {
         if (ammo > 0 && canFire && !reloading)
         {
             MainGameHandler.bulletsFiredByPlayer.Add(MainGameHandler.CreateBullet(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.rotation, damage, bulletSpeed, sentByRemote, localIsWhale, type));
-            ammo--;
+            gameObject.GetComponent<SpriteRenderer>().sprite = unloadedSprite;
 
+            ammo--;
             canFire = false;
         }
     }

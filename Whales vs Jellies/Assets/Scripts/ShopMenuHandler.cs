@@ -31,7 +31,7 @@ public class ShopMenuHandler : MonoBehaviour {
 
         lastPosition = new Vector3(-158, 222, -15);
 
-        AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.nematocystSprite, "Nematocyst \nThis weapon packs a sting! High single target damage.");
+        AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.nematocystSpriteLoaded, "Nematocyst \nThis weapon packs a sting! High single target damage.");
         AddItemToInventory(ItemData.ItemTypes.GunPanel, SpriteHandler.harpoonGunSprite, "HarpoonGun \nHook your foes!");
         AddItemToInventory(ItemData.ItemTypes.HatPanel, SpriteHandler.topHatSprite, "TopHat \nWant to impress your friends? Look like a businessman? This is for you!");
         AddItemToInventory(ItemData.ItemTypes.MouthpiecePanel, SpriteHandler.cigarSprite, "Cigar \nThis just raises further questions.");

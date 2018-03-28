@@ -70,7 +70,7 @@ public class MainGameHandler : MonoBehaviour {
     public static Dictionary<String, Sprite> weaponSpritesMap = new Dictionary<string, Sprite>()
     {
         {"EMPTY", new Sprite() },
-        { "nematocyst", SpriteHandler.nematocystSprite },
+        { "nematocyst", SpriteHandler.nematocystSpriteLoaded },
         { "harpoonGun", SpriteHandler.harpoonGunSprite },
     };
     public static Dictionary<String, Sprite> hatSpritesMap = new Dictionary<string, Sprite>()
@@ -663,6 +663,7 @@ public class MainGameHandler : MonoBehaviour {
     {
         GameObject bullet = new GameObject("Bullet");
         bullet.transform.position = new Vector2(x, y);
+        bullet.transform.localScale = new Vector2(0.5F, 0.5F);
 
         if (firedByWhale) bullet.layer = 11;
         else bullet.layer = 10;
@@ -716,11 +717,15 @@ public class MainGameHandler : MonoBehaviour {
             bodyBase.mass = 100;
 
             ActiveAnimator animator = p.AddComponent<ActiveAnimator>();
-            animator.interval = 0.5F;
+            animator.interval = 0.2F;
 
             List<Sprite> moveSet = new List<Sprite>();
             moveSet.Add(SpriteHandler.bottleNoseSprite);
             moveSet.Add(SpriteHandler.bottleNoseSpriteAnim1);
+            moveSet.Add(SpriteHandler.bottleNoseSpriteAnim2);
+            moveSet.Add(SpriteHandler.bottleNoseSpriteAnim3);
+            moveSet.Add(SpriteHandler.bottleNoseSpriteAnim4);
+            moveSet.Add(SpriteHandler.bottleNoseSpriteAnim3);
             moveSet.Add(SpriteHandler.bottleNoseSpriteAnim2);
             moveSet.Add(SpriteHandler.bottleNoseSpriteAnim1);
             moveSet.Add(SpriteHandler.bottleNoseSprite);
@@ -819,6 +824,8 @@ public class MainGameHandler : MonoBehaviour {
             weaponData.bulletSpeed = 40;
             weaponData.damage = 100;
             weaponData.firingSpeed = 8;
+            weaponData.loadedSprite = SpriteHandler.nematocystSpriteLoaded;
+            weaponData.unloadedSprite = SpriteHandler.nematocystSpriteUnloaded;
         }
         else if (weaponType.Equals("harpoonGun"))
         {
@@ -828,6 +835,8 @@ public class MainGameHandler : MonoBehaviour {
             weaponData.damage = 150;
             weaponData.firingSpeed = 2;
             weaponData.fullyAuto = true;
+            weaponData.loadedSprite = SpriteHandler.harpoonGunSprite;
+            weaponData.unloadedSprite = SpriteHandler.harpoonGunSprite;
         }
         weaponData.type = (WeaponTypes)Enum.Parse(typeof(WeaponTypes), weaponType);
 

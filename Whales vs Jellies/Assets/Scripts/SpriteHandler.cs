@@ -12,7 +12,10 @@ public class SpriteHandler : MonoBehaviour {
     public static Sprite bottleNoseSprite;
     public static Sprite bottleNoseSpriteAnim1;
     public static Sprite bottleNoseSpriteAnim2;
-    public static Sprite nematocystSprite;
+    public static Sprite bottleNoseSpriteAnim3;
+    public static Sprite bottleNoseSpriteAnim4;
+    public static Sprite nematocystSpriteLoaded;
+    public static Sprite nematocystSpriteUnloaded;
     public static Sprite harpoonGunSprite;
     public static Sprite topHatSprite;
     public static Sprite cigarSprite;
@@ -37,7 +40,10 @@ public class SpriteHandler : MonoBehaviour {
         bottleNoseSprite = Resources.Load("BottleNoseAnim/bottlenose0", typeof(Sprite)) as Sprite;
         bottleNoseSpriteAnim1 = Resources.Load("BottleNoseAnim/bottlenose1", typeof(Sprite)) as Sprite;
         bottleNoseSpriteAnim2 = Resources.Load("BottleNoseAnim/bottlenose2", typeof(Sprite)) as Sprite;
-        nematocystSprite = Resources.Load("jellyfishSpineShooter", typeof(Sprite)) as Sprite;
+        bottleNoseSpriteAnim3 = Resources.Load("BottleNoseAnim/bottlenose3", typeof(Sprite)) as Sprite;
+        bottleNoseSpriteAnim4 = Resources.Load("BottleNoseAnim/bottlenose4", typeof(Sprite)) as Sprite;
+        nematocystSpriteLoaded = Resources.Load("NematocystAnimation/nematocystLoaded", typeof(Sprite)) as Sprite;
+        nematocystSpriteUnloaded = Resources.Load("NematocystAnimation/nematocystUnloaded", typeof(Sprite)) as Sprite;
         harpoonGunSprite = Resources.Load("harpoonGun", typeof(Sprite)) as Sprite;
         topHatSprite = Resources.Load("topHat", typeof(Sprite)) as Sprite;
         cigarSprite = Resources.Load("cigar", typeof(Sprite)) as Sprite;
