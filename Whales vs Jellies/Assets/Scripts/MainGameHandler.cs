@@ -19,7 +19,8 @@ public class MainGameHandler : MonoBehaviour {
     {
         EMPTY,
         nematocyst,
-        harpoonGun
+        harpoonGun,
+        eggBazooka
     }
 
     //player data
@@ -72,6 +73,7 @@ public class MainGameHandler : MonoBehaviour {
         {"EMPTY", new Sprite() },
         { "nematocyst", SpriteHandler.nematocystSpriteLoaded },
         { "harpoonGun", SpriteHandler.harpoonGunSprite },
+        { "eggBazooka", SpriteHandler.omeletteBringerSprite }
     };
     public static Dictionary<String, Sprite> hatSpritesMap = new Dictionary<string, Sprite>()
     {
@@ -683,6 +685,7 @@ public class MainGameHandler : MonoBehaviour {
         physics.bulletDamage = damage;
         if (weaponUsed.Equals(WeaponTypes.nematocyst)) renderer.sprite = SpriteHandler.jellySpineSprite;
         else if (weaponUsed.Equals(WeaponTypes.harpoonGun)) renderer.sprite = SpriteHandler.harpoonSprite;
+        else if (weaponUsed.Equals(WeaponTypes.eggBazooka)) renderer.sprite = SpriteHandler.eggSprite;
         renderer.sortingOrder = -2;
 
         body.AddRelativeForce(new Vector2(speed, 0), ForceMode2D.Impulse);
@@ -837,6 +840,17 @@ public class MainGameHandler : MonoBehaviour {
             weaponData.fullyAuto = true;
             weaponData.loadedSprite = SpriteHandler.harpoonGunSprite;
             weaponData.unloadedSprite = SpriteHandler.harpoonGunSprite;
+        }
+        else if (weaponType.Equals("eggBazooka"))
+        {
+            weaponData.maxAmmo = 1;
+            weaponData.ammo = weaponData.maxAmmo;
+            weaponData.bulletSpeed = 10;
+            weaponData.damage = 500;
+            weaponData.firingSpeed = 5;
+            weaponData.fullyAuto = false;
+            weaponData.loadedSprite = SpriteHandler.omeletteBringerSprite;
+            weaponData.unloadedSprite = SpriteHandler.omeletteBringerSprite;
         }
         weaponData.type = (WeaponTypes)Enum.Parse(typeof(WeaponTypes), weaponType);
 

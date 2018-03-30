@@ -28,13 +28,13 @@ public class WeaponHandlerScript : MonoBehaviour {
             gameObject.GetComponent<SpriteRenderer>().sprite = loadedSprite;
         }
 
-        if (reloading)
+        if (reloading && canFire)
         {
-            ammo++;
             if (ammo >= maxAmmo)
             {
                 reloading = false;
             }
+            else ammo++;
         }
     }
 
