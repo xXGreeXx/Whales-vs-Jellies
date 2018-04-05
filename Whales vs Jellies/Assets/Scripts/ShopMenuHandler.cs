@@ -64,7 +64,7 @@ public class ShopMenuHandler : MonoBehaviour {
             shopMenuForJellies.SetActive(false);
             shopMenuForWhales.SetActive(true);
 
-            previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.bottleNoseSprite;
+            if(MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)) previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.bottleNoseSprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 270);
             previewPanel.transform.localScale = new Vector2(-1, -1);
 
@@ -80,7 +80,8 @@ public class ShopMenuHandler : MonoBehaviour {
             shopMenuForJellies.SetActive(true);
             shopMenuForWhales.SetActive(false);
 
-            previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.moonJellySprite;
+            if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.MoonJelly)) previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.moonJellySprite;
+            if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.CannonballJelly)) previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.cannonballJellySprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 0);
 
             for (int index = 0; index < previewPanel.transform.childCount; index++)

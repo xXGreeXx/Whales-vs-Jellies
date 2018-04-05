@@ -146,3 +146,4 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.Spa
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.BubbleScript
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.InventoryAddScript
 38efd81941be6c2478e4374904e4ce3b Assembly-CSharp.dll:.PlayerData
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ChangePreviewToActiveJellyToggle

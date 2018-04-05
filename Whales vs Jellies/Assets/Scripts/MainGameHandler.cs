@@ -12,6 +12,7 @@ public class MainGameHandler : MonoBehaviour {
     public enum CreatureTypes
     {
         MoonJelly,
+        CannonballJelly,
         BottleNose
     }
 
