@@ -50,6 +50,11 @@ public class ShopMenuHandler : MonoBehaviour {
         GameObject.Find("XPBarText").GetComponent<UnityEngine.UI.Text>().text = MainGameHandler.playerCurrentXP + "/" + MainGameHandler.xpNeededForNextLevel;
         GameObject.Find("goldText").GetComponent<UnityEngine.UI.Text>().text = MainGameHandler.currency.ToString();
         GameObject.Find("levelText").GetComponent<UnityEngine.UI.Text>().text = "Lvl: " + MainGameHandler.playerLevel.ToString();
+
+        GameObject.Find("attackLabel").GetComponent<UnityEngine.UI.Text>().text = MainGameHandler.attack.ToString();
+        GameObject.Find("defenseLabel").GetComponent<UnityEngine.UI.Text>().text = MainGameHandler.defense.ToString();
+        GameObject.Find("healthLabel").GetComponent<UnityEngine.UI.Text>().text = MainGameHandler.health.ToString();
+        GameObject.Find("speedLabel").GetComponent<UnityEngine.UI.Text>().text = MainGameHandler.speed.ToString();
     }
 
     //change preview base
@@ -82,6 +87,7 @@ public class ShopMenuHandler : MonoBehaviour {
 
             if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.MoonJelly)) previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.moonJellySprite;
             if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.CannonballJelly)) previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.cannonballJellySprite;
+            if (MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BluefireJelly)) previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.bluefireJellySprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 0);
 
             for (int index = 0; index < previewPanel.transform.childCount; index++)

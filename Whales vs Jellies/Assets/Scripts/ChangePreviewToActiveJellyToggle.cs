@@ -11,6 +11,6 @@ public class ChangePreviewToActiveJellyToggle : MonoBehaviour {
 
         if (t.name.Equals("MoonJellyToggle")) { MainGameHandler.type = MainGameHandler.CreatureTypes.MoonJelly; ShopMenuHandler.ChangeBackground(); }
         if (t.name.Equals("CannonballJellyToggle")) { MainGameHandler.type = MainGameHandler.CreatureTypes.CannonballJelly; ShopMenuHandler.ChangeBackground(); }
-
+        if (t.name.Equals("BluefireJellyToggle")) { MainGameHandler.type = MainGameHandler.CreatureTypes.BluefireJelly; ShopMenuHandler.ChangeBackground(); }
     }
 }

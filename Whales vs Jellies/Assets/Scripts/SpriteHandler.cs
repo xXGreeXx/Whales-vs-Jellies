@@ -13,6 +13,7 @@ public class SpriteHandler : MonoBehaviour {
     public static Sprite moonJellySpriteAnim2;
     public static Sprite moonJellySpriteAnim3;
     public static Sprite cannonballJellySprite;
+    public static Sprite bluefireJellySprite;
     //whales
     public static Sprite bottleNoseSprite;
     public static Sprite bottleNoseSpriteAnim1;
@@ -49,6 +50,7 @@ public class SpriteHandler : MonoBehaviour {
         moonJellySpriteAnim2 = Resources.Load("MoonJellyAnim/moonjelly2", typeof(Sprite)) as Sprite;
         moonJellySpriteAnim3 = Resources.Load("MoonJellyAnim/moonjelly3", typeof(Sprite)) as Sprite;
         cannonballJellySprite = Resources.Load("CannonballJellyAnim/cannonballjelly0", typeof(Sprite)) as Sprite;
+        bluefireJellySprite = Resources.Load("BluefireJellyAnim/bluefirejelly", typeof(Sprite)) as Sprite;
         bottleNoseSprite = Resources.Load("BottleNoseAnim/bottlenose0", typeof(Sprite)) as Sprite;
         bottleNoseSpriteAnim1 = Resources.Load("BottleNoseAnim/bottlenose1", typeof(Sprite)) as Sprite;
         bottleNoseSpriteAnim2 = Resources.Load("BottleNoseAnim/bottlenose2", typeof(Sprite)) as Sprite;

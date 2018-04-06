@@ -13,6 +13,8 @@ public class MainGameHandler : MonoBehaviour {
     {
         MoonJelly,
         CannonballJelly,
+        BluefireJelly,
+        BoxJelly,
         BottleNose
     }
 
@@ -37,10 +39,10 @@ public class MainGameHandler : MonoBehaviour {
     public static int playerCurrentXP = 0;
     public static int xpNeededForNextLevel = 100;
     public static int currency = 0;
-    public static float attack;
-    public static float defense;
-    public static float health;
-    public static float speed;
+    public static float attack = 0;
+    public static float defense = 0;
+    public static float health = 0;
+    public static float speed = 0;
 
     public static float damageDealtToWhale = 0;
 
