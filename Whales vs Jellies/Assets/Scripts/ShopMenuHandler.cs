@@ -68,6 +68,7 @@ public class ShopMenuHandler : MonoBehaviour {
         {
             shopMenuForJellies.SetActive(false);
             shopMenuForWhales.SetActive(true);
+            AddItemsForWhale();
 
             if(MainGameHandler.type.Equals(MainGameHandler.CreatureTypes.BottleNose)) previewPanel.GetComponent<UnityEngine.UI.Image>().sprite = SpriteHandler.bottleNoseSprite;
             previewPanel.transform.rotation = Quaternion.Euler(0, 0, 270);
@@ -97,6 +98,26 @@ public class ShopMenuHandler : MonoBehaviour {
                 child.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         }
+    }
+
+    //add shop items for whale
+    private static void AddItemsForWhale()
+    {
+        float margin = GameObject.Find("whaleStorePanel").GetComponent<RectTransform>().rect.height;
+
+        GameObject whaleShopItem = Instantiate(GameObject.Find("whaleStorePanel"), shopMenuForWhales.transform);
+        whaleShopItem.transform.Find("costLabel").GetComponent<UnityEngine.UI.Text>().text = "Cost: 50";
+        whaleShopItem.transform.Find("itemLabel").GetComponent<UnityEngine.UI.Text>().text = "Harpoon Gun";
+        whaleShopItem.transform.Find("statPane").GetComponent<UnityEngine.UI.Text>().text = "dmg: 150, rds/s: 3, mag: 30";
+        whaleShopItem.transform.Find("descriptionPane").GetComponent<UnityEngine.UI.Text>().text = "Fully automatic harpoon launcher";
+        whaleShopItem.transform.localPosition = new Vector2(0, shopMenuForWhales.GetComponent<RectTransform>().rect.width - 50);
+
+        whaleShopItem = Instantiate(GameObject.Find("whaleStorePanel"), shopMenuForWhales.transform);
+        whaleShopItem.transform.Find("costLabel").GetComponent<UnityEngine.UI.Text>().text = "Cost: 150";
+        whaleShopItem.transform.Find("itemLabel").GetComponent<UnityEngine.UI.Text>().text = "Bubble Gun";
+        whaleShopItem.transform.Find("statPane").GetComponent<UnityEngine.UI.Text>().text = "dmg: 20, rds/s: 100, mag: 500";
+        whaleShopItem.transform.Find("descriptionPane").GetComponent<UnityEngine.UI.Text>().text = "Bubble launcher, smother your jellyfish foes in\nrespiratory blocking bubbles!";
+        whaleShopItem.transform.localPosition = new Vector2(0, shopMenuForWhales.GetComponent<RectTransform>().rect.width - 50 - margin);
     }
 
     //push items to right spot
