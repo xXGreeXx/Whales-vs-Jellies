@@ -28,6 +28,7 @@ public class MainMenuButtonScript : MonoBehaviour {
         }
         else if (button.Equals("GoWhale"))
         {
+            GameObject.Find("GoWhaleButton").GetComponent<UnityEngine.UI.Button>().interactable = false;
             MainGameHandler.isWhale = true;
             MainGameHandler.type = MainGameHandler.CreatureTypes.BottleNose;
             ShopMenuHandler.ChangeBackground();

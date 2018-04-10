@@ -843,6 +843,8 @@ public class MainGameHandler : MonoBehaviour {
             weaponData.fullyAuto = true;
             weaponData.loadedSprite = SpriteHandler.harpoonGunSprite;
             weaponData.unloadedSprite = SpriteHandler.harpoonGunSprite;
+
+            weapon.transform.localScale = Vector3.Scale(weapon.transform.localScale, new Vector3(2.25F, 1.25F, 1.25F));
         }
         else if (weaponType.Equals("eggBazooka"))
         {
@@ -854,6 +856,8 @@ public class MainGameHandler : MonoBehaviour {
             weaponData.fullyAuto = false;
             weaponData.loadedSprite = SpriteHandler.omeletteBringerSprite;
             weaponData.unloadedSprite = SpriteHandler.omeletteBringerSprite;
+
+            weapon.transform.localScale = Vector3.Scale(weapon.transform.localScale, new Vector3(2.5F, 1.25F, 1.25F));
         }
         weaponData.type = (WeaponTypes)Enum.Parse(typeof(WeaponTypes), weaponType);
 
